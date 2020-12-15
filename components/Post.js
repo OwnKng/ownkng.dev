@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Card } from "../components/styled/element/Card";
+import { PostWrapper } from "../components/styled/element/PostWrapper";
 
 export const Post = ({ post }) => {
   const {
@@ -8,16 +9,20 @@ export const Post = ({ post }) => {
   } = post;
 
   return (
-    <Card>
-      <article>
-        <Card.Img src={meta.img} />
-        <Card.Heading>{meta.title}</Card.Heading>
-        <p>{meta.description}</p>
-        <p>{meta.date}</p>
-        <Link href={"/blog" + link}>
-          <a>Read more &rarr;</a>
-        </Link>
-      </article>
-    </Card>
+    <PostWrapper>
+      <Link href={"/blog" + link}>
+        <Card>
+          <Card.Img src={meta.img} />
+          <Card.Content>
+            <h4>
+              <span>{meta.date}</span>
+            </h4>
+            <Card.Heading>{meta.title}</Card.Heading>
+            <p>{meta.description}</p>
+            <a>Read more &rarr;</a>
+          </Card.Content>
+        </Card>
+      </Link>
+    </PostWrapper>
   );
 };

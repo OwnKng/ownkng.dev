@@ -27,7 +27,6 @@ export default styled(Header)`
   z-index: 1;
   justify-content: space-between;
   place-items: center;
-  ${fixed()};
 
   h1 {
     color: ${(props) => props.theme.colors.headline};
