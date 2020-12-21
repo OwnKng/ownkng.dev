@@ -5,4 +5,8 @@ export const Main = styled.main`
   min-height: 100vh;
   margin: 0px auto;
   padding: 4rem 1rem 0;
+
+  p {
+    color: ${({ theme }) => theme.colors.paragraph};
+  }
 `;

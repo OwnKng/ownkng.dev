@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const BlogHead = styled.div`
   color: ${({ theme }) => theme.colors.paragraph};
-  max-width: 720px;
+  max-width: 920px;
   margin: 0px auto;
   padding-bottom: 4rem;
   h1 {

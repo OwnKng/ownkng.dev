@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { fixed } from "../utilities";
 import Link from "next/link";
 import MenuButton from "../element/MenuButton";
 

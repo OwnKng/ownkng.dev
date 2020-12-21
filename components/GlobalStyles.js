@@ -18,7 +18,7 @@ html {
 
 body {
   margin: 0;
-  background-color: #0f0e17;
+  background-color: #fffffe;
   font-family: 'Saira', sans-serif;
   font-weight: 400;
   line-height: 1.8;
@@ -39,7 +39,7 @@ small, .text_small {font-size: 0.8rem;}
 
 @media screen and (max-width: 600px) {
     html {
-        font-size: 80%;
+        font-size: 60%;
     }
   }
 `;

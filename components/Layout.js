@@ -2,7 +2,6 @@ import Head from "next/head";
 import Header from "./styled/layout/Header";
 import { Main } from "./styled/element/Main";
 import Nav from "./styled/layout/Nav";
-import { SectionTitle } from "./styled/element/SectionTitle";
 
 export default function Layout({ children, pageTitle, description }) {
   return (
@@ -17,7 +16,6 @@ export default function Layout({ children, pageTitle, description }) {
       <Header />
       <Main>
         <Nav />
-        <SectionTitle>Thoughts</SectionTitle>
         <div className='content'>{children}</div>
       </Main>
     </>

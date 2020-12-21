@@ -7,12 +7,21 @@ export const Card = styled.div`
   grid-template-areas: "image image content";
   grid-gap: 100px 6.66667%;
   cursor: pointer;
+  grid-auto-flow: dense;
+  min-height: 60vh;
 
-  @media screen and (max-width: 600px) {
+  img {
+    :hover {
+      transform: scale(1.2);
+    }
+    transition: transform 0.3s;
+  }
+
+  @media screen and (max-width: 767px) {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.5fr 1fr;
+    grid-template-rows: 1fr 1fr;
     grid-template-areas: "image image" "content content";
-    grid-gap: 50px 6.66667%;
+    grid-gap: 20px;
   }
 `;
 
@@ -26,10 +35,6 @@ const CardContent = styled.div`
     color: ${({ theme }) => theme.colors.button};
     line-height: 1.5rem;
     font-weight: bold;
-  }
-
-  p {
-    color: ${({ theme }) => theme.colors.paragraph};
   }
 
   span {
@@ -53,12 +58,12 @@ const CardHeading = styled.h1`
   place-items: center;
 `;
 
-const CardImg = styled.img`
+const CardImage = styled.div`
+  position: relative;
   grid-area: image;
-  width: 100%;
-  object-fit: cover;
+  overflow: hidden;
 `;
 
 Card.Heading = CardHeading;
-Card.Img = CardImg;
 Card.Content = CardContent;
+Card.Image = CardImage;

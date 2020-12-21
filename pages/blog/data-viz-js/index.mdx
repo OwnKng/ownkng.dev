@@ -1,17 +1,23 @@
 import BlogPost from "../../../components/BlogPost";
-import YueLongXueShan from "./YueLongXueShan";
+import ScatterPlot from "./ScatterPlot";
+import ParentSize from "@visx/responsive/lib/components/ParentSize";
 
 export const meta = {
-  title: "3D Mapping with Rayshader and ThreeJS",
-  description: "Recreating China's Jade Snow Mountain with R and React",
+  title: "Data Visualisation in JavaScript",
+  description: "Exploring Charting Libraries in JavaScript",
   date: "Aug 04, 2020",
-  img: "/yulongxueshan.png",
+  img: "/dataViz.png",
   readTime: 2,
 };
 
 export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
 
-<YueLongXueShan />
+<h2>Economic development improves life expectancy</h2>
+<div style={{ height: 550, width: "100%", margin: "0 0 50px 0" }}>
+  <ParentSize>
+    {({ width, height }) => <ScatterPlot width={width} height={height} />}
+  </ParentSize>
+</div>
 
 ## My Headline
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Card } from "../components/styled/element/Card";
 import { PostWrapper } from "../components/styled/element/PostWrapper";
+import Image from "next/image";
 
 export const Post = ({ post }) => {
   const {
@@ -12,7 +13,9 @@ export const Post = ({ post }) => {
     <PostWrapper>
       <Link href={"/blog" + link}>
         <Card>
-          <Card.Img src={meta.img} />
+          <Card.Image>
+            <Image src={meta.img} layout='fill' objectFit='cover' />
+          </Card.Image>
           <Card.Content>
             <h4>
               <span>{meta.date}</span>
