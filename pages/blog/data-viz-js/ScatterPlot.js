@@ -10,7 +10,7 @@ import { TooltipWithBounds, withTooltip, defaultStyles } from "@visx/tooltip";
 import { localPoint } from "@visx/event";
 import { voronoi } from "@visx/voronoi";
 import styled from "styled-components";
-import { data } from "./gdpPerCap";
+import { data } from "../../../components/data/gdpPerCap";
 import { Text } from "@visx/text";
 
 const Graph = styled.div`

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import DeckGL from "@deck.gl/react";
-import data from "./airPolution.json";
 import { GeoJsonLayer } from "@deck.gl/layers";
 import { StaticMap } from "react-map-gl";
 import { format, scaleThreshold } from "d3";
 import { BASEMAP } from "@deck.gl/carto";
 import styled from "styled-components";
+import data from "../../../components/data/airPolution.json";
 
 const StyledTooltip = styled.div`
   background: white;
