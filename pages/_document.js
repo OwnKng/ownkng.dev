@@ -18,6 +18,10 @@ export default class MyDocument extends Document {
         ...initialProps,
         styles: (
           <>
+            <link
+              href='https://fonts.googleapis.com/css?family=Archivo+Black|Saira:400'
+              rel='stylesheet'
+            ></link>
             {initialProps.styles}
             {sheet.getStyleElement()}
           </>

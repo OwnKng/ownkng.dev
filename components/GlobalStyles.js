@@ -5,8 +5,6 @@ import { above, below } from "../components/styled/utilities";
 export const GlobalStyles = createGlobalStyle`
 ${normalize()}
 
-@import url('https://fonts.googleapis.com/css?family=Archivo+Black|Saira:400');
-
 html {
     box-sizing: border-box;
     font-size: 100%;
