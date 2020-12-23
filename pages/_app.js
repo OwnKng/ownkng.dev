@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }) {
       <GlobalStyles />
       <PageWrapper>
         <ThemeProvider theme={theme}>
-          <Layout pageTitle='Blog' description='My Personal Blog'>
+          <Layout pageTitle='Blog' description=''>
             <Component {...pageProps} />
           </Layout>
         </ThemeProvider>

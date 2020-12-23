@@ -29,7 +29,8 @@ const CardContent = styled.div`
   grid-area: content;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0 1rem 0 1rem;
+  margin-top: 0;
 
   a {
     color: ${({ theme }) => theme.colors.button};
@@ -47,6 +48,7 @@ const CardContent = styled.div`
     color: ${({ theme }) => theme.colors.paragraph};
     line-height: 1.7;
     display: inline-block;
+    margin-top: 0px;
   }
 `;
 

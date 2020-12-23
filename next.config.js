@@ -11,6 +11,13 @@ const withTM = require("next-transpile-modules")([
   "react-three-fiber",
 ]);
 
+const withImages = require("next-images");
+module.exports = withImages({
+  webpack(config, options) {
+    return config;
+  },
+});
+
 module.exports = withPlugins([
   [
     withMDX,
@@ -19,8 +26,5 @@ module.exports = withPlugins([
     },
   ],
   [withTM],
+  [withImages],
 ]);
-/* 
-
-module.exports = withTM()
-*/

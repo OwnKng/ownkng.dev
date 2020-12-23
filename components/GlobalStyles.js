@@ -28,7 +28,7 @@ p {
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: sans-serif;
+  font-family: 'Archivo Black', sans-serif;
   font-weight: 400;
   line-height: 1.2;
 }
@@ -37,7 +37,7 @@ small, .text_small {font-size: 0.8rem;}
 
 @media screen and (max-width: 600px) {
     html {
-        font-size: 60%;
+        font-size: 70%;
     }
   }
 `;

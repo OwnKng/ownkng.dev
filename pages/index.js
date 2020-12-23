@@ -1,6 +1,7 @@
 import { Post } from "../components/Post";
 import { posts } from "../getAllPosts";
 import { SectionTitle } from "../components/styled/element/SectionTitle";
+import Bio from "../components/styled/layout/Bio";
 import styled from "styled-components";
 
 const ArticleWrapper = styled.div`
@@ -12,6 +13,7 @@ const ArticleWrapper = styled.div`
 export default function IndexPage() {
   return (
     <>
+      <Bio />
       <SectionTitle>Thoughts</SectionTitle>
       <p style={{ textAlign: "center", padding: "0px", margin: "0px" }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit
