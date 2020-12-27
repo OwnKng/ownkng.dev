@@ -15,7 +15,7 @@ const Bio = ({ className }) => {
         </div>
         <div>
           <h1>Owen King</h1>
-          <p>Hobbyist statistician and developer</p>
+          <p>I use modern tech to analyse, visualise and model data</p>
         </div>
         <ul>
           <li>
