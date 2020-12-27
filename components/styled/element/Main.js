@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 export const Main = styled.main`
-  width: 90%;
   min-height: 100vh;
   margin: 0px auto;
-  padding: 4rem 1rem 0;
+  padding: 0rem 5%;
 
   p {
     color: ${({ theme }) => theme.colors.paragraph};

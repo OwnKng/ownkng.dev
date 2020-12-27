@@ -1,15 +1,15 @@
 export const theme = {
   colors: {
-    background: "#fffffe",
-    headline: "#094067",
-    paragraph: "#5f6c7b",
-    cardParagraph: "#5f6c7b",
-    button: "#ef4565",
+    background: "#0f0e17",
+    headline: "#fffffe",
+    paragraph: "#a7a9be",
+    cardParagraph: "#a7a9be",
+    button: "#e53170",
     buttonText: "#fffffe",
-    stroke: "#094067",
+    stroke: "#a7a9be",
     main: "#fffffe",
-    highlight: "#3da9fc",
-    secondary: "#90b4ce",
+    highlight: "#ff8906",
+    secondary: "#f25f4c",
     tertiary: "#ef4565",
   },
 };

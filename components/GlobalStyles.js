@@ -16,7 +16,7 @@ html {
 
 body {
   margin: 0;
-  background-color: #fffffe;
+  background-color: #0f0e17;
   font-family: 'Saira', sans-serif;
   font-weight: 400;
   line-height: 1.8;
@@ -31,6 +31,7 @@ h1, h2, h3, h4, h5 {
   font-family: 'Archivo Black', sans-serif;
   font-weight: 400;
   line-height: 1.2;
+  color: #fffffe;
 }
 
 small, .text_small {font-size: 0.8rem;}

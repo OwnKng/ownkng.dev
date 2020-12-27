@@ -20,7 +20,7 @@ const Header = ({ className }) => {
 
 export default styled(Header)`
   background: ${(props) => props.theme.colors.background};
-  padding: 0px 4%;
+  padding: 0px 5%;
   width: 100%;
   display: flex;
   z-index: 1;
@@ -36,6 +36,6 @@ export default styled(Header)`
   a {
     text-decoration: none;
     color: ${(props) => props.theme.colors.headline};
-    padding: 1rem;
+    padding: 1rem 0rem;
   }
 `;
