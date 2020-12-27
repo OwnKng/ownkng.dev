@@ -84,8 +84,8 @@ export const AreaChart = ({
       const { x } = localPoint(event) || { x: 0 };
       let x0 = xScale.invert(x);
       x0 = Math.round(x0);
+      if (x0 > 2020) x0 = 2020;
       let d = data.filter((row) => row.year === x0);
-
       const { y } = localPoint(event) || { y: 0 };
 
       showTooltip({
