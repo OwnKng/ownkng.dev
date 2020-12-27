@@ -16,7 +16,7 @@ const Line = ({
   dataKey,
   x,
   y,
-  margin = { left: 30, right: 20, top: 40, bottom: 25 },
+  margin = { left: 15, right: 15, top: 40, bottom: 25 },
   showTooltip,
   hideTooltip,
   tooltipData,
@@ -39,7 +39,7 @@ const Line = ({
 
   const yScale = scaleLinear({
     range: [innerHeight + margin.top, margin.top],
-    domain: [0, 60000],
+    domain: [0, 70000],
     nice: true,
   });
 
@@ -122,7 +122,7 @@ const Line = ({
           tickLabelProps={() => ({ fill: "#292f31", fontSize: 10 })}
           hideAxisLine={true}
           hideTicks={true}
-          tickFormat={(v, t) => (t === 6 ? "" : format("~s")(v))}
+          tickFormat={(v, t) => (t === 7 ? "" : format("~s")(v))}
         />
         <rect
           x={margin.left}
@@ -142,7 +142,7 @@ const Line = ({
               cy={yScale(yAccessor(row))}
               r={5}
               stroke='#FFFFFE'
-              fill='black'
+              fill='#061E39'
               strokeWidth={1}
               pointerEvents='none'
             />

@@ -38,6 +38,7 @@ const FacetLineGraph = () => {
 
   return (
     <div style={{ width: "100%" }}>
+      <h3>GDP Per Capita ($)</h3>
       <StyledGrid>
         {dataGrouped.map((data, i) => (
           <ParentSize>
