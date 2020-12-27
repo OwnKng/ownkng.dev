@@ -11,5 +11,6 @@ export const theme = {
     highlight: "#ff8906",
     secondary: "#f25f4c",
     tertiary: "#ef4565",
+    boxShadow: "#2e2f3e",
   },
 };

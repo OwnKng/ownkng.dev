@@ -40,7 +40,7 @@ const CardContent = styled.div`
 
   span {
     margin-bottom: 50px;
-    box-shadow: 0 1px ${({ theme }) => theme.colors.paragraph};
+    box-shadow: 0 1px ${({ theme }) => theme.colors.boxShadow};
     padding: 0.4rem 0rem;
   }
 

@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useRef } from "react";
 import { Group } from "@visx/group";
-import { GradientOrangeRed, GradientPinkRed } from "@visx/gradient";
-import { RectClipPath } from "@visx/clip-path";
+import { GradientOrangeRed, GradientTealBlue } from "@visx/gradient";
 import { voronoi, VoronoiPolygon } from "@visx/voronoi";
 import { localPoint } from "@visx/event";
 
@@ -43,13 +42,7 @@ const Voronoi = ({ width, height, margin = defaultMargin }) => {
   return width < 10 ? null : (
     <svg width={width} height={height} ref={svgRef}>
       <GradientOrangeRed id='voronoi_orange_red' />
-      <GradientPinkRed id='voronoi_pink_red' />
-      <RectClipPath
-        id='voronoi_clip'
-        width={innerWidth}
-        height={innerHeight}
-        rx={0}
-      />
+      <GradientTealBlue id='voronoi_teal_blue' />
       <Group
         top={margin.top}
         left={margin.left}
@@ -93,13 +86,10 @@ const Voronoi = ({ width, height, margin = defaultMargin }) => {
               (polygon.data.id === hoveredId ||
                 neighborIds.has(polygon.data.id))
                 ? "url(#voronoi_orange_red)"
-                : "url(#voronoi_pink_red)"
+                : "url(#voronoi_teal_blue)"
             }
-            stroke='#fff'
+            stroke='#FFFFFE'
             strokeWidth={1}
-            fillOpacity={
-              hoveredId && neighborIds.has(polygon.data.id) ? 0.5 : 1
-            }
           />
         ))}
         {data.map(({ x, y, id }) => (
@@ -108,7 +98,7 @@ const Voronoi = ({ width, height, margin = defaultMargin }) => {
             r={2}
             cx={x * innerWidth}
             cy={y * innerHeight}
-            fill={id === hoveredId ? "fuchsia" : "#fff"}
+            fill={id === hoveredId ? "fuchsia" : "#FFFFFE"}
             fillOpacity={0.8}
           />
         ))}
