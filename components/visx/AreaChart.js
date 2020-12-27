@@ -84,7 +84,11 @@ export const AreaChart = ({
       const { x } = localPoint(event) || { x: 0 };
       let x0 = xScale.invert(x);
       x0 = Math.round(x0);
+
+      // for mobile, prevents tooltip from crashing the app
       if (x0 > 2020) x0 = 2020;
+      if (x0 < 1960) x0 = 1960;
+
       let d = data.filter((row) => row.year === x0);
       const { y } = localPoint(event) || { y: 0 };
 
@@ -102,14 +106,14 @@ export const AreaChart = ({
       <LegendOrdinal scale={fillScale} direction='row' labelMargin='0 15px 0 0'>
         {(labels) => (
           <>
+            <h4>Age</h4>
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr",
+                gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
                 gridAutoFlow: "column",
               }}
             >
-              <h4>Age</h4>
               {labels.map((label, i) => (
                 <LegendItem key={i} margin='0 10px'>
                   <svg width={legendGlyphSize} height={legendGlyphSize}>
