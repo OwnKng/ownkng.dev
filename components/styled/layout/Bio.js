@@ -5,10 +5,12 @@ import img from "../../../public/bio.png";
 import { theme } from "../utilities";
 import Link from "next/link";
 import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos";
+import {SectionTitle} from '../element/SectionTitle';
 
 const Bio = ({ className }) => {
   return (
     <div className={className}>
+        <SectionTitle className='title'>About me</SectionTitle>
       <div className='hero'>
         <div className='imgWrapper'>
           <Image src={img} layout='fill' objectFit='cover' />
@@ -57,17 +59,23 @@ const Bio = ({ className }) => {
 
 export default styled(Bio)`
   display: grid;
-  grid-template-areas: "hero bio";
+  grid-template-areas:
+  "title title" 
+  "hero bio";
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr auto;
   padding-bottom: 70px;
-  grid-gap: 100px 6.66667%;
+  grid-gap: 50px 6.66667%;
 
   @media screen and (max-width: 767px) {
-    grid-template-areas: "hero" "bio";
+    grid-template-areas: "title" "hero" "bio";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
     grid-gap: 20px;
+  }
+
+  .title {
+    grid-area: title;
   }
 
   .hero {
@@ -76,10 +84,6 @@ export default styled(Bio)`
     flex-direction: column;
     place-items: center;
     text-align: center;
-
-    h1 {
-      margin-bottom: 0px;
-    }
 
     p {
       color: ${({ theme }) => theme.colors.paragraph};
