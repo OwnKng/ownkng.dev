@@ -4,8 +4,8 @@ export const Button = styled.button`
   background: #90b4ce;
   border: none;
   border-radius: 5px;
-  padding: 0.2rem 0.8rem;
-  font-size: 1.2rem;
+  padding: 0.5rem 0.8rem;
+  font-size: 1rem;
   color: white;
 
   :focus {

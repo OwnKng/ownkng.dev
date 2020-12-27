@@ -12,6 +12,8 @@ const AreaChartWrapper = () => {
 
   return (
     <div style={{ marginBottom: 100, width: "100%" }}>
+      <h2>Share of population by age</h2>
+      <h4>Select a country</h4>
       <div
         style={{
           display: "flex",

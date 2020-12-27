@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { AreaStack, Line } from "@visx/shape";
+import { AreaStack, Line, Bar } from "@visx/shape";
 import { scaleLinear, scaleOrdinal } from "@visx/scale";
 import { AxisBottom, AxisLeft, Axis } from "@visx/axis";
 import { extent, format } from "d3";
@@ -120,7 +120,7 @@ export const AreaChart = ({
                     />
                   </svg>
                   <LegendLabel
-                    style={{ color: "#5f6c7b", margin: `0 0 0 10px` }}
+                    style={{ color: "#5f6c7b", margin: `0 0 0 2px` }}
                     align='left'
                   >
                     {label.text}
@@ -132,35 +132,28 @@ export const AreaChart = ({
         )}
       </LegendOrdinal>
       <svg height={height} width={width}>
-        <g
-          onTouchStart={handleTooltip}
-          onTouchMove={handleTooltip}
-          onMouseMove={handleTooltip}
-          onMouseLeave={() => hideTooltip()}
+        <AreaStack
+          top={margin.top}
+          left={margin.left}
+          data={data}
+          keys={keys}
+          x={(d) => xScale(x(d.data))}
+          y0={(d) => yScale(y0(d))}
+          y1={(d) => yScale(y1(d))}
         >
-          <AreaStack
-            top={margin.top}
-            left={margin.left}
-            data={data}
-            keys={keys}
-            x={(d) => xScale(x(d.data))}
-            y0={(d) => yScale(y0(d))}
-            y1={(d) => yScale(y1(d))}
-          >
-            {({ stacks, path }) =>
-              stacks.map((stack) => (
-                <motion.path
-                  initial={false}
-                  animate={{ d: path(stack) }}
-                  key={`stack-${stack.key}`}
-                  stroke={fillScale(stack.key)}
-                  strokeWidth={0.5}
-                  fill={fillScale(stack.key)}
-                />
-              ))
-            }
-          </AreaStack>
-        </g>
+          {({ stacks, path }) =>
+            stacks.map((stack) => (
+              <motion.path
+                initial={false}
+                animate={{ d: path(stack) }}
+                key={`stack-${stack.key}`}
+                stroke={fillScale(stack.key)}
+                strokeWidth={0.5}
+                fill={fillScale(stack.key)}
+              />
+            ))
+          }
+        </AreaStack>
         <AxisLeft
           scale={yScale}
           left={margin.left}
@@ -184,6 +177,18 @@ export const AreaChart = ({
           tickStroke='black'
           stroke='black'
           numTicks={innerWidth > 500 ? 10 : 5}
+        />
+        <Bar
+          x={margin.left}
+          y={margin.top}
+          width={innerWidth}
+          height={innerHeight}
+          fill='transparent'
+          rx={14}
+          onTouchStart={handleTooltip}
+          onTouchMove={handleTooltip}
+          onMouseMove={handleTooltip}
+          onMouseLeave={() => hideTooltip()}
         />
         {tooltipData && (
           <g>
