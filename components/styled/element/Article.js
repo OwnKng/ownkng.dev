@@ -9,4 +9,8 @@ export const Article = styled.article`
   h2 {
     color: ${({ theme }) => theme.colors.headline};
   }
+
+  @media only screen and (max-width: 600px) {
+    padding: 5px;
+  }
 `;
