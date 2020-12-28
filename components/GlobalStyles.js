@@ -1,6 +1,5 @@
 import { createGlobalStyle } from "styled-components";
 import { normalize } from "polished";
-import { above, below } from "../components/styled/utilities";
 
 export const GlobalStyles = createGlobalStyle`
 ${normalize()}
@@ -8,7 +7,7 @@ ${normalize()}
 html {
     box-sizing: border-box;
     font-size: 100%;
-    height: 100%;
+    height: 100vh;
   }
   
   *, *:before, *:after {
