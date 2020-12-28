@@ -4,6 +4,17 @@ import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import styled from "styled-components";
 import LineChart from "./LineChart";
 
+const Graph = styled.div`
+  color: #a7a9be;
+
+  svg {
+    text {
+      fill: #a7a9be;
+      font-size: 0.7rem;
+    }
+  }
+`;
+
 const StyledGrid = styled.div`
   display: grid;
   height: 600px;
@@ -37,7 +48,7 @@ const FacetLineGraph = () => {
   );
 
   return (
-    <div style={{ width: "100%" }}>
+    <Graph style={{ width: "100%" }}>
       <h3>GDP Per Capita ($)</h3>
       <StyledGrid>
         {dataGrouped.map((data, i) => (
@@ -55,7 +66,7 @@ const FacetLineGraph = () => {
           </ParentSize>
         ))}
       </StyledGrid>
-    </div>
+    </Graph>
   );
 };
 

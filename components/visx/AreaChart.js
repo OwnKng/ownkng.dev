@@ -9,10 +9,22 @@ import { useTooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
+const Graph = styled.div`
+  font-size: 0.7rem;
+  color: #a7a9be;
+
+  svg {
+    text {
+      fill: #a7a9be;
+      font-size: 0.7rem;
+    }
+  }
+`;
+
 const tooltipStyles = {
   ...defaultStyles,
   border: "1px solid #a7a9be",
-  color: "#a7a9be",
+  color: "black",
   fontSize: "1rem",
   margin: 0,
   padding: "0 0.5rem 0.5rem 0.5rem",
@@ -39,7 +51,7 @@ export const AreaChart = ({
   data,
   width,
   height,
-  margin = { top: 40, bottom: 30, left: 40, right: 30 },
+  margin = { top: 40, bottom: 30, left: 50, right: 50 },
 }) => {
   // create dimensions
   const innerWidth = width - margin.left - margin.right;
@@ -102,7 +114,7 @@ export const AreaChart = ({
   );
 
   return (
-    <>
+    <Graph>
       <LegendOrdinal scale={fillScale} direction='row' labelMargin='0 15px 0 0'>
         {(labels) => (
           <>
@@ -123,10 +135,7 @@ export const AreaChart = ({
                       height={legendGlyphSize}
                     />
                   </svg>
-                  <LegendLabel
-                    style={{ color: "#5f6c7b", margin: `0 0 0 2px` }}
-                    align='left'
-                  >
+                  <LegendLabel style={{ margin: `0 0 0 2px` }} align='left'>
                     {label.text}
                   </LegendLabel>
                 </LegendItem>
@@ -161,8 +170,8 @@ export const AreaChart = ({
         <AxisLeft
           scale={yScale}
           left={margin.left}
-          tickStroke='black'
-          stroke='black'
+          tickStroke='#a7a9be'
+          stroke='#a7a9be'
           tickFormat={format(".0%")}
         />
         <Axis
@@ -170,16 +179,16 @@ export const AreaChart = ({
           scale={xScale}
           top={margin.top}
           tickFormat={format("d")}
-          tickStroke='black'
-          stroke='black'
+          tickStroke='#a7a9be'
+          stroke='#a7a9be'
           numTicks={innerWidth > 500 ? 10 : 5}
         />
         <AxisBottom
           scale={xScale}
           top={innerHeight + margin.top}
           tickFormat={format("d")}
-          tickStroke='black'
-          stroke='black'
+          tickStroke='#a7a9be'
+          stroke='#a7a9be'
           numTicks={innerWidth > 500 ? 10 : 5}
         />
         <Bar
@@ -234,7 +243,7 @@ export const AreaChart = ({
           </StyledTooltip>
         </TooltipWithBounds>
       )}
-    </>
+    </Graph>
   );
 };
 

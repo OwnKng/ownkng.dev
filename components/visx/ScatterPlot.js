@@ -3,23 +3,22 @@ import { scaleLinear, scaleLog, scaleOrdinal, scaleSqrt } from "@visx/scale";
 import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
 import { Group } from "@visx/group";
 import * as d3 from "d3";
-import { Circle } from "@visx/shape";
+import { Circle, Bar } from "@visx/shape";
 import { Axis, AxisLeft, AxisBottom } from "@visx/axis";
 import { GridColumns } from "@visx/grid";
 import { TooltipWithBounds, withTooltip, defaultStyles } from "@visx/tooltip";
 import { localPoint } from "@visx/event";
 import { voronoi } from "@visx/voronoi";
 import styled from "styled-components";
-import { data } from "../../../components/data/gdpPerCap";
+import { data } from "../data/gdpPerCap";
 import { Text } from "@visx/text";
 
 const Graph = styled.div`
-  background: #fffffe;
-  color: #5f6c7b;
+  color: #a7a9be;
 
   svg {
     text {
-      fill: #5f6c7b;
+      fill: #a7a9be;
       font-size: 1rem;
     }
   }
@@ -153,10 +152,7 @@ const ScatterPlot = ({
                     rx={5}
                   />
                 </svg>
-                <LegendLabel
-                  style={{ color: "#5f6c7b", margin: `0 0 0 10px` }}
-                  align='left'
-                >
+                <LegendLabel style={{ margin: `0 0 0 10px` }} align='left'>
                   {label.text}
                 </LegendLabel>
               </LegendItem>
@@ -166,9 +162,12 @@ const ScatterPlot = ({
       </LegendOrdinal>
       <svg width={width} height={height} ref={svgRef}>
         <rect
-          width={width}
-          height={height}
-          fill={"transparent"}
+          x={margin.left}
+          y={margin.top}
+          width={innerWidth}
+          height={innerHeight}
+          fill='#2e2f3e'
+          stroke='#a7a9be'
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           onTouchMove={handleMouseMove}
@@ -177,8 +176,8 @@ const ScatterPlot = ({
         <AxisLeft
           scale={yScale}
           left={margin.left}
-          tickStroke='#094067'
-          stroke='#094067'
+          tickStroke='#a7a9be'
+          stroke='#a7a9be'
           label='Life expectancy'
         />
         <Axis
@@ -195,34 +194,19 @@ const ScatterPlot = ({
           top={innerHeight + margin.top}
           tickFormat={d3.format("$~s")}
           numTicks={2}
-          tickStroke='#094067'
-          stroke='#094067'
+          tickStroke='#a7a9be'
+          stroke='#a7a9be'
           label='GDP per cap'
         />
         <GridColumns
           top={margin.top}
           scale={xScale}
           height={innerHeight}
-          stroke='#094067'
+          stroke='#a7a9be'
           strokeOpacity={0.3}
           pointerEvents='none'
           numTicks={2}
         />
-        <Group pointerEvents='none'>
-          {data.map((point, i) => (
-            <Circle
-              key={i}
-              cx={xScale(x(point))}
-              cy={yScale(y(point))}
-              r={rScale(radius(point))}
-              fill={fillScale(fill(point))}
-              fillOpacity={0.8}
-              stroke={
-                tooltipData === point ? "#094067" : fillScale(fill(point))
-              }
-            />
-          ))}
-        </Group>
         <Text
           x={width * 0.75}
           width={width}
@@ -251,7 +235,7 @@ const ScatterPlot = ({
           &larr; Poor
         </Text>
         <Text
-          x={xScale(350)}
+          x={xScale(400)}
           width={height}
           textAnchor='middle'
           angle={270}
@@ -261,7 +245,7 @@ const ScatterPlot = ({
           Healthy &rarr;
         </Text>
         <Text
-          x={xScale(350)}
+          x={xScale(400)}
           width={height}
           angle={270}
           textAnchor='middle'
@@ -271,7 +255,7 @@ const ScatterPlot = ({
           HEALTH
         </Text>
         <Text
-          x={xScale(350)}
+          x={xScale(400)}
           width={height}
           textAnchor='middle'
           angle={270}
@@ -280,6 +264,19 @@ const ScatterPlot = ({
         >
           &larr; Sick
         </Text>
+        <Group pointerEvents='none'>
+          {data.map((point, i) => (
+            <Circle
+              key={i}
+              cx={xScale(x(point))}
+              cy={yScale(y(point))}
+              r={rScale(radius(point))}
+              fill={fillScale(fill(point))}
+              fillOpacity={0.8}
+              stroke={tooltipData === point ? "white" : fillScale(fill(point))}
+            />
+          ))}
+        </Group>
       </svg>
       {tooltipOpen && tooltipData && tooltipLeft != null && tooltipTop != null && (
         <TooltipWithBounds

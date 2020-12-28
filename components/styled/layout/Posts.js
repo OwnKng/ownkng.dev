@@ -1,6 +1,6 @@
-import { Post } from "../components/Post";
-import { posts } from "../getAllPosts";
-import { SectionTitle } from "../components/styled/element/SectionTitle";
+import { Post } from "./Post";
+import { posts } from "../../../getAllPosts";
+import { SectionTitle } from "../element/SectionTitle";
 import styled from "styled-components";
 
 const StyledPosts = styled.div`
@@ -15,9 +15,9 @@ const ArticleWrapper = styled.div`
 
 const Posts = () => (
   <StyledPosts>
-    <SectionTitle>Thoughts</SectionTitle>
+    <SectionTitle>Writing</SectionTitle>
     <p style={{ textAlign: "center", padding: "0px", margin: "0px" }}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit
+      Articles and how-to's about some of my personal projects
     </p>
     <ArticleWrapper>
       {posts.map((post) => (

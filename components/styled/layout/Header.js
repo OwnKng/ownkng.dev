@@ -8,7 +8,7 @@ const Header = ({ className }) => {
     <header className={className}>
       <Link href='/'>
         <a>
-          <h1>Owen King</h1>
+          <h1>Own Kng</h1>
         </a>
       </Link>
       <ul>
@@ -19,9 +19,10 @@ const Header = ({ className }) => {
 };
 
 export default styled(Header)`
+  border-left: 1px solid ${({ theme }) => theme.colors.boxShadow};
+  border-right: 1px solid ${({ theme }) => theme.colors.boxShadow};
   background: ${(props) => props.theme.colors.background};
-  padding: 0px 5%;
-  width: 100%;
+  margin: 0 5%;
   display: flex;
   z-index: 1;
   justify-content: space-between;

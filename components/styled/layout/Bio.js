@@ -2,15 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import img from "../../../public/bio.png";
-import { theme } from "../utilities";
 import Link from "next/link";
 import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos";
-import {SectionTitle} from '../element/SectionTitle';
+import { SectionTitle } from "../element/SectionTitle";
 
 const Bio = ({ className }) => {
   return (
     <div className={className}>
-        <SectionTitle className='title'>About me</SectionTitle>
+      <SectionTitle className='title'>About me</SectionTitle>
       <div className='hero'>
         <div className='imgWrapper'>
           <Image src={img} layout='fill' objectFit='cover' />
@@ -60,8 +59,8 @@ const Bio = ({ className }) => {
 export default styled(Bio)`
   display: grid;
   grid-template-areas:
-  "title title" 
-  "hero bio";
+    "title title"
+    "hero bio";
   grid-template-columns: 1fr 2fr;
   grid-template-rows: 1fr auto;
   padding-bottom: 70px;

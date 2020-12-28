@@ -79,14 +79,14 @@ const Line = ({
           y={margin.top}
           width={innerWidth}
           height={innerHeight}
-          fill='#f4f7f9'
+          fill='#2e2f3e'
         />
         <GridRows
           scale={yScale}
           width={innerWidth}
           height={height - margin.top - margin.bottom}
           left={margin.left}
-          stroke='white'
+          stroke='#0f0e17'
           numTicks={6}
         />
         <AxisBottom
@@ -104,13 +104,13 @@ const Line = ({
           yScale={yScale}
           strokeWidth={2}
           curve={curveLinear}
-          fill='#9bbce0'
+          fill='#ffcb8f'
         />
         <LinePath
           data={data}
           x={(d) => xScale(xAccessor(d))}
           y={(d) => yScale(yAccessor(d))}
-          stroke='#061E39'
+          stroke='#ff8906'
           strokeWidth={2}
           curve={curveLinear}
         />

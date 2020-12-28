@@ -8,7 +8,7 @@ const divVariants = {
   initial: {},
   animate: {
     transition: {
-      staggerChildren: 0.5,
+      staggerChildren: 0.4,
     },
   },
 };
@@ -44,9 +44,8 @@ const Hero = ({ className }) => (
         variants={scrollVariants}
         transition='transition'
       >
-        <DownArrowAlt size={50} color={"white"} />
-        <h3>Scroll</h3>
-        <DownArrowAlt size={50} color={"white"} />
+        <DownArrowAlt size={50} color={"#a7a9be"} />
+        <DownArrowAlt size={50} color={"#a7a9be"} />
       </motion.div>
     </div>
   </motion.div>
@@ -55,8 +54,8 @@ const Hero = ({ className }) => (
 export default styled(Hero)`
   height: 85vh;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.background};
   position: relative;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
 
   .heroPlot {
     height: 90%;
@@ -85,6 +84,7 @@ const StyledNameCard = styled(motion.div)`
       h2 {
         margin: 10px 10px;
         font-size: 2rem;
+        color:  ${({ theme }) => theme.colors.paragraph}
       }
 
     .title {
@@ -111,7 +111,7 @@ const NameCard = () => (
     </div>
     <div className='subtitle'>
       <motion.h2 variants={titleVariants} transition='transition'>
-        I USE MODERN TECH TO ANALYSE, VISUALISE AND MODEL DATA
+        I ANALYSE, VISUALISE AND MODEL DATA USING MODERN TECH
       </motion.h2>
     </div>
   </StyledNameCard>

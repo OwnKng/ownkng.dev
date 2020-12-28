@@ -12,6 +12,7 @@ const MenuWrapper = styled.button`
   cursor: pointer;
   padding: 0;
   z-index: 10;
+  margin-right: 2px;
 
   &:focus {
     outline: none;

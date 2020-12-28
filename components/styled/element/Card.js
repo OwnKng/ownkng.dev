@@ -10,13 +10,6 @@ export const Card = styled.div`
   grid-auto-flow: dense;
   min-height: 60vh;
 
-  img {
-    :hover {
-      transform: scale(1.2);
-    }
-    transition: transform 0.3s;
-  }
-
   @media screen and (max-width: 767px) {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
@@ -34,13 +27,13 @@ const CardContent = styled.div`
 
   a {
     color: ${({ theme }) => theme.colors.button};
-    line-height: 1.5rem;
     font-weight: bold;
+    font-size: 1.5rem;
+    z-index: 1;
   }
 
   span {
     margin-bottom: 50px;
-    box-shadow: 0 1px ${({ theme }) => theme.colors.boxShadow};
     padding: 0.4rem 0rem;
   }
 
@@ -49,6 +42,7 @@ const CardContent = styled.div`
     line-height: 1.7;
     display: inline-block;
     margin-top: 0px;
+    font-family: "Saira", sans-serif;
   }
 `;
 
