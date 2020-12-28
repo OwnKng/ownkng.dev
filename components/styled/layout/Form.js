@@ -8,7 +8,7 @@ const StyledForm = styled.div`
   place-items: center;
   gap: 10px;
 
-  h4 {
+  p {
     margin: 0px;
     color: ${({ theme }) => theme.colors.paragraph};
   }
@@ -18,9 +18,9 @@ const StyledForm = styled.div`
   button {
     font-size: 1.2rem;
     padding: 0.5rem 1rem;
-    background: ${({ theme }) => theme.colors.button};
-    color: ${({ theme }) => theme.colors.buttonText};
-    border-radius: 2px;
+    background: ${({ theme }) => theme.colors.paragraph};
+    color: ${({ theme }) => theme.colors.background};
+    border-radius: 5px;
     border: none;
   }
 
@@ -32,9 +32,12 @@ const StyledForm = styled.div`
 const Form = ({ tags, active, setActive }) => {
   return (
     <StyledForm>
-      <h4>Filter</h4>
+      <p>Filter</p>
       <button
-        style={{ color: !active ? "black" : "" }}
+        style={{
+          background: !active ? "#e53170" : "",
+          color: !active ? "white" : "",
+        }}
         onClick={() => setActive(false)}
       >
         All
@@ -43,7 +46,10 @@ const Form = ({ tags, active, setActive }) => {
         ? tags.map((tag) => (
             <button
               key={tag}
-              style={{ color: tag === active ? "black" : "" }}
+              style={{
+                background: tag === active ? "#e53170" : "",
+                color: tag === active ? "white" : "",
+              }}
               onClick={() => setActive(tag)}
             >
               {tag}

@@ -4,8 +4,10 @@ export const BlogHead = styled.div`
   color: ${({ theme }) => theme.colors.paragraph};
   max-width: 920px;
   margin: 0px auto;
-  padding-bottom: 4rem;
+  padding: 3rem 0rem 4rem;
+
   h1 {
     color: ${({ theme }) => theme.colors.headline};
+    margin: 0;
   }
 `;

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Card } from "../element/Card";
-import { PostWrapper } from "../element/PostWrapper";
 import Image from "next/image";
 import PostLink from "./PostLink";
 
@@ -14,7 +13,11 @@ export const Post = ({ post }) => {
   } = post;
 
   return (
-    <PostWrapper
+    <div
+      style={{
+        padding: "70px 50px 70px 50px",
+        margin: 0,
+      }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -33,6 +36,6 @@ export const Post = ({ post }) => {
           </Card.Content>
         </Card>
       </Link>
-    </PostWrapper>
+    </div>
   );
 };

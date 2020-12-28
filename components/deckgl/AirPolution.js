@@ -5,7 +5,7 @@ import { StaticMap } from "react-map-gl";
 import { format, scaleThreshold } from "d3";
 import { BASEMAP } from "@deck.gl/carto";
 import styled from "styled-components";
-import data from "../../../components/data/airPolution.json";
+import data from "../data/airPolution.json";
 
 const StyledTooltip = styled.div`
   background: white;
@@ -28,13 +28,16 @@ const StyledLegend = styled.div`
   bottom: 20px;
   border-radius: 5px;
   font-size: 0.8rem;
+  color: black;
 
   p {
     font-size: 0.8rem;
+    color: black;
   }
 
   h3 {
     margin-top: 0px;
+    color: black;
   }
 
   h4 {

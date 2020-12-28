@@ -19,8 +19,8 @@ const Header = ({ className }) => {
 };
 
 export default styled(Header)`
-  border-left: 1px solid ${({ theme }) => theme.colors.boxShadow};
-  border-right: 1px solid ${({ theme }) => theme.colors.boxShadow};
+  border: 1px solid ${({ theme }) => theme.colors.boxShadow};
+  border-top: none;
   background: ${(props) => props.theme.colors.background};
   margin: 0 5%;
   display: flex;
