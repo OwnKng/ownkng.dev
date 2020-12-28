@@ -9,11 +9,16 @@ const Footer = ({ className }) => (
 );
 
 export default styled(Footer)`
+  margin: 0 5%;
   padding-top: 50px;
   text-align: center;
   color: ${({ theme }) => theme.colors.paragraph};
+  border-top: 1px solid ${({ theme }) => theme.colors.boxShadow};
+  border-left: 1px solid ${({ theme }) => theme.colors.boxShadow};
+  border-right: 1px solid ${({ theme }) => theme.colors.boxShadow};
 
   p {
     font-size: 0.8rem;
+    margin-bottom: 0px;
   }
 `;

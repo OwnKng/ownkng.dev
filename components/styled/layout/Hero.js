@@ -63,7 +63,7 @@ export default styled(Hero)`
   .scrollPrompt {
     align-items: top;
     width: 100%;
-    height: 10vh;
+    height: 9vh;
     display: flex;
     color: white;
     justify-content: space-between;

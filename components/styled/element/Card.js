@@ -25,13 +25,6 @@ const CardContent = styled.div`
   padding: 0 1rem 0 1rem;
   margin-top: 0;
 
-  a {
-    color: ${({ theme }) => theme.colors.button};
-    font-weight: bold;
-    font-size: 1.5rem;
-    z-index: 1;
-  }
-
   span {
     margin-bottom: 50px;
     padding: 0.4rem 0rem;
