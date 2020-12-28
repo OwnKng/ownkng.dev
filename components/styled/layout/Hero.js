@@ -52,19 +52,18 @@ const Hero = ({ className }) => (
 );
 
 export default styled(Hero)`
-  height: 85vh;
   width: 100%;
   position: relative;
   border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
 
   .heroPlot {
-    height: 90%;
+    height: 80vh;
   }
 
   .scrollPrompt {
     align-items: top;
     width: 100%;
-    height: 10%;
+    height: 10vh;
     display: flex;
     color: white;
     justify-content: space-between;
@@ -84,7 +83,8 @@ const StyledNameCard = styled(motion.div)`
       h2 {
         margin: 10px 10px;
         font-size: 2rem;
-        color:  ${({ theme }) => theme.colors.paragraph}
+        color:  ${({ theme }) => theme.colors.paragraph};
+        font-family: 'Saira', sans-serif;
       }
 
     .title {
@@ -111,7 +111,7 @@ const NameCard = () => (
     </div>
     <div className='subtitle'>
       <motion.h2 variants={titleVariants} transition='transition'>
-        I ANALYSE, VISUALISE AND MODEL DATA USING MODERN TECH
+        I analyse, visualise and model data using modern tech
       </motion.h2>
     </div>
   </StyledNameCard>

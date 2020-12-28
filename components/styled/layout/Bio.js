@@ -4,12 +4,17 @@ import Image from "next/image";
 import img from "../../../public/bio.png";
 import Link from "next/link";
 import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos";
-import { SectionTitle } from "../element/SectionTitle";
+import { SectionHeader } from "../element/SectionHeader";
 
 const Bio = ({ className }) => {
   return (
     <div className={className}>
-      <SectionTitle className='title'>About me</SectionTitle>
+      <SectionHeader className='title'>
+        <SectionHeader.Title>About me</SectionHeader.Title>
+        <SectionHeader.Subtitle>
+          The tools and technologies I use
+        </SectionHeader.Subtitle>
+      </SectionHeader>
       <div className='hero'>
         <div className='imgWrapper'>
           <Image src={img} layout='fill' objectFit='cover' />

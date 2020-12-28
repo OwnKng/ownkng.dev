@@ -1,11 +1,7 @@
 import { Post } from "./Post";
 import { posts } from "../../../getAllPosts";
-import { SectionTitle } from "../element/SectionTitle";
+import { SectionHeader } from "../element/SectionHeader";
 import styled from "styled-components";
-
-const StyledPosts = styled.div`
-  margin-top: 100px;
-`;
 
 const ArticleWrapper = styled.div`
   li:nth-child(even) {
@@ -14,17 +10,19 @@ const ArticleWrapper = styled.div`
 `;
 
 const Posts = () => (
-  <StyledPosts>
-    <SectionTitle>Writing</SectionTitle>
-    <p style={{ textAlign: "center", padding: "0px", margin: "0px" }}>
-      Articles and how-to's about some of my personal projects
-    </p>
+  <>
+    <SectionHeader>
+      <SectionHeader.Title>Thoughts</SectionHeader.Title>
+      <SectionHeader.Subtitle>
+        Articles and how-to's about some of my personal projects
+      </SectionHeader.Subtitle>
+    </SectionHeader>
     <ArticleWrapper>
       {posts.map((post) => (
         <Post key={post.link} post={post} />
       ))}
     </ArticleWrapper>
-  </StyledPosts>
+  </>
 );
 
 export default Posts;
