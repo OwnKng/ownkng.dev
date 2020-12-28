@@ -7,7 +7,6 @@ ${normalize()}
 html {
     box-sizing: border-box;
     font-size: 100%;
-    height: 100vh;
   }
   
   *, *:before, *:after {

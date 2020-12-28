@@ -68,6 +68,12 @@ export default styled(Hero)`
     color: white;
     justify-content: space-between;
   }
+
+  @media only screen and (max-width: 480px) {
+    .heroPlot {
+      height: 600px;
+    }
+  }
 `;
 
 const StyledNameCard = styled(motion.div)`
