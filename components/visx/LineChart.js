@@ -49,7 +49,8 @@ const Line = ({
       const { x } = localPoint(event) || { x: 0 };
       let x0 = xScale.invert(x);
       x0 = Math.round(x0);
-      if (x0 === 2020) x0 = 2019;
+      if (x0 > 2019) x0 = 2019;
+      if (x0 < 1960) x0 = 1960;
       let d = data.filter((row) => row.year === x0);
       let yMax = max(d, yAccessor);
 

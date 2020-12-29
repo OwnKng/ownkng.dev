@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SectionHeader = styled.div`
-  margin: 100px 0 0 0;
+  margin: 50px 0 0 0;
   text-align: center;
   border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
 `;

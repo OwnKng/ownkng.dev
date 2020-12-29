@@ -4,5 +4,7 @@ export const useToggle = () => {
   const [isToggled, setToggle] = useState(false);
 
   const toggle = () => setToggle((prevState) => !prevState);
-  return { isToggled, setToggle, toggle };
+  const closeToggle = () => setToggle(false);
+
+  return { isToggled, toggle, closeToggle };
 };

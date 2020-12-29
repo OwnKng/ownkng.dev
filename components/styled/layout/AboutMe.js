@@ -5,10 +5,11 @@ import img from "../../../public/bio.png";
 import Link from "next/link";
 import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos";
 import { SectionHeader } from "../element/SectionHeader";
+import Tech from "./Tech";
 
-const Bio = ({ className }) => {
+const AboutMe = ({ className }) => {
   return (
-    <div className={className}>
+    <div className={className} id='bio'>
       <SectionHeader className='title'>
         <SectionHeader.Title>About me</SectionHeader.Title>
         <SectionHeader.Subtitle>
@@ -21,7 +22,7 @@ const Bio = ({ className }) => {
         </div>
         <div>
           <h1>Owen King</h1>
-          <p>I use modern tech to analyse, visualise and model data</p>
+          <p>I analyse, visualise and model data using modern tech</p>
         </div>
         <ul>
           <li>
@@ -57,21 +58,25 @@ const Bio = ({ className }) => {
           of functional programming across my work.
         </p>
       </div>
+      <div className='tech'>
+        <Tech />
+      </div>
     </div>
   );
 };
 
-export default styled(Bio)`
+export default styled(AboutMe)`
   display: grid;
   grid-template-areas:
     "title title"
-    "hero bio";
+    "hero bio"
+    "hero tech";
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
   grid-gap: 50px 6.66667%;
 
   @media screen and (max-width: 767px) {
-    grid-template-areas: "title" "hero" "bio";
+    grid-template-areas: "title" "hero" "bio" "tech";
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
     grid-gap: 20px;
@@ -101,17 +106,21 @@ export default styled(Bio)`
 
       li {
         padding: 0rem 0.5rem;
-        color: ${({ theme }) => theme.colors.stroke};
       }
 
       svg {
         fill: ${({ theme }) => theme.colors.stroke};
+
+        a:visited {
+          color: ${({ theme }) => theme.colors.stroke};
+        }
       }
     }
   }
 
-  a:visited {
-    color: ${({ theme }) => theme.colors.stroke};
+  .tech {
+    grid-area: tech;
+    padding: 0px 50px;
   }
 
   .imgWrapper {

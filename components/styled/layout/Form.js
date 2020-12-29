@@ -6,7 +6,7 @@ const StyledForm = styled.div`
   padding: 1rem;
   justify-content: space-evenly;
   place-items: center;
-  gap: 10px;
+  margin-bottom: 0px;
 
   p {
     margin: 0px;
@@ -22,6 +22,7 @@ const StyledForm = styled.div`
     color: ${({ theme }) => theme.colors.background};
     border-radius: 5px;
     border: none;
+    margin: 5px;
   }
 
   button:focus {

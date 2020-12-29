@@ -122,7 +122,7 @@ const ScatterPlot = ({
   const handleMouseLeave = useCallback(() => {
     tooltipTimeout = window.setTimeout(() => {
       hideTooltip();
-    }, 300);
+    }, 1500);
   }, [hideTooltip]);
 
   // Sort the data so that the largest populations are plotted first

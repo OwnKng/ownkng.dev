@@ -18,14 +18,14 @@ const AreaChartWrapper = () => {
         style={{
           display: "flex",
           flexWrap: "wrap",
-          gap: "1rem",
         }}
       >
         {keys.map((key) => (
           <Button
             key={key}
             style={{
-              background: key === active ? "#094067" : "",
+              background: key === active ? "#2C8CBE" : "",
+              color: key === active ? "#FFFFFE" : "",
             }}
             onClick={() => setActive(key)}
           >

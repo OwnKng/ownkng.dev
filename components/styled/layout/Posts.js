@@ -2,16 +2,14 @@ import { useState, useEffect } from "react";
 import { Post } from "./Post";
 import { posts } from "../../../getAllPosts";
 import { SectionHeader } from "../element/SectionHeader";
-import styled from "styled-components";
 import Form from "./Form";
 import { motion } from "framer-motion";
 import { PostWrapper } from "../element/PostWrapper";
 
-const ArticleWrapper = styled(motion.div)``;
-
 const variants = {
   initial: { y: 100, opacity: 0 },
   animate: { y: 0, opacity: 1 },
+  transition: { type: "easeIn" },
 };
 
 const Posts = () => {
@@ -45,14 +43,14 @@ const Posts = () => {
 
   return (
     <>
-      <SectionHeader>
+      <SectionHeader id='thoughts'>
         <SectionHeader.Title>Thoughts</SectionHeader.Title>
         <SectionHeader.Subtitle>
           Articles and how-to's from some of my personal projects
         </SectionHeader.Subtitle>
       </SectionHeader>
       <Form tags={[...new Set(tags)]} active={active} setActive={setActive} />
-      <ArticleWrapper>
+      <div>
         {filteredPosts
           ? filteredPosts.map((post) => (
               <PostWrapper>
@@ -61,13 +59,14 @@ const Posts = () => {
                   variants={variants}
                   initial='initial'
                   animate='animate'
+                  transition='transition'
                 >
                   <Post post={post} />
                 </motion.div>
               </PostWrapper>
             ))
           : null}
-      </ArticleWrapper>
+      </div>
     </>
   );
 };

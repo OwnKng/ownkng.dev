@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  background: #90b4ce;
-  border: none;
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  background: ${({ theme }) => theme.colors.paragraph};
+  color: ${({ theme }) => theme.colors.background};
   border-radius: 5px;
-  padding: 0.5rem 0.8rem;
-  font-size: 1rem;
-  color: white;
+  border: none;
+  margin: 5px;
 
   :focus {
     outline: none;

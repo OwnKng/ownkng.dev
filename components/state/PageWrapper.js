@@ -1,14 +1,18 @@
 import React, { createContext, useContext } from "react";
 import { useToggle } from "../hooks";
 
-export const AppContext = createContext({
-  isMenuOpen: false,
-});
+export const AppContext = createContext();
 
 export const PageWrapper = ({ children }) => {
-  const { isToggled, toggle } = useToggle(false);
+  const { isToggled, toggle, closeToggle } = useToggle(false);
   return (
-    <AppContext.Provider value={{ isMenuOpen: isToggled, toggleMenu: toggle }}>
+    <AppContext.Provider
+      value={{
+        isMenuOpen: isToggled,
+        toggleMenu: toggle,
+        closeMenu: closeToggle,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
