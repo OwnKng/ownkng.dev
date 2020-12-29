@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Card } from "../element/Card";
 import Image from "next/image";
 import PostLink from "./PostLink";
+import ParentSize from "@visx/responsive/lib/components/ParentSize";
 
 export const Post = ({ post }) => {
   const [hover, setHover] = useState(false);
@@ -24,14 +25,16 @@ export const Post = ({ post }) => {
       <Link href={"/blog" + link}>
         <Card>
           <Card.Image>
-            <Image src={meta.img} layout='fill' objectFit='cover' />
+            <Image src={meta.img} layout='fill' objectFit='fill' />
           </Card.Image>
           <Card.Content>
-            <h4>
-              <span>{meta.date}</span>
-            </h4>
             <Card.Heading>{meta.title}</Card.Heading>
             <p>{meta.description}</p>
+            <div style={{ display: "flex", marginBottom: 5 }}>
+              {meta.tags.map((tag) => (
+                <Card.Tag>{tag}</Card.Tag>
+              ))}
+            </div>
             <PostLink hover={hover} />
           </Card.Content>
         </Card>

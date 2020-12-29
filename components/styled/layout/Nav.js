@@ -2,6 +2,7 @@ import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { useAppState } from "../../state";
+import { useScrollFreeze } from "../../hooks";
 import React from "react";
 import Link from "next/link";
 
@@ -72,6 +73,7 @@ const NavWrapper = () => {
 };
 
 const Nav = ({ isMenuOpen, closeMenu }) => {
+  useScrollFreeze();
   const liVariants = {
     open: {
       y: 0,
@@ -83,7 +85,7 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
   const links = [
     { name: "Home", url: "/" },
     { name: "Thoughts", url: "/#thoughts" },
-    { name: "About me", url: "/#bio" },
+    { name: "About me", url: "/#about" },
   ];
 
   return (

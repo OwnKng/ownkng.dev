@@ -9,7 +9,7 @@ import Tech from "./Tech";
 
 const AboutMe = ({ className }) => {
   return (
-    <div className={className} id='bio'>
+    <div className={className} id='about'>
       <SectionHeader className='title'>
         <SectionHeader.Title>About me</SectionHeader.Title>
         <SectionHeader.Subtitle>
