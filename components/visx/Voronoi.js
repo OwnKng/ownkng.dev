@@ -3,7 +3,6 @@ import { Group } from "@visx/group";
 import { GradientTealBlue } from "@visx/gradient";
 import { voronoi, VoronoiPolygon } from "@visx/voronoi";
 import { GlyphTriangle, GlyphSquare } from "@visx/glyph";
-import { motion } from "framer-motion";
 
 const data = new Array(150).fill(null).map(() => ({
   x: Math.random(),
@@ -16,11 +15,6 @@ const defaultMargin = {
   left: 0,
   right: 0,
   bottom: 0,
-};
-
-const variants = {
-  big: { stroke: "#fffffe", strokeWidth: 0.8 },
-  small: { stroke: "#F1F4F7", strokeWidth: 0.2 },
 };
 
 const Voronoi = ({ width, height, margin = defaultMargin }) => {
@@ -49,16 +43,10 @@ const Voronoi = ({ width, height, margin = defaultMargin }) => {
           <VoronoiPolygon key={`polygon-${polygon.data.id}`} polygon={polygon}>
             {({ polygon, path }) =>
               polygon.map((polygon) => (
-                <motion.path
-                  variants={variants}
-                  initial='small'
-                  animate='big'
-                  transition={{
-                    repeat: Infinity,
-                    duration: 2,
-                    repeatType: "reverse",
-                  }}
+                <path
                   d={path}
+                  stroke='#fffffe'
+                  strokeWidth={0.8}
                   stroke='#FFFFFE'
                   fill={"url(#voronoi_teal_blue)"}
                 />

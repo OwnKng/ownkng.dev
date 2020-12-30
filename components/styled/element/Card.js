@@ -1,13 +1,13 @@
 import styled from "styled-components";
+import PostLink from "../layout/PostLink";
 
 export const Card = styled.div`
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 1fr;
   grid-template-areas: "image content";
-  grid-gap: 0px 6.66667%;
+  grid-gap: 0 6.66667%;
   cursor: pointer;
-  min-height: 60vh;
 
   @media screen and (max-width: 767px) {
     grid-template-columns: 1fr;
@@ -18,6 +18,16 @@ export const Card = styled.div`
   }
 `;
 
+const CardDesc = styled.p`
+  grid-area: description;
+`;
+
+const CardTags = styled.div`
+  grid-area: tags;
+  display: flex;
+  place-items: center;
+`;
+
 const CardTag = styled.div`
   color: ${({ theme }) => theme.colors.background};
   background: ${({ theme }) => theme.colors.paragraph};
@@ -25,34 +35,33 @@ const CardTag = styled.div`
   margin-right: 3px;
   white-space: nowrap;
   overflow: hidden;
-  padding: 0 0.5rem;
   border-radius: 2px;
+  padding: 5px 10px;
+`;
+
+const CardStar = styled.div`
+  grid-area: stared;
 `;
 
 const CardContent = styled.div`
   grid-area: content;
-  display: flex;
-  flex-direction: column;
-  padding: 0 1rem 0 1rem;
-  margin-top: 0;
+  display: grid;
+  grid-template-areas:
+    "title stared"
+    "description description"
+    "tags tags"
+    "link link";
 
-  span {
-    margin-bottom: 50px;
-    padding: 0.4rem 0rem;
-  }
+  grid-template-rows: 1fr auto 0.5fr 0.5fr;
+  grid-template-columns: 5fr 1fr;
 
-  h4 {
-    color: ${({ theme }) => theme.colors.paragraph};
-    line-height: 1.7;
-    display: inline-block;
-    margin-top: 0px;
-    font-family: "Saira", sans-serif;
+  @media screen and (max-width: 767px) {
   }
 `;
 
 const CardHeading = styled.h1`
+  grid-area: title;
   margin: 0px;
-  font-size: 2.4rem;
   color: ${({ theme }) => theme.colors.headline};
   flex-grow: 1;
   place-items: center;
@@ -61,10 +70,23 @@ const CardHeading = styled.h1`
 const CardImage = styled.div`
   position: relative;
   grid-area: image;
+  height: calc(60vh - 140px);
   overflow: hidden;
+`;
+
+const CardLink = styled(PostLink)`
+  grid-area: link;
+  position: relative;
+  display: flex;
+  place-items: center;
+  margin: 20px 0;
 `;
 
 Card.Heading = CardHeading;
 Card.Content = CardContent;
 Card.Image = CardImage;
 Card.Tag = CardTag;
+Card.Tags = CardTags;
+Card.Desc = CardDesc;
+Card.Star = CardStar;
+Card.Link = CardLink;

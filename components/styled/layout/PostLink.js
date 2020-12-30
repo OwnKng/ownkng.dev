@@ -12,12 +12,8 @@ const variants = {
   },
 };
 
-const PostLink = ({ hover }) => (
-  <div
-    style={{
-      position: "relative",
-    }}
-  >
+const PostLink = ({ className, hover }) => (
+  <div className={className}>
     <Link>Read more &rarr;</Link>
     <motion.div
       variants={variants}
@@ -29,9 +25,6 @@ const PostLink = ({ hover }) => (
         top: 0,
         height: "100%",
         background: "#fffffe",
-        zIndex: -1,
-        fontWeight: "bold",
-        fontSize: "1.5rem",
       }}
     />
   </div>

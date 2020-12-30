@@ -16,7 +16,6 @@ export const Post = ({ post }) => {
     <div
       style={{
         padding: "70px 50px 70px 50px",
-        margin: 0,
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -28,13 +27,14 @@ export const Post = ({ post }) => {
           </Card.Image>
           <Card.Content>
             <Card.Heading>{meta.title}</Card.Heading>
-            <p>{meta.description}</p>
-            <div style={{ display: "flex", marginBottom: 5 }}>
+            {meta.tags.includes("Stared") && <Card.Star>Stared</Card.Star>}
+            <Card.Desc>{meta.description}</Card.Desc>
+            <Card.Tags>
               {meta.tags.map((tag) => (
                 <Card.Tag>{tag}</Card.Tag>
               ))}
-            </div>
-            <PostLink hover={hover} />
+            </Card.Tags>
+            <Card.Link hover={hover} />
           </Card.Content>
         </Card>
       </Link>
