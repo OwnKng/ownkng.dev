@@ -8,13 +8,13 @@ export const Card = styled.div`
   grid-template-areas: "image content";
   grid-gap: 0 6.66667%;
   cursor: pointer;
+  min-height: 50vh;
 
   @media screen and (max-width: 767px) {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas: "image" "content";
     grid-gap: 20px;
-    min-height: 50vh;
   }
 `;
 
@@ -25,6 +25,7 @@ const CardDesc = styled.p`
 const CardTags = styled.div`
   grid-area: tags;
   display: flex;
+  flex-wrap: wrap;
   place-items: center;
 `;
 
@@ -32,15 +33,16 @@ const CardTag = styled.div`
   color: ${({ theme }) => theme.colors.background};
   background: ${({ theme }) => theme.colors.paragraph};
   opacity: 0.6;
-  margin-right: 3px;
-  white-space: nowrap;
-  overflow: hidden;
+  margin: 3px 3px 0px 0px;
   border-radius: 2px;
   padding: 5px 10px;
 `;
 
 const CardStar = styled.div`
   grid-area: stared;
+  font-size: 1.4rem;
+  text-align: right;
+  color: ${({ theme }) => theme.colors.tertiary};
 `;
 
 const CardContent = styled.div`
@@ -70,7 +72,6 @@ const CardHeading = styled.h1`
 const CardImage = styled.div`
   position: relative;
   grid-area: image;
-  height: calc(60vh - 140px);
   overflow: hidden;
 `;
 
@@ -79,7 +80,7 @@ const CardLink = styled(PostLink)`
   position: relative;
   display: flex;
   place-items: center;
-  margin: 20px 0;
+  margin: 20px 0 0 0;
 `;
 
 Card.Heading = CardHeading;

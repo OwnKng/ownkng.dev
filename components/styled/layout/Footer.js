@@ -13,7 +13,9 @@ const Footer = ({ className }) => (
 );
 
 export default styled(Footer)`
-  margin: 0 5%;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1400px;
   padding-top: 20px;
   text-align: center;
   color: ${({ theme }) => theme.colors.paragraph};

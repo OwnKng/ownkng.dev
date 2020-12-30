@@ -19,10 +19,12 @@ const Header = ({ className }) => {
 };
 
 export default styled(Header)`
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1400px;
   border: 1px solid ${({ theme }) => theme.colors.boxShadow};
   border-top: none;
   background: ${(props) => props.theme.colors.background};
-  margin: 0 5%;
   display: flex;
   z-index: 1;
   justify-content: space-between;

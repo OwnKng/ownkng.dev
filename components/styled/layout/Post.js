@@ -2,7 +2,15 @@ import { useState } from "react";
 import Link from "next/link";
 import { Card } from "../element/Card";
 import Image from "next/image";
-import PostLink from "./PostLink";
+import styled from "styled-components";
+
+const StyledPost = styled.div`
+  padding: 70px 50px 70px 50px;
+
+  @media screen and (max-width: 767px) {
+    padding: 30px 20px 30px 20px;
+  }
+`;
 
 export const Post = ({ post }) => {
   const [hover, setHover] = useState(false);
@@ -13,10 +21,7 @@ export const Post = ({ post }) => {
   } = post;
 
   return (
-    <div
-      style={{
-        padding: "70px 50px 70px 50px",
-      }}
+    <StyledPost
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -27,7 +32,11 @@ export const Post = ({ post }) => {
           </Card.Image>
           <Card.Content>
             <Card.Heading>{meta.title}</Card.Heading>
-            {meta.tags.includes("Stared") && <Card.Star>Stared</Card.Star>}
+            {meta.tags.includes("Stared") ? (
+              <Card.Star>&#9734;</Card.Star>
+            ) : (
+              <Card.Star></Card.Star>
+            )}
             <Card.Desc>{meta.description}</Card.Desc>
             <Card.Tags>
               {meta.tags.map((tag) => (
@@ -38,6 +47,6 @@ export const Post = ({ post }) => {
           </Card.Content>
         </Card>
       </Link>
-    </div>
+    </StyledPost>
   );
 };
