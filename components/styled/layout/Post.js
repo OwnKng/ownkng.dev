@@ -25,7 +25,7 @@ export const Post = ({ post }) => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <Link href={"/blog" + link}>
+      <Link href={"/thoughts" + link}>
         <Card>
           <Card.Image>
             <Image src={meta.img} layout='fill' objectFit='fill' />

@@ -4,6 +4,15 @@ export const SectionHeader = styled.div`
   margin: 50px 0 0 0;
   text-align: center;
   border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
+
+  :before {
+    display: block;
+    content: " ";
+    margin-top: -80px;
+    height: 80px;
+    visibility: hidden;
+    pointer-events: none;
+  }
 `;
 
 const SectionTitle = styled.h1`

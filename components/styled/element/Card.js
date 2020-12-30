@@ -54,7 +54,7 @@ const CardContent = styled.div`
     "tags tags"
     "link link";
 
-  grid-template-rows: 1fr auto 0.5fr 0.5fr;
+  grid-template-rows: 1fr auto 0.5fr 0.25fr;
   grid-template-columns: 5fr 1fr;
 
   @media screen and (max-width: 767px) {

@@ -9,79 +9,78 @@ import Tech from "./Tech";
 
 const AboutMe = ({ className }) => {
   return (
-    <div className={className} id='about'>
-      <SectionHeader className='title'>
+    <>
+      <SectionHeader className='title' id='about'>
         <SectionHeader.Title>About me</SectionHeader.Title>
         <SectionHeader.Subtitle>
           The tools and technologies I use
         </SectionHeader.Subtitle>
       </SectionHeader>
-      <div className='hero'>
-        <div className='imgWrapper'>
-          <Image src={img} layout='fill' objectFit='cover' />
-        </div>
-        <div>
-          <h1>Owen King</h1>
-          <p>I analyse, visualise and model data using modern tech</p>
-        </div>
-        <ul>
-          <li>
-            <a href='https://www.linkedin.com/in/owenrking/'>
-              <LinkedinSquare size={40} />
-            </a>
-          </li>
-          <li>
-            <Link href='https://github.com/OwnKng'>
-              <a>
-                <Github size={40} />
+      <div className={className}>
+        <div className='hero'>
+          <div className='imgWrapper'>
+            <Image src={img} layout='fill' objectFit='cover' />
+          </div>
+          <div>
+            <h1>Owen King</h1>
+            <p>I analyse, visualise and model data using modern tech</p>
+          </div>
+          <ul>
+            <li>
+              <a href='https://www.linkedin.com/in/owenrking/'>
+                <LinkedinSquare size={40} />
               </a>
-            </Link>
-          </li>
-        </ul>
-      </div>
-      <div className='bio'>
-        <div>
-          <h3>Hi, I'm Owen</h3>
+            </li>
+            <li>
+              <Link href='https://github.com/OwnKng'>
+                <a>
+                  <Github size={40} />
+                </a>
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className='bio'>
+          <div>
+            <h3>Hi, I'm Owen</h3>
+            <p>
+              I'm a quantitative researcher in the property sector, based in
+              London. In my professional work, I apply skills in data
+              visualisation, geospatial analysis, automation and machine
+              learning to generate insights, automate processes and create new
+              products.
+            </p>
+          </div>
           <p>
-            I'm a quantitative researcher in the property sector, based in
-            London. In my professional work, I apply skills in data
-            visualisation, geospatial analysis, automation and machine learning
-            to generate insights, automate processes and create new products.
+            This site is a collection of my personal projects, mainly written in
+            R. My R code makes extensive use of the Tidyverse, ggplot and R
+            Shiny. I also have experience in package development and apply the
+            principals of functional programming across my work.
           </p>
         </div>
-        <p>
-          This site is a collection of my personal projects, mainly written in
-          R. My R code makes extensive use of the Tidyverse, ggplot and R Shiny.
-          I also have experience in package development and apply the principals
-          of functional programming across my work.
-        </p>
+        <div className='tech'>
+          <Tech />
+        </div>
       </div>
-      <div className='tech'>
-        <Tech />
-      </div>
-    </div>
+    </>
   );
 };
 
 export default styled(AboutMe)`
   display: grid;
   grid-template-areas:
-    "title title"
     "hero bio"
     "hero tech";
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: 1fr auto auto;
+  grid-template-rows: auto auto;
   grid-gap: 50px 6.66667%;
+  margin-top: 50px;
 
   @media screen and (max-width: 767px) {
-    grid-template-areas: "title" "hero" "bio" "tech";
+    grid-template-areas: "hero" "bio" "tech";
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: auto;
     grid-gap: 20px;
-  }
-
-  .title {
-    grid-area: title;
   }
 
   .hero {
