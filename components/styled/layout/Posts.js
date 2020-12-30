@@ -56,8 +56,8 @@ const Posts = () => {
       />
       <div>
         {filteredPosts
-          ? filteredPosts.map((post) => (
-              <PostWrapper>
+          ? filteredPosts.map((post, i) => (
+              <PostWrapper key={`post-${i}`}>
                 <motion.div
                   key={Math.random()}
                   variants={variants}

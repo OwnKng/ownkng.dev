@@ -106,7 +106,7 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
     >
       <motion.ul variants={ulVariants}>
         {links.map((link) => (
-          <li>
+          <li key={`link-${link.name}`}>
             <motion.div
               variants={liVariants}
               key={link.name}

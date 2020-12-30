@@ -89,24 +89,26 @@ const Legend = () => (
     </p>
     <h4>Nitrogen dioxide (µg/m3)</h4>
     <div className='legendKey'>
-      {breaks.map((x) => (
+      {breaks.map((legendBreak) => (
         <div
+          key={`color-row-${legendBreak}`}
           style={{
             width: "100%",
             height: 10,
-            background: `rgb(${COLOR_SCALE(x).toString()})`,
+            background: `rgb(${COLOR_SCALE(legendBreak).toString()})`,
           }}
         ></div>
       ))}
     </div>
     <div className='legendItem'>
-      {breaks.map((x) => (
+      {breaks.map((legendBreak) => (
         <div
+          key={`text-row-${legendBreak}`}
           style={{
             width: "100%",
           }}
         >
-          {x}
+          {legendBreak}
         </div>
       ))}
     </div>

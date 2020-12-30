@@ -41,8 +41,8 @@ export const Post = ({ post }) => {
             <Card.Tags>
               {meta.tags
                 .filter((tag) => tag !== "Starred")
-                .map((tag) => (
-                  <Card.Tag>{tag}</Card.Tag>
+                .map((tag, i) => (
+                  <Card.Tag key={`tag-${i}`}>{tag}</Card.Tag>
                 ))}
             </Card.Tags>
             <Card.Link hover={hover} />

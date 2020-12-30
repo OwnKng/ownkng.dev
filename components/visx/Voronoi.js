@@ -41,17 +41,16 @@ const Voronoi = ({ width, height, margin = defaultMargin }) => {
       <Group top={margin.top} left={margin.left} clipPath='url(#voronoi_clip)'>
         {polygons.map((polygon) => (
           <VoronoiPolygon key={`polygon-${polygon.data.id}`} polygon={polygon}>
-            {({ polygon, path }) =>
-              polygon.map((polygon) => (
-                <path
-                  d={path}
-                  stroke='#fffffe'
-                  strokeWidth={0.8}
-                  stroke='#FFFFFE'
-                  fill={"url(#voronoi_teal_blue)"}
-                />
-              ))
-            }
+            {({ polygon, path }) => (
+              <path
+                d={path}
+                key={polygon.data.id}
+                stroke='#fffffe'
+                strokeWidth={0.8}
+                stroke='#FFFFFE'
+                fill={"url(#voronoi_teal_blue)"}
+              />
+            )}
           </VoronoiPolygon>
         ))}
         {data.map(({ x, y, id }, i) => {
@@ -69,6 +68,7 @@ const Voronoi = ({ width, height, margin = defaultMargin }) => {
           } else if (i % 3 == 0) {
             return (
               <GlyphTriangle
+                key={`square-${id}`}
                 left={x * innerWidth}
                 top={y * innerHeight}
                 fill={"#FFFFFE"}
@@ -79,6 +79,7 @@ const Voronoi = ({ width, height, margin = defaultMargin }) => {
           } else {
             return (
               <GlyphSquare
+                key={`sqaure-${id}`}
                 left={x * innerWidth}
                 top={y * innerHeight}
                 fill={"#FFFFFE"}
