@@ -10,4 +10,8 @@ export const BlogHead = styled.div`
     color: ${({ theme }) => theme.colors.headline};
     margin: 0;
   }
+
+  @media only screen and (max-width: 600px) {
+    padding: 5px;
+  }
 `;
