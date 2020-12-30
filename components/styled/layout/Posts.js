@@ -49,7 +49,11 @@ const Posts = () => {
           Articles and how-to's from some of my personal projects
         </SectionHeader.Subtitle>
       </SectionHeader>
-      <Form tags={[...new Set(tags)]} active={active} setActive={setActive} />
+      <Form
+        tags={[...new Set(tags)].filter((tag) => tag !== "Starred")}
+        active={active}
+        setActive={setActive}
+      />
       <div>
         {filteredPosts
           ? filteredPosts.map((post) => (

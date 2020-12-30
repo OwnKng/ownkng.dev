@@ -26,14 +26,12 @@ const AboutMe = ({ className }) => {
         </div>
         <ul>
           <li>
-            <Link href='/'>
-              <a>
-                <LinkedinSquare size={40} />
-              </a>
-            </Link>
+            <a href='https://www.linkedin.com/in/owenrking/'>
+              <LinkedinSquare size={40} />
+            </a>
           </li>
           <li>
-            <Link href=''>
+            <Link href='https://github.com/OwnKng'>
               <a>
                 <Github size={40} />
               </a>
@@ -101,6 +99,7 @@ export default styled(AboutMe)`
     }
 
     ul {
+      padding: 0px;
       list-style: none;
       display: flex;
 

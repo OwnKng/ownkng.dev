@@ -32,16 +32,18 @@ export const Post = ({ post }) => {
           </Card.Image>
           <Card.Content>
             <Card.Heading>{meta.title}</Card.Heading>
-            {meta.tags.includes("Stared") ? (
+            {meta.tags.includes("Starred") ? (
               <Card.Star>&#9734;</Card.Star>
             ) : (
               <Card.Star></Card.Star>
             )}
             <Card.Desc>{meta.description}</Card.Desc>
             <Card.Tags>
-              {meta.tags.map((tag) => (
-                <Card.Tag>{tag}</Card.Tag>
-              ))}
+              {meta.tags
+                .filter((tag) => tag !== "Starred")
+                .map((tag) => (
+                  <Card.Tag>{tag}</Card.Tag>
+                ))}
             </Card.Tags>
             <Card.Link hover={hover} />
           </Card.Content>

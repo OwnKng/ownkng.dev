@@ -114,7 +114,7 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
           transition='transition'
           style={{ paddingTop: "1rem" }}
         >
-          <Link href='/'>
+          <Link href='https://www.linkedin.com/in/owenrking/'>
             <a>
               <span style={{ fontSize: "1rem" }}>LinkedIn</span>
               <LinkedinSquare
@@ -127,7 +127,7 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
           </Link>
         </motion.li>
         <motion.li variants={liVariants} transition='transition'>
-          <Link href=''>
+          <Link href='https://github.com/OwnKng'>
             <a>
               <span style={{ fontSize: "1rem" }}>GitHub</span>
               <Github size={30} style={{ paddingLeft: 10 }} />

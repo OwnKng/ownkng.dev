@@ -4,7 +4,7 @@ export const Article = styled.article`
   max-width: 920px;
   margin: 0px auto;
   color: ${({ theme }) => theme.colors.paragraph};
-  padding: 2rem;
+  padding: 2rem 0rem;
 
   h2 {
     color: ${({ theme }) => theme.colors.headline};

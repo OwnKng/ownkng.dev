@@ -43,6 +43,15 @@ const Form = ({ tags, active, setActive }) => {
       >
         All
       </button>
+      <button
+        style={{
+          background: active === "Starred" ? "#e53170" : "",
+          color: active === "Starred" ? "white" : "",
+        }}
+        onClick={() => setActive("Starred")}
+      >
+        &#9734; Starred
+      </button>
       {tags
         ? tags.map((tag) => (
             <button

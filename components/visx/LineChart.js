@@ -5,7 +5,7 @@ import { GridRows } from "@visx/grid";
 import { scaleLinear } from "@visx/scale";
 import { LinePath, AreaClosed } from "@visx/shape";
 import { curveLinear } from "@visx/curve";
-import { format, max } from "d3";
+import { format, min, max } from "d3";
 import { localPoint } from "@visx/event";
 import { withTooltip, TooltipWithBounds } from "@visx/tooltip";
 
@@ -49,8 +49,9 @@ const Line = ({
       const { x } = localPoint(event) || { x: 0 };
       let x0 = xScale.invert(x);
       x0 = Math.round(x0);
-      if (x0 > 2019) x0 = 2019;
-      if (x0 < 1960) x0 = 1960;
+      if (x0 > max(data, xAccessor)) x0 = max(data, xAccessor);
+      if (x0 < min(data, xAccessor)) x0 = min(data, xAccessor);
+
       let d = data.filter((row) => row.year === x0);
       let yMax = max(d, yAccessor);
 
@@ -142,9 +143,9 @@ const Line = ({
               cx={xScale(xAccessor(row))}
               cy={yScale(yAccessor(row))}
               r={5}
-              stroke='#FFFFFE'
-              fill='#061E39'
-              strokeWidth={1}
+              stroke='#ff8906'
+              fill='#ffcb8f'
+              strokeWidth={2}
               pointerEvents='none'
             />
           ))}
