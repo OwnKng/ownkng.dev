@@ -12,6 +12,6 @@ export const BlogHead = styled.div`
   }
 
   @media only screen and (max-width: 600px) {
-    padding: 5px;
+    padding: 3rem 5px 4rem 5px;
   }
 `;
