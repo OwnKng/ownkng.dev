@@ -8,12 +8,12 @@ import Link from "next/link";
 
 const StyledNav = styled(motion.div)`
   position: fixed;
-  left: 0px;
   top: 4rem;
   height: 100vh;
-  width: 100vw;
+  width: 90%;
+  max-width: 1400px;
   margin: 0px auto;
-  text-align: center;
+  text-align: right;
   z-index: 1;
 
   background: rgba(15, 14, 23, 0.4);
@@ -40,6 +40,15 @@ const StyledNav = styled(motion.div)`
   svg {
     font-size: 1rem;
     color: ${({ theme }) => theme.colors.buttonText};
+  }
+
+  a:hover {
+    color: ${({ theme }) => theme.colors.tertiary};
+  }
+
+  a:hover svg {
+    color: ${({ theme }) => theme.colors.tertiary};
+  }
   }
 `;
 
@@ -116,7 +125,7 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
         >
           <Link href='https://www.linkedin.com/in/owenrking/'>
             <a>
-              <span style={{ fontSize: "1rem" }}>LinkedIn</span>
+              <span style={{ fontSize: "1.2rem" }}>LinkedIn</span>
               <LinkedinSquare
                 size={30}
                 style={{
@@ -129,7 +138,7 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
         <motion.li variants={liVariants} transition='transition'>
           <Link href='https://github.com/OwnKng'>
             <a>
-              <span style={{ fontSize: "1rem" }}>GitHub</span>
+              <span style={{ fontSize: "1.2rem" }}>GitHub</span>
               <Github size={30} style={{ paddingLeft: 10 }} />
             </a>
           </Link>
