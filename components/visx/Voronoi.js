@@ -1,8 +1,9 @@
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Group } from "@visx/group";
-import { GradientOrangeRed, GradientTealBlue } from "@visx/gradient";
+import { GradientTealBlue } from "@visx/gradient";
 import { voronoi, VoronoiPolygon } from "@visx/voronoi";
-import { localPoint } from "@visx/event";
+import { GlyphTriangle, GlyphSquare } from "@visx/glyph";
+import { motion } from "framer-motion";
 
 const data = new Array(150).fill(null).map(() => ({
   x: Math.random(),
@@ -10,13 +11,16 @@ const data = new Array(150).fill(null).map(() => ({
   id: Math.random().toString(36).slice(2),
 }));
 
-const neighborRadius = 75;
-
 const defaultMargin = {
   top: 0,
   left: 0,
   right: 0,
   bottom: 0,
+};
+
+const variants = {
+  big: { stroke: "#fffffe", strokeWidth: 0.8 },
+  small: { stroke: "#F1F4F7", strokeWidth: 0.2 },
 };
 
 const Voronoi = ({ width, height, margin = defaultMargin }) => {
@@ -36,18 +40,85 @@ const Voronoi = ({ width, height, margin = defaultMargin }) => {
 
   const polygons = voronoiLayout.polygons();
   const svgRef = useRef(null);
-  const [hoveredId, setHoveredId] = useState(null);
-  const [neighborIds, setNeighborIds] = useState(new Set());
 
   return width < 10 ? null : (
     <svg width={width} height={height} ref={svgRef}>
-      <GradientOrangeRed id='voronoi_orange_red' />
       <GradientTealBlue id='voronoi_teal_blue' />
-      <Group
-        top={margin.top}
-        left={margin.left}
-        clipPath='url(#voronoi_clip)'
-        onMouseMove={(event) => {
+      <Group top={margin.top} left={margin.left} clipPath='url(#voronoi_clip)'>
+        {polygons.map((polygon) => (
+          <VoronoiPolygon key={`polygon-${polygon.data.id}`} polygon={polygon}>
+            {({ polygon, path }) =>
+              polygon.map((polygon) => (
+                <motion.path
+                  variants={variants}
+                  initial='small'
+                  animate='big'
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2,
+                    repeatType: "reverse",
+                  }}
+                  d={path}
+                  stroke='#FFFFFE'
+                  fill={"url(#voronoi_teal_blue)"}
+                />
+              ))
+            }
+          </VoronoiPolygon>
+        ))}
+        {data.map(({ x, y, id }, i) => {
+          if (i % 2 == 0) {
+            return (
+              <circle
+                key={`circle-${id}`}
+                r={2}
+                cx={x * innerWidth}
+                cy={y * innerHeight}
+                fill={"#FFFFFE"}
+                fillOpacity={0.8}
+              />
+            );
+          } else if (i % 3 == 0) {
+            return (
+              <GlyphTriangle
+                left={x * innerWidth}
+                top={y * innerHeight}
+                fill={"#FFFFFE"}
+                size={15}
+                fillOpacity={0.8}
+              />
+            );
+          } else {
+            return (
+              <GlyphSquare
+                left={x * innerWidth}
+                top={y * innerHeight}
+                fill={"#FFFFFE"}
+                size={15}
+                fillOpacity={0.8}
+              />
+            );
+          }
+        })}
+      </Group>
+    </svg>
+  );
+};
+
+export default Voronoi;
+
+/*
+
+import { localPoint } from "@visx/event";
+
+  const [hoveredId, setHoveredId] = useState(null);
+
+const neighborRadius = 75;
+
+
+  const [neighborIds, setNeighborIds] = useState(new Set());
+
+onMouseMove={(event) => {
           if (!svgRef.current) return;
 
           // find the nearest polygon to the current mouse position
@@ -76,35 +147,6 @@ const Voronoi = ({ width, height, margin = defaultMargin }) => {
           setHoveredId(null);
           setNeighborIds(new Set());
         }}
-      >
-        {polygons.map((polygon) => (
-          <VoronoiPolygon
-            key={`polygon-${polygon.data.id}`}
-            polygon={polygon}
-            fill={
-              hoveredId &&
-              (polygon.data.id === hoveredId ||
-                neighborIds.has(polygon.data.id))
-                ? "url(#voronoi_orange_red)"
-                : "url(#voronoi_teal_blue)"
-            }
-            stroke='#FFFFFE'
-            strokeWidth={1}
-          />
-        ))}
-        {data.map(({ x, y, id }) => (
-          <circle
-            key={`circle-${id}`}
-            r={2}
-            cx={x * innerWidth}
-            cy={y * innerHeight}
-            fill={id === hoveredId ? "fuchsia" : "#FFFFFE"}
-            fillOpacity={0.8}
-          />
-        ))}
-      </Group>
-    </svg>
-  );
-};
 
-export default Voronoi;
+
+*/

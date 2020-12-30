@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Card } from "../element/Card";
 import Image from "next/image";
 import PostLink from "./PostLink";
-import ParentSize from "@visx/responsive/lib/components/ParentSize";
 
 export const Post = ({ post }) => {
   const [hover, setHover] = useState(false);
