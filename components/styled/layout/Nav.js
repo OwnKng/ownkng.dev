@@ -7,17 +7,10 @@ import React from "react";
 import Link from "next/link";
 
 const StyledNav = styled(motion.div)`
-  position: fixed;
-  top: 4rem;
-  height: 100vh;
-  width: 90%;
+width: 90%;
   max-width: 1400px;
   margin: 0px auto;
   text-align: right;
-  z-index: 1;
-
-  background: rgba(15, 14, 23, 0.4);
-  backdrop-filter: blur(4px);
 
   li {
     list-style-type: none;
@@ -75,10 +68,14 @@ const NavItem = React.forwardRef(({ onClick, href, linkName }, ref) => {
   );
 });
 
-const NavWrapper = () => {
+const NavWrapper = ({ className }) => {
   const { isMenuOpen, closeMenu } = useAppState();
   if (!isMenuOpen) return null;
-  return <Nav isMenuOpen={isMenuOpen} closeMenu={closeMenu}></Nav>;
+  return (
+    <div className={className}>
+      <Nav isMenuOpen={isMenuOpen} closeMenu={closeMenu}></Nav>
+    </div>
+  );
 };
 
 const Nav = ({ isMenuOpen, closeMenu }) => {
@@ -148,4 +145,12 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
   );
 };
 
-export default NavWrapper;
+export default styled(NavWrapper)`
+  position: fixed;
+  top: 4rem;
+  height: 100vh;
+  width: 100vw;
+  z-index: 2;
+  background: rgba(15, 14, 23, 0.4);
+  backdrop-filter: blur(4px);
+`;

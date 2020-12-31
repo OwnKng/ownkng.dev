@@ -21,15 +21,17 @@ const Header = ({ className }) => {
 export default styled(Header)`
   position: sticky;
   top: 0px;
-  z-index: 2;
+  height: 4rem;
+  z-index: 4;
   margin: 0 auto;
   width: 90%;
   max-width: 1400px;
+  background: rgba(15, 14, 23, 0.4);
   backdrop-filter: blur(4px);
+
   border: 1px solid ${({ theme }) => theme.colors.boxShadow};
   border-top: none;
   border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
-  background: rgba(15, 14, 23, 0.2);
   display: flex;
   justify-content: space-between;
   place-items: center;
