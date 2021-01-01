@@ -66,8 +66,7 @@ const StyledContent = styled.div`
     overflow: hidden;
 
     h2 {
-      font-size: 2.4rem;
-      width: 70%;
+      font-size: 2.1rem;
     }
   }
 
