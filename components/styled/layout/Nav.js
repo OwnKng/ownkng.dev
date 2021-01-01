@@ -7,8 +7,8 @@ import React from "react";
 import Link from "next/link";
 
 const StyledNav = styled(motion.div)`
-width: 90%;
-  max-width: 1400px;
+  width: 96%;
+  max-width: 1200px;
   margin: 0px auto;
   text-align: right;
 

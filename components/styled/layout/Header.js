@@ -24,8 +24,8 @@ export default styled(Header)`
   height: 4rem;
   z-index: 4;
   margin: 0 auto;
-  width: 90%;
-  max-width: 1400px;
+  width: 96%;
+  max-width: 1200px;
   background: rgba(15, 14, 23, 1);
   backdrop-filter: blur(4px);
 
