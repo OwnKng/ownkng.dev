@@ -26,7 +26,7 @@ export default styled(Header)`
   margin: 0 auto;
   width: 90%;
   max-width: 1400px;
-  background: rgba(15, 14, 23, 0.4);
+  background: rgba(15, 14, 23, 1);
   backdrop-filter: blur(4px);
 
   border: 1px solid ${({ theme }) => theme.colors.boxShadow};

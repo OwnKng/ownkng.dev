@@ -45,12 +45,12 @@ const Form = ({ tags, active, setActive }) => {
       </button>
       <button
         style={{
-          background: active === "Starred" ? "#e53170" : "",
-          color: active === "Starred" ? "white" : "",
+          background: active === "Featured" ? "#e53170" : "",
+          color: active === "Featured" ? "white" : "",
         }}
-        onClick={() => setActive("Starred")}
+        onClick={() => setActive("Featured")}
       >
-        &#9734; Starred
+        Featured
       </button>
       {tags
         ? tags.map((tag) => (

@@ -5,6 +5,37 @@ import { SectionHeader } from "../element/SectionHeader";
 import Form from "./Form";
 import { motion } from "framer-motion";
 import { PostWrapper } from "../element/PostWrapper";
+import styled from "styled-components";
+
+const StyledPosts = styled.div`
+  border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
+`;
+
+const StyledWrapper = styled.div`
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr minmax(auto, 1000px) 1fr;
+    grid-template-rows: 1fr;
+    grid-auto-flow: rows;
+
+    @media only screen and (max-width: 1000px) {
+      grid-template-columns: 0px 100% 0px;
+    }
+  }
+
+  .wrapper {
+    border: 1px solid ${({ theme }) => theme.colors.boxShadow};
+    border-top: none;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0px auto;
+
+    @media only screen and (max-width: 1000px) {
+      border: none;
+      border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
+    }
+  }
+`;
 
 const variants = {
   initial: { y: 100, opacity: 0 },
@@ -13,7 +44,7 @@ const variants = {
 };
 
 const Posts = () => {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState("Featured");
   const [filteredPosts, setFiltered] = useState();
 
   let tags = posts
@@ -42,7 +73,7 @@ const Posts = () => {
   }, [active]);
 
   return (
-    <>
+    <StyledPosts>
       <SectionHeader id='thoughts'>
         <SectionHeader.Title>Thoughts</SectionHeader.Title>
         <SectionHeader.Subtitle>
@@ -50,28 +81,32 @@ const Posts = () => {
         </SectionHeader.Subtitle>
       </SectionHeader>
       <Form
-        tags={[...new Set(tags)].filter((tag) => tag !== "Starred")}
+        tags={[...new Set(tags)].filter((tag) => tag !== "Featured")}
         active={active}
         setActive={setActive}
       />
-      <div>
+      <StyledWrapper>
         {filteredPosts
           ? filteredPosts.map((post, i) => (
-              <PostWrapper key={`post-${i}`}>
-                <motion.div
-                  key={Math.random()}
-                  variants={variants}
-                  initial='initial'
-                  animate='animate'
-                  transition='transition'
-                >
-                  <Post post={post} />
-                </motion.div>
-              </PostWrapper>
+              <div className='grid'>
+                <div />
+                <PostWrapper key={`post-${i}`} className='wrapper'>
+                  <motion.div
+                    key={Math.random()}
+                    variants={variants}
+                    initial='initial'
+                    animate='animate'
+                    transition='transition'
+                  >
+                    <Post post={post} />
+                  </motion.div>
+                </PostWrapper>
+                <div />
+              </div>
             ))
           : null}
-      </div>
-    </>
+      </StyledWrapper>
+    </StyledPosts>
   );
 };
 

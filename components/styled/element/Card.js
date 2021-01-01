@@ -31,11 +31,12 @@ const CardTags = styled.div`
 
 const CardTag = styled.div`
   color: ${({ theme }) => theme.colors.background};
-  background: ${({ theme }) => theme.colors.paragraph};
-  opacity: 0.6;
-  margin: 3px 3px 0px 0px;
+  backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.4);
+  margin: 0px 3px 5px 0px;
   border-radius: 2px;
   padding: 5px 10px;
+  font-size: 1rem;
 `;
 
 const CardStar = styled.div`

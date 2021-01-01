@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Article = styled.article`
-  max-width: 920px;
+  max-width: 800px;
   margin: 0px auto;
   color: ${({ theme }) => theme.colors.paragraph};
   padding: 2rem 0rem;
