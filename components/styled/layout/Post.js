@@ -15,19 +15,20 @@ const StyledPost = styled.div`
     width: 100%;
     height: 100%;
     background: ${({ theme }) => theme.colors.background};
-    opacity: 0.3;
+    opacity: 0.4;
   }
 
   .hoverOverlay {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: rgb(255, 255, 255);
+    border: none;
     opacity: 0;
-    transition: opacity 0.25s ease-in-out;
+    border: 1px solid ${({ theme }) => theme.colors.boxShadow};
+    transition: opacity 0.5s;
 
     :hover {
-      opacity: 0.1;
+      opacity: 1;
     }
   }
 
@@ -41,7 +42,7 @@ const StyledContent = styled.div`
   width: 95%;
   height: 90%;
   display: grid;
-  margin: 0px 5px;
+  margin: 0px 15px;
 
   grid-template-areas:
     "featured"
@@ -67,27 +68,32 @@ const StyledContent = styled.div`
 
     h2 {
       font-size: 2.1rem;
+      margin-left: 0px;
     }
+  }
+
+  h3 {
+    display: flex;
+    margin-left: 0px;
   }
 
   .description {
     grid-area: description;
     align-self: end;
     overflow: hidden;
+    justify-self: baseline;
   }
 
   .tags {
     grid-area: tags;
     display: flex;
     align-self: end;
-    margin-left: 10px;
   }
 
   .featured {
     grid-area: featured;
     display: flex;
     align-self: end;
-    margin-left: 10px;
 
     span {
       color: ${({ theme }) => theme.colors.background};
@@ -100,7 +106,6 @@ const StyledContent = styled.div`
   }
 
   .link {
-    margin-left: 10px;
     grid-area: link;
     align-self: center;
     justify-self: baseline;
@@ -145,7 +150,7 @@ export const Post = ({ post }) => {
         initial='initial'
         animate='animate'
       >
-        <StyledPost>
+        <StyledPost style={{ cursor: "pointer" }}>
           <Image src={meta.img} layout='fill' objectFit='fill' />
           <div className='imageOverlay' />
           <StyledContent>
