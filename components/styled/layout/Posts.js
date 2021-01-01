@@ -3,7 +3,6 @@ import { Post } from "./Post";
 import { posts } from "../../../getAllPosts";
 import { SectionHeader } from "../element/SectionHeader";
 import Form from "./Form";
-import { motion } from "framer-motion";
 import { PostWrapper } from "../element/PostWrapper";
 import styled from "styled-components";
 
@@ -36,12 +35,6 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-
-const variants = {
-  initial: { y: 100, opacity: 0 },
-  animate: { y: 0, opacity: 1 },
-  transition: { type: "easeIn" },
-};
 
 const Posts = () => {
   const [active, setActive] = useState("Featured");
@@ -91,15 +84,7 @@ const Posts = () => {
               <div className='grid'>
                 <div />
                 <PostWrapper key={`post-${i}`} className='wrapper'>
-                  <motion.div
-                    key={Math.random()}
-                    variants={variants}
-                    initial='initial'
-                    animate='animate'
-                    transition='transition'
-                  >
-                    <Post post={post} />
-                  </motion.div>
+                  <Post post={post} />
                 </PostWrapper>
                 <div />
               </div>

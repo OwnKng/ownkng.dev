@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Card } from "../element/Card";
 import Image from "next/image";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 const StyledPost = styled.div`
   height: 400px;
@@ -28,6 +29,10 @@ const StyledPost = styled.div`
     :hover {
       opacity: 0.1;
     }
+  }
+
+  @media only screen and (max-width: 500px) {
+    height: 300px;
   }
 `;
 
@@ -56,9 +61,9 @@ const StyledContent = styled.div`
 
   .title {
     grid-area: title;
-    justify-self: baseline;
     display: flex;
     align-self: start;
+    overflow: hidden;
 
     h2 {
       font-size: 2.4rem;
@@ -88,7 +93,7 @@ const StyledContent = styled.div`
     span {
       color: ${({ theme }) => theme.colors.background};
       backdrop-filter: blur(4px);
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 1);
       margin: 3px 3px 0px 0px;
       border-radius: 2px;
       padding: 3px 5px;
@@ -101,14 +106,33 @@ const StyledContent = styled.div`
     align-self: center;
     justify-self: baseline;
     border-radius: 2px;
+    padding: 3px 5px;
     background: ${({ theme }) => theme.colors.tertiary};
     color: ${({ theme }) => theme.colors.headline};
   }
 `;
 
-export const Post = ({ post }) => {
-  const [hover, setHover] = useState(false);
+const variants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.2,
+      duration: 0.2,
+    },
+  },
+};
 
+const titleVariants = {
+  initial: { y: 100 },
+  animate: { y: 0 },
+  transition: { type: "easeIn" },
+};
+
+export const Post = ({ post }) => {
   const {
     link,
     module: { meta },
@@ -116,35 +140,43 @@ export const Post = ({ post }) => {
 
   return (
     <Link href={"/thoughts" + link}>
-      <StyledPost
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
+      <motion.div
+        key={Math.random()}
+        variants={variants}
+        initial='initial'
+        animate='animate'
       >
-        <Image src={meta.img} layout='fill' objectFit='fill' />
-        <div className='imageOverlay' />
-        <StyledContent>
-          <div className='title'>
-            <h2>{meta.title}</h2>
-          </div>
-          <div className='description'>
-            <h3>{meta.description}</h3>
-          </div>
-          <div className='tags'>
-            {meta.tags
-              .filter((tag) => tag !== "Featured")
-              .map((tag, i) => (
-                <Card.Tag key={`tag-${i}`}>{tag}</Card.Tag>
-              ))}
-          </div>
-          <div className='featured'>
-            {meta.tags.includes("Featured") && <span>Featured</span>}
-          </div>
-          <div className='link'>
-            <span>Read more &rarr;</span>
-          </div>
-        </StyledContent>
-        <div className='hoverOverlay' />
-      </StyledPost>
+        <StyledPost>
+          <Image src={meta.img} layout='fill' objectFit='fill' />
+          <div className='imageOverlay' />
+          <StyledContent>
+            <div className='title'>
+              <motion.h2 variants={titleVariants} transition='transition'>
+                {meta.title}
+              </motion.h2>
+            </div>
+            <div className='description'>
+              <motion.h3 variants={titleVariants} transition='transition'>
+                {meta.description}
+              </motion.h3>
+            </div>
+            <div className='tags'>
+              {meta.tags
+                .filter((tag) => tag !== "Featured")
+                .map((tag, i) => (
+                  <Card.Tag key={`tag-${i}`}>{tag}</Card.Tag>
+                ))}
+            </div>
+            <div className='featured'>
+              {meta.tags.includes("Featured") && <span>Featured</span>}
+            </div>
+            <div className='link'>
+              <span>Read more &rarr;</span>
+            </div>
+          </StyledContent>
+          <div className='hoverOverlay' />
+        </StyledPost>
+      </motion.div>
     </Link>
   );
 };
