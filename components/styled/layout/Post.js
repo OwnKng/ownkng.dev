@@ -1,21 +1,25 @@
-import { useState } from "react";
 import Link from "next/link";
 import { Card } from "../element/Card";
 import Image from "next/image";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { elevation } from "../utilities";
 
 const StyledPost = styled.div`
   height: 400px;
   margin: 0rem 1rem 1rem 1rem;
   position: relative;
+  ${elevation[2]};
 
   .imageOverlay {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: ${({ theme }) => theme.colors.background};
-    opacity: 0.4;
+    background-image: linear-gradient(
+      to right,
+      rgba(15, 14, 23, 0.7),
+      rgba(15, 14, 23, 0.4)
+    );
   }
 
   .hoverOverlay {
