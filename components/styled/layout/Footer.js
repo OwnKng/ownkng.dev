@@ -28,7 +28,7 @@ export default styled(Footer)`
   }
 
   p {
-    font-size: 0.8rem;
+    font-size: 1rem;
     margin: 0px;
     padding: 0.2rem 0 0.8rem 0;
   }
