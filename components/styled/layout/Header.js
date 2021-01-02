@@ -34,6 +34,7 @@ export default styled(Header)`
     justify-content: space-between;
     place-items: center;
     height: 100%;
+    width: 96%;
     max-width: 1200px;
     background: rgba(15, 14, 23, 1);
     opacity: 0.9;
