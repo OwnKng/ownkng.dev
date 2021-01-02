@@ -36,15 +36,6 @@ const Form = ({ tags, active, setActive }) => {
       <p>Filter</p>
       <button
         style={{
-          background: !active ? "#e53170" : "",
-          color: !active ? "white" : "",
-        }}
-        onClick={() => setActive(false)}
-      >
-        All
-      </button>
-      <button
-        style={{
           background: active === "Featured" ? "#e53170" : "",
           color: active === "Featured" ? "white" : "",
         }}

@@ -51,7 +51,7 @@ const StyledContent = styled.div`
     "tags"
     "link";
 
-  grid-template-rows: 0.5fr 1fr 0.5fr 0.5fr;
+  grid-template-rows: 0.5fr 1fr 0.5fr 0.5fr 0.5fr;
   grid-template-columns: 1fr;
 
   h2,
@@ -107,12 +107,18 @@ const StyledContent = styled.div`
 
   .link {
     grid-area: link;
-    align-self: center;
+    align-self: end;
     justify-self: baseline;
     border-radius: 2px;
-    padding: 3px 5px;
+    display: flex;
     background: ${({ theme }) => theme.colors.tertiary};
     color: ${({ theme }) => theme.colors.headline};
+
+    span {
+      margin: 0px 3px 0px 0px;
+      border-radius: 2px;
+      padding: 5px 10px;
+    }
   }
 `;
 

@@ -3,11 +3,35 @@ import { Post } from "./Post";
 import { posts } from "../../../getAllPosts";
 import { SectionHeader } from "../element/SectionHeader";
 import Form from "./Form";
+import Link from "next/link";
 import { PostWrapper } from "../element/PostWrapper";
 import styled from "styled-components";
 
 const StyledPosts = styled.div`
+  .footer {
+    text-align: center;
+    border-left: 1px solid ${({ theme }) => theme.colors.boxShadow};
+    border-right: 1px solid ${({ theme }) => theme.colors.boxShadow};
+    padding: 1rem 0px 1rem 0px;
+
+    @media only screen and (max-width: 1000px) {
+      border: none;
+    }
+  }
   border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
+
+  a {
+    color: ${({ theme }) => theme.colors.paragraph};
+    font-size: 1.2rem;
+
+    :hover {
+      color: ${({ theme }) => theme.colors.tertiary};
+    }
+
+    :vistied {
+      color: ${({ theme }) => theme.colors.stroke};
+    }
+  }
 `;
 
 const StyledWrapper = styled.div`
@@ -36,7 +60,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const Posts = () => {
+const Posts = ({ className }) => {
   const [active, setActive] = useState("Featured");
   const [filteredPosts, setFiltered] = useState();
 
@@ -90,6 +114,13 @@ const Posts = () => {
               </div>
             ))
           : null}
+        <div className='grid'>
+          <div />
+          <div className='footer'>
+            <Link href='/archive'>See all posts &#x2192;</Link>
+          </div>
+          <div />
+        </div>
       </StyledWrapper>
     </StyledPosts>
   );

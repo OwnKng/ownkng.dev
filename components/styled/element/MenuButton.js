@@ -22,7 +22,7 @@ const MenuWrapper = styled.button`
     height: 0.25rem;
     background: ${({ theme }) => theme.colors.headline};
     border-radius: 10px;
-    transition: all 0.2s linear;
+    transition: all 0.1s linear;
     position: relative;
     transform-origin: 0px;
 
