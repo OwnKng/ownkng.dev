@@ -6,6 +6,7 @@ import Link from "next/link";
 import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos";
 import { SectionHeader } from "../element/SectionHeader";
 import Tech from "./Tech";
+import { elevation } from "../utilities";
 
 const AboutMe = ({ className }) => {
   return (
@@ -125,9 +126,12 @@ export default styled(AboutMe)`
     position: relative;
     width: 200px;
     height: 200px;
+    border-radius: 50%;
+    ${elevation[2]};
 
     img {
       border-radius: 50%;
+      ${elevation[2]};
     }
   }
 
