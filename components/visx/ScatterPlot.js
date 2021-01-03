@@ -1,12 +1,12 @@
 import React, { useEffect, useCallback, useRef, useMemo } from "react";
-import { scaleLinear, scaleLog, scaleOrdinal, scaleSqrt } from "@visx/scale";
+import { scaleLinear, scaleLog, scaleSqrt, scaleOrdinal } from "@visx/scale";
+import { extent, format } from "d3";
 import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
 import { Group } from "@visx/group";
-import * as d3 from "d3";
-import { Circle, Bar } from "@visx/shape";
-import { Axis, AxisLeft, AxisBottom } from "@visx/axis";
+import { Circle } from "@visx/shape";
+import { Axis, AxisLeft } from "@visx/axis";
 import { GridColumns } from "@visx/grid";
-import { TooltipWithBounds, withTooltip, defaultStyles } from "@visx/tooltip";
+import { useTooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip";
 import { localPoint } from "@visx/event";
 import { voronoi } from "@visx/voronoi";
 import styled from "styled-components";
@@ -42,51 +42,51 @@ const tooltipStyles = {
 const ScatterPlot = ({
   width,
   height,
-  showTooltip,
-  hideTooltip,
-  tooltipData,
-  tooltipOpen,
-  tooltipTop = 0,
-  tooltipLeft = 0,
-  margin = { top: 30, left: 60, right: 40, bottom: 40 },
+  margin = { top: 30, left: 60, right: 40, bottom: 50 },
 }) => {
   // set the dimensions of the plot
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
   const legendGlyphSize = 10;
 
-  const svgRef = useRef(null);
-  let tooltipTimeout;
-
   // accessors
   const x = (d) => d.gdpPerCap;
   const y = (d) => d.lifeExpectancy;
-  const fill = (d) => d.region;
   const radius = (d) => d.population;
+  const color = (d) => d.region;
 
   // scales
   const xScale = scaleLog({
     range: [margin.left, innerWidth + margin.left],
-    domain: d3.extent(data, x),
+    domain: extent(data, x),
   });
 
   const yScale = scaleLinear({
     range: [innerHeight + margin.top, margin.top],
-    domain: d3.extent(data, y),
+    domain: extent(data, y),
     nice: true,
   });
 
-  const fillScale = scaleOrdinal({
-    domain: [...new Set(data.map(fill))],
+  const colorScale = scaleOrdinal({
     range: ["#ff8906", "#3da9fc", "#ef4565", "#7f5af0", "#2cb67d"],
+    domain: [...new Set(data.map(color))],
   });
 
   const rScale = scaleSqrt({
     range: [3, 30],
-    domain: d3.extent(data, radius),
+    domain: extent(data, radius),
   });
 
   // Event handlers for tooltips
+  const {
+    showTooltip,
+    hideTooltip,
+    tooltipData,
+    tooltipOpen,
+    tooltipTop = 0,
+    tooltipLeft = 0,
+  } = useTooltip();
+
   const voronoiLayout = useMemo(
     () =>
       voronoi({
@@ -97,6 +97,9 @@ const ScatterPlot = ({
       })(data),
     [data, width, height, xScale, yScale]
   );
+
+  let tooltipTimeout;
+  const svgRef = useRef(null);
 
   const handleMouseMove = useCallback(
     (event) => {
@@ -132,7 +135,7 @@ const ScatterPlot = ({
 
   return (
     <Graph>
-      <LegendOrdinal scale={fillScale} labelFormat={(label) => `${label}`}>
+      <LegendOrdinal scale={colorScale} labelFormat={(label) => `${label}`}>
         {(labels) => (
           <div
             style={{
@@ -184,15 +187,16 @@ const ScatterPlot = ({
           orientation='top'
           scale={xScale}
           top={margin.top}
-          tickFormat={d3.format("$~s")}
+          tickFormat={format("$~s")}
           numTicks={2}
           tickStroke='transparent'
           stroke='transparent'
         />
-        <AxisBottom
+        <Axis
+          orientation='bottom'
           scale={xScale}
           top={innerHeight + margin.top}
-          tickFormat={d3.format("$~s")}
+          tickFormat={format("$~s")}
           numTicks={2}
           tickStroke='#a7a9be'
           stroke='#a7a9be'
@@ -271,9 +275,11 @@ const ScatterPlot = ({
               cx={xScale(x(point))}
               cy={yScale(y(point))}
               r={rScale(radius(point))}
-              fill={fillScale(fill(point))}
+              fill={colorScale(color(point))}
               fillOpacity={0.8}
-              stroke={tooltipData === point ? "white" : fillScale(fill(point))}
+              stroke={
+                tooltipData === point ? "white" : colorScale(color(point))
+              }
             />
           ))}
         </Group>
@@ -286,7 +292,7 @@ const ScatterPlot = ({
         >
           <h3
             style={{
-              color: fillScale(fill(tooltipData)),
+              color: colorScale(color(tooltipData)),
               paddding: 0,
               margin: 0,
             }}
@@ -295,7 +301,7 @@ const ScatterPlot = ({
           </h3>
           <StyledTooltip>
             <div>GDP per cap</div>
-            <div style={{ textAlign: "right" }}>{`${d3.format("$.2~s")(
+            <div style={{ textAlign: "right" }}>{`${format("$.2~s")(
               x(tooltipData)
             )}`}</div>
             <div>Life Expectancy</div>
@@ -313,4 +319,4 @@ const ScatterPlot = ({
   );
 };
 
-export default withTooltip(ScatterPlot);
+export default ScatterPlot;
