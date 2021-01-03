@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { elevation } from "../utilities";
 
 const StyledForm = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ const StyledForm = styled.div`
     border-radius: 5px;
     border: none;
     margin: 5px;
+    ${elevation[2]};
   }
 
   button:focus {

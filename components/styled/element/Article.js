@@ -13,4 +13,12 @@ export const Article = styled.article`
   @media only screen and (max-width: 600px) {
     padding: 2rem 5px 2rem 5px;
   }
+
+  a {
+    color: ${({ theme }) => theme.colors.tertiary};
+  }
+
+  a:visited {
+    color: ${({ theme }) => theme.colors.tertiary};
+  }
 `;
