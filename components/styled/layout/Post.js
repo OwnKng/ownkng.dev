@@ -4,6 +4,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { elevation } from "../utilities";
+import { useInView } from "react-intersection-observer";
 
 const StyledPost = styled.div`
   height: 400px;
@@ -147,6 +148,11 @@ const titleVariants = {
 };
 
 export const Post = ({ post }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    rootMargin: "-150px 0px",
+  });
+
   const {
     link,
     module: { meta },
@@ -155,10 +161,11 @@ export const Post = ({ post }) => {
   return (
     <Link href={"/thoughts" + link}>
       <motion.div
+        ref={ref}
         key={Math.random()}
         variants={variants}
         initial='initial'
-        animate='animate'
+        animate={inView ? "animate" : "initial"}
       >
         <StyledPost style={{ cursor: "pointer" }}>
           <Image src={meta.img} layout='fill' objectFit='fill' />

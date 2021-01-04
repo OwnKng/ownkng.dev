@@ -1,0 +1,353 @@
+import BlogPost from "../../../components/BlogPost";
+
+export const meta = {
+  title: "Linear regression for exploratory data analysis",
+  description:
+    "How simple models can reveal patterns in house prices movements in England and Wales",
+  date: "December 20, 2019",
+  img: "/linear-regression.png",
+  readTime: 2,
+  tags: ["Machine Learning", "R"],
+};
+
+export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
+
+This analysis applies linear regression to data on house prices in
+England and Wales. It is intended to demonstrate that fitting simple
+models to a dataset can be a highly effective way of quickly identifying
+trends and generating ideas for further analysis.
+
+More information on this approach can be found [here](https://r4ds.had.co.nz/model-building.html)
+
+# How have house prices in England and Wales changed since 2008?
+
+Data on median property prices in England and Wales is published
+quarterly by the UK's Office for National Statistics, using data from
+the Land Registry. It is available
+[here](https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/medianhousepricefornationalandsubnationalgeographiesquarterlyrollingyearhpssadataset09)
+
+The Excel document contains house prices for different administrative
+geographies of England and Wales, and different types of property. In
+this analysis, we will look at house prices in the final quarter of each
+year since 2008 across c. 350 local authority areas in England and
+Wales.
+
+We'll start by reading in the data and do some basic cleaning.
+
+```r
+library(tidyverse)
+library(readxl)
+library(lubridate)
+
+house_prices <- read_xls("hpssadataset9medianpricepaidforadministrativegeographies.xls",
+         sheet = "2a", skip = 6) %>%
+  # Converting the data from 'wide' to long
+  gather(key = "date", value = "median_price", -1, -2, -3, -4) %>%
+  # Converting date to a date format using the myd() function from the lubridate package
+  filter(str_detect(date, "Dec")) %>%
+  mutate(year = readr::parse_number(date)) %>%
+  # Looking at data since 2008
+  filter(year >= 2008) %>%
+  janitor::clean_names() %>%
+  select(-region_country_code, -date)
+
+# Clean data
+house_prices
+```
+
+    ## # A tibble: 3,828 x 5
+    ##    region_country_name local_authority_code local_authority_name median_price  year
+    ##    <chr>               <chr>                <chr>                       <dbl> <dbl>
+    ##  1 North East          E06000047            County Durham              105000  2008
+    ##  2 North East          E06000005            Darlington                 124950  2008
+    ##  3 North East          E06000001            Hartlepool                 110000  2008
+    ##  4 North East          E06000002            Middlesbrough               99999  2008
+    ##  5 North East          E06000057            Northumberland             142000  2008
+    ##  6 North East          E06000003            Redcar and Cleveland       115000  2008
+    ##  7 North East          E06000004            Stockton-on-Tees           129950  2008
+    ##  8 North East          E08000037            Gateshead                  117000  2008
+    ##  9 North East          E08000021            Newcastle upon Tyne        142500  2008
+    ## 10 North East          E08000022            North Tyneside             128500  2008
+    ## # … with 3,818 more rows
+
+# Visualising changes to house prices
+
+Let's quickly graph the changes to house prices.
+
+```r
+library(scales)
+
+house_prices %>%
+  ggplot(aes(year, median_price)) +
+  geom_line(aes(group = local_authority_name), alpha = 0.2) +
+  geom_smooth() +
+  scale_y_continuous(labels = dollar_format(prefix = "£")) +
+  labs(x = "", y = "Median house prices")
+```
+
+![](/thoughts/linear-regression/unnamed-chunk-12-1.png)
+
+```r
+house_prices %>%
+  ggplot(aes(year, median_price)) +
+  geom_line(aes(group = local_authority_name), alpha = 0.2) +
+  geom_smooth() +
+  scale_y_continuous(trans = "log10", labels = dollar_format(prefix = "£")) +
+  annotation_logticks(side = "l") +
+  labs(x = "", y = "Median house prices (log scale)")
+```
+
+![](/thoughts/linear-regression/unnamed-chunk-12-2.png)
+
+At first glance it appears that house prices have been steadily rising
+across England and Wales, though at very different rates. There is too
+much data (even in this relatively small dataset) to easily identify any
+key takeaways - so we need to find a way of summarising the data.
+
+# Fitting a (simple) model
+
+One way of summarising the data is to fit a model that captures the
+general trend. Since what we're interested in is how house prices have
+changed since 2008, we should try to fit a model that can capture the
+variation over time. It would also be interesting to look at whether
+local authorities that are close together have experienced similar
+trends in house price changes.
+
+It's generally better during an exploratory exercise to start with a
+simple model, and then expand. The first thing we'll do is visualise
+what a simple linear model would look like when applied to one local
+authority - here, we'll used Ealing in West London. This model only uses
+the passage of time to predict house prices - it is not a sophisticated
+model, but merely captures the trend in how house prices have changed
+over time.
+
+```r
+house_prices %>%
+  filter(local_authority_name == "Ealing") %>%
+  ggplot(aes(year, median_price)) +
+  geom_line() +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_y_continuous(labels = dollar_format(prefix = "£")) +
+  labs(y = "Median Price")
+```
+
+    ## `geom_smooth()` using formula 'y ~ x'
+
+![](/thoughts/linear-regression/unnamed-chunk-13-1.png)
+
+This model does a reasonable job of summarising the overall trend in
+house prices in Ealing, with the blue fitted line generally close to the
+black line showing house price data. Now let's see how well this
+approach scales to c. 350 local authorities.
+
+# Fitting 348 (simple) models
+
+We'll use the nested dataframe work flow to split our data into separate
+datasets - one for each local authority. We'll then fit the same linear
+regression model to each one, and calculate a couple of summary measures
+to compare the quality and findings of the model. Note that for this
+model we'll log transform the median prices to base 2. This flattens out
+some of the variation in the prices data, and means our resulting
+coefficients can (after some transformation) be interpreted as the
+estimated annual percentage change in house prices.
+
+```r
+library(modelr)
+library(broom)
+library(scales)
+
+house_prices_model <- house_prices %>%
+  mutate(year_since_08 = year-2008) %>%
+  group_by(region_country_name, local_authority_name, local_authority_name) %>%
+  nest() %>%
+  ungroup() %>%
+  mutate(price_model = map(data,
+                           ~ lm(log2(.$median_price) ~ .$year_since_08, data = .))) %>%
+  mutate(model_summary = map(price_model, glance),
+         tidy_model = map(price_model, tidy))
+```
+
+# How good are the models?
+
+We'll use R squared to assess how good our models are. Broadly, an R
+squared of 1 indicates a perfect fit, while 0 indicates a very poor fit
+and a model with no explanatory power.
+
+```r
+model_summary <- house_prices_model %>%
+  unnest(model_summary) %>%
+  select(-data, -price_model) %>%
+  janitor::clean_names()
+
+model_summary %>%
+  ggplot(aes(fct_reorder(region_country_name, r_squared),
+             r_squared, col = region_country_name)) +
+  geom_boxplot(outlier.shape = NULL, varwidth = TRUE) +
+  geom_jitter(alpha = 0.5) +
+  coord_flip() +
+  theme(legend.position = "none") +
+  labs(x = "", y = "R Square")
+```
+
+![](/thoughts/linear-regression/unnamed-chunk-15-1.png)
+
+Here we can see that locations in London, the South East and the East
+have the highest R squared, which means the models work well here. The
+fit is likely to look like the graph for Ealing above.
+
+We can visualise what higher levels of R square indicate in terms of
+trends in the data. Below, we've 'cut' r squared into 5 equally-spaced
+groups. We can see that areas with higher levels of R square have seen
+faster rates of house price growth. In locations where R squared is very
+low, house prices have barely moved at all or have been very volatile.
+
+```r
+house_prices %>%
+  inner_join(model_summary) %>%
+  mutate(r_squared_cut = cut_width(r_squared, 0.2, boundary = 0)) %>%
+  ggplot(aes(year, median_price)) +
+  geom_line(aes(col = r_squared_cut, group = local_authority_name), alpha = 0.5, show.legend = FALSE) +
+  geom_smooth() +
+  facet_wrap(~r_squared_cut, nrow = 1) +
+  scale_y_continuous(trans = "log10", labels = dollar_format(prefix = "£")) +
+  scale_x_continuous(breaks = seq(2008, 2018, 4)) +
+  labs(x = "", y = "Median Price (£)")
+```
+
+![](/thoughts/linear-regression/unnamed-chunk-9-1.png)
+
+# Interpreting the results
+
+We can transform the results of the models to assess how much house
+prices have changed since 2008 in different parts of England and Wales.
+The transformed coefficients of our model (see code below) can be
+interpreted as estimated annual % change in house prices since 2008.
+
+```r
+model_tidy <- house_prices_model %>%
+  unnest(tidy_model) %>%
+  select(-std.error, -statistic, -p.value) %>%
+  spread(term, value = estimate) %>%
+  janitor::clean_names() %>%
+  mutate_at(vars("year_since_08","intercept"), ~ 2^.) %>%
+  mutate(year_since_08 = year_since_08-1) %>%
+  inner_join(model_summary)
+
+model_tidy %>%
+  arrange(intercept) %>%
+  ggplot(aes(r_squared, year_since_08, fill = region_country_name)) +
+  geom_point(aes(size = intercept), shape = 21, alpha = 0.5) +
+  scale_y_continuous(labels = percent) +
+  labs(x = "R square", y = "Estimated annual increases in house prices (%)")
+```
+
+![](/thoughts/linear-regression/unnamed-chunk-17-1.png)
+
+Here, we can see that locations in London, the East and the East
+Midlands have seen the biggest increases to house prices. The model fit
+in these locations, as measured by R squared, is also very high.
+
+We can visualise what this means in practise by adding the predictions
+back into the data. As we can see below, the predicted values for Tower
+Hamlets (a borough in East London) closely track the median house
+prices.
+
+```r
+model_tidy %>%
+  filter(local_authority_name == "Tower Hamlets") %>%
+  select(local_authority_name, data, price_model) %>%
+  mutate(predictions = map2(data, price_model, add_predictions, var = "price_pred")) %>%
+  unnest(predictions) %>%
+  mutate(price_pred = 2 ^ price_pred) %>%
+  ggplot(aes(year, price_pred)) +
+  geom_line(col = "blue", linetype = "dashed") +
+  geom_point(aes(y = median_price)) +
+  scale_y_continuous(labels = dollar_format(prefix = "£")) +
+  scale_x_continuous(breaks = seq(2008, 2018, 2)) +
+  labs(x = "", y = "",
+       title = "Actual and predicted median house prices in Tower Hamlets, 2008 - 2018")
+```
+
+![](/thoughts/linear-regression/unnamed-chunk-18-1.png)
+
+We can dig deeper into the variation in model performance by region by
+faceting our earlier visualisation. Below, we can see that almost
+everywhere in London has experienced more than 6% annual increases in
+house prices since 2008, while in the East and South East more than half
+of locations have experienced more than 5% annual increases.
+
+Most locations in the East Midlands, South West and West Midlands have
+experienced between 2.5% and 5%.
+
+In Yorkshire, the North West, North East and Wales, the coefficients are
+lower and model performance worse - likely indicating that house price
+growth has been slower or more volatile.
+
+```r
+model_tidy %>%
+  mutate(region_country_name =
+           fct_reorder(region_country_name, -year_since_08, .fun = median)) %>%
+  ggplot(aes(r_squared, year_since_08, fill = region_country_name)) +
+  geom_point(shape = 21, alpha = 0.5) +
+  scale_y_continuous(labels = percent) +
+  facet_wrap(~region_country_name, nrow = 2) +
+  labs(x = "R square", y = "Estimated annual increases in house prices (%)") +
+  theme(legend.position = "none")
+```
+
+![](/thoughts/linear-regression/unnamed-chunk-19-1.png)
+
+We can examine the differences in performance within Wales if we
+pull-out some of the 'best' and 'worst' fitting locations. While the
+best fitting locations have undoubtedly seen slower growth than those in
+London and the South East, they have seen some growth. However, areas
+where the model fits badly have seen almost no growth in house prices
+over the last decade.
+
+```r
+wales_best <- model_tidy %>%
+  filter(region_country_name == "Wales") %>%
+  arrange(desc(r_squared)) %>%
+  head(5)
+
+wales_worst <- model_tidy %>%
+  filter(region_country_name == "Wales") %>%
+  arrange(desc(r_squared)) %>%
+  tail(5)
+
+wales_modlels <- bind_rows(list("best" = wales_best, "worst" = wales_worst), .id = "fit_quality")
+
+house_prices %>%
+  inner_join(wales_modlels) %>%
+  ggplot(aes(year, median_price)) +
+  geom_line(aes(group = local_authority_name, col = fit_quality), show.legend = FALSE) +
+  geom_smooth() +
+  facet_wrap(~fit_quality) +
+  scale_y_continuous(labels = dollar_format(prefix = "£")) +
+  labs(x = "", y = "Median House Prices",
+       title = "Median House Prices (2008 vs 2018) in Best and Worst Fitting Areas in Wales") +
+  theme(legend.position = "none")
+```
+
+![](/thoughts/linear-regression/unnamed-chunk-23-1.png)
+
+```r
+house_prices %>%
+  inner_join(wales_modlels) %>%
+  filter(year %in% c(2008, 2018)) %>%
+  ggplot(aes(factor(year), median_price, col = fit_quality)) +
+  geom_line(aes(group = local_authority_name)) +
+  geom_point() +
+  geom_text(data = house_prices %>%
+              inner_join(wales_modlels) %>%
+              filter(year == 2018),
+            aes(label = local_authority_name), hjust = "left") +
+  facet_wrap(~fit_quality) +
+  scale_y_continuous(labels = dollar_format(prefix = "£")) +
+  labs(x = "", y = "Median House Prices",
+       title = "Median House Prices (2008 vs 2018) in Best and Worst Fitting Areas in Wales") +
+  theme(legend.position = "none")
+```
+
+![](/thoughts/linear-regression/unnamed-chunk-24-1.png)
