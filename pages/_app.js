@@ -5,6 +5,10 @@ import { theme } from "../components/styled/utilities";
 import { PageWrapper } from "../components/state";
 import { MDXProvider } from "@mdx-js/react";
 import CodeBlock from "../components/CodeBlock";
+import Prism from "prism-react-renderer/prism";
+
+(typeof global !== "undefined" ? global : window).Prism = Prism;
+require("prismjs/components/prism-r");
 
 const components = {
   pre: (props) => <div {...props} />,

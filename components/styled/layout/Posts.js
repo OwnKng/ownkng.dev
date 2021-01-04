@@ -6,9 +6,9 @@ const Posts = ({ className, posts }) => (
   <div className={className}>
     {posts
       ? posts.map((post, i) => (
-          <div className='grid'>
+          <div className='grid' key={`post-${i}`}>
             <div />
-            <PostWrapper key={`post-${i}`} className='wrapper'>
+            <PostWrapper className='wrapper'>
               <Post post={post} />
             </PostWrapper>
             <div />

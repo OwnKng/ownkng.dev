@@ -2,12 +2,14 @@ import Highlight, { defaultProps } from "prism-react-renderer";
 import palenight from "prism-react-renderer/themes/palenight";
 
 const CodeBlock = ({ children, className }) => {
+  const language = className ? className.replace(/language-/, "") : "";
+
   return (
     <Highlight
       {...defaultProps}
       theme={palenight}
       code={children.trim()}
-      language={"jsx"}
+      language={language}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre

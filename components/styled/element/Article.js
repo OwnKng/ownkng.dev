@@ -21,4 +21,10 @@ export const Article = styled.article`
   a:visited {
     color: ${({ theme }) => theme.colors.tertiary};
   }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    margin: 0px auto;
+  }
 `;
