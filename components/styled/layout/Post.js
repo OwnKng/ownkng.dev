@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Card } from "../element/Card";
 import Image from "next/image";
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -93,6 +92,15 @@ const StyledContent = styled.div`
     grid-area: tags;
     display: flex;
     align-self: end;
+
+    span {
+      color: ${({ theme }) => theme.colors.background};
+      backdrop-filter: blur(4px);
+      background: rgba(255, 255, 255, 0.4);
+      margin: 3px 3px 0px 0px;
+      border-radius: 2px;
+      padding: 3px 10px;
+    }
   }
 
   .featured {
@@ -185,7 +193,9 @@ export const Post = ({ post }) => {
               {meta.tags
                 .filter((tag) => tag !== "Featured")
                 .map((tag, i) => (
-                  <Card.Tag key={`tag-${i}`}>{tag}</Card.Tag>
+                  <span key={`tag-${i}`} className='tag'>
+                    {tag}
+                  </span>
                 ))}
             </div>
             <div className='featured'>

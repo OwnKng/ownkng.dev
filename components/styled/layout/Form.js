@@ -2,15 +2,21 @@ import styled from "styled-components";
 import { elevation } from "../utilities";
 
 const StyledForm = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  padding: 1rem;
-  justify-content: space-evenly;
-  place-items: center;
-  margin-bottom: 0px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
+    justify-content: flex-start;
+    place-items: center;
+    margin-bottom: 0px;
+  }
 
   p {
-    margin: 0px;
+    margin: 5px;
+    padding: 0.5rem 1rem;
     color: ${({ theme }) => theme.colors.paragraph};
   }
 
@@ -35,30 +41,34 @@ const StyledForm = styled.div`
 const Form = ({ tags, active, setActive }) => {
   return (
     <StyledForm>
-      <p>Filter</p>
-      <button
-        style={{
-          background: active === "Featured" ? "#e53170" : "",
-          color: active === "Featured" ? "white" : "",
-        }}
-        onClick={() => setActive("Featured")}
-      >
-        Featured
-      </button>
-      {tags
-        ? tags.map((tag) => (
-            <button
-              key={tag}
-              style={{
-                background: tag === active ? "#e53170" : "",
-                color: tag === active ? "white" : "",
-              }}
-              onClick={() => setActive(tag)}
-            >
-              {tag}
-            </button>
-          ))
-        : null}
+      <div>
+        <p>Filter</p>
+      </div>
+      <div className='buttons'>
+        <button
+          style={{
+            background: active === "Featured" ? "#e53170" : "",
+            color: active === "Featured" ? "white" : "",
+          }}
+          onClick={() => setActive("Featured")}
+        >
+          Featured
+        </button>
+        {tags
+          ? tags.map((tag) => (
+              <button
+                key={tag}
+                style={{
+                  background: tag === active ? "#e53170" : "",
+                  color: tag === active ? "white" : "",
+                }}
+                onClick={() => setActive(tag)}
+              >
+                {tag}
+              </button>
+            ))
+          : null}
+      </div>
     </StyledForm>
   );
 };
