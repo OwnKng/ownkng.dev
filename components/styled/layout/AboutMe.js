@@ -54,7 +54,7 @@ const AboutMe = ({ className }) => {
           </div>
           <p>
             This site is a collection of my personal projects, with a focus on
-            data analysis, visulisation and web development.
+            data analysis, visualisation and web development.
           </p>
         </div>
         <div className='tech'>

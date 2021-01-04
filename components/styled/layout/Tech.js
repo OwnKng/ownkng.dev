@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Tech = ({ className }) => (
   <div className={className}>
-    <h3>The technologies I use often are</h3>
+    <h3>The technologies I frequently use are</h3>
     <div className='grid'>
       <div className='web'>
         <h4>Web dev</h4>
@@ -98,7 +98,7 @@ export default styled(Tech)`
       color: ${({ theme }) => theme.colors.tertiary};
     }
 
-    :vistied {
+    :visited {
       color: ${({ theme }) => theme.colors.stroke};
     }
   }

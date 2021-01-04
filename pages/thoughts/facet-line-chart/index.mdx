@@ -13,10 +13,339 @@ export const meta = {
 export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
 
 <FacetLineChart />
+<br />
 
-## My Headline
+[Visx](https://airbnb.io/visx/) is a collection of visualisation packages for React developed by Airbnb. The power of visx is that it combines low-level primitives for constructing data visulisations out of basic geometries and scales, while also providing high-level components and functions to handle the more finicky elements of creating graphs for the web like tooltips, legends or resizing. This makes visx an extremely flexible and expressive library for data visualisation.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque maximus pellentesque dolor non egestas. In sed tristique elit. Cras vehicula, nisl vel ultricies gravida, augue nibh laoreet arcu, et tincidunt augue dui non elit. Vestibulum semper posuere magna, quis molestie mauris faucibus ut. Praesent ornare velit sit amet enim semper lacinia. Aenean nec sem lacus. Cras porta nunc nec leo lacinia sagittis. Aliquam ornare gravida cursus. Etiam ultrices massa quis erat scelerisque rhoncus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin lacinia sodales augue, non mattis ipsum pretium non. Morbi vehicula tempor blandit. Nam rhoncus, massa a maximus imperdiet, tortor risus aliquet tortor, nec lacinia eros nisi volutpat massa. Maecenas ut augue ipsum.
+I've written a more extensive [post about the fundamentals of data visualisation with visx](https://ownkng.vercel.app/thoughts/data-viz-react). This post is to intended to instead demonstrate how to create a visualisation feature I use extensively when working with R and [ggplot](https://ggplot2.tidyverse.org/index.html): facets.
 
-Sed vehicula libero pulvinar
-tincidunt ligula non, luctus massa. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas arcu purus, aliquam ac molestie ac, luctus eget sem. Sed pellentesque massa eros, condimentum commodo ligula cursus ut. Mauris sit amet molestie ipsum. Nullam venenatis est at purus mollis consectetur. Phasellus a ipsum a quam ullamcorper aliquet. Nunc gravida bibendum placerat.
+Facetted visualisations are composed by a matrix of plot panels where each plot shares the same x and y variables. Each panel represents another variable that the observations share. In the example above, time is represented on the x axis; GDP per capita ($) is represented on the y axis; and each facet represents a country. This is an alternative to a line graph in which we encode country using different colors, which with ten countries to encode would be difficult to do effectively.
+
+The other advantage we have with using facets is that we can meaningfully order them. Here, our facets are ordered by GDP per capita in 2019. This makes it easy to discern that India is the poorest country in our sample, and that the United Kingdom is richer than Japan.
+
+### Creating a faceted visualisation with visx
+
+[here](https://codesandbox.io/s/upbeat-sun-kzolv?file=/src/Line.js)
+
+```jsx
+import React from "react";
+
+const Line = ({
+  data,
+  width,
+  height,
+  margin = { top: 40, left: 10, right: 15, bottom: 25 },
+}) => {
+  // Set dimensions
+  const innerWidth = width - margin.left - margin.right;
+  const innerHeight = height - margin.top - margin.bottom;
+
+  // Create accessor functions
+
+  // Create scales
+
+  // Return our chart
+  return <svg width={width} height={height}></svg>;
+};
+
+export default Line;
+```
+
+```jsx
+// create accessor functions
+const xAccessor = (d) => d.year;
+const yAccessor = (d) => d.gdpPerCap;
+```
+
+```jsx
+import { scaleLinear } from "@visx/scale";
+```
+
+```jsx
+// Create scales
+const xScale = scaleLinear({
+  range: [margin.left, innerWidth + margin.left],
+  domain: [1960, 2019],
+  nice: true,
+});
+
+const yScale = scaleLinear({
+  range: [innerHeight + margin.top, margin.top],
+  domain: [0, 70000],
+  nice: true,
+});
+```
+
+```jsx
+import { LinePath, AreaClosed } from "@visx/shape";
+import { curveLinear } from "@visx/curve";
+```
+
+```jsx
+// Return our chart
+return (
+  <svg width={width} height={height}>
+    <AreaClosed
+      data={data}
+      x={(d) => xScale(xAccessor(d))}
+      y={(d) => yScale(yAccessor(d))}
+      yScale={yScale}
+      curve={curveLinear}
+      fill='#ffcb8f'
+    />
+    <LinePath
+      data={data}
+      x={(d) => xScale(xAccessor(d))}
+      y={(d) => yScale(yAccessor(d))}
+      curve={curveLinear}
+      stroke='black'
+    />
+  </svg>
+);
+```
+
+```jsx
+import React from "react";
+import Line from "./Line";
+import { group } from "d3";
+import { gdpPerCapData } from "./data";
+```
+
+```jsx
+const FacetLineChart = () => {
+  const data = gdpPerCapData;
+
+  const dataGrouped = Array.from(
+    group(data, (d) => d.country),
+    ([key, value]) => ({ key, value })
+  );
+
+  return (
+    <>
+      {dataGrouped.map((data, i) => (
+        <Line key={i} data={data.value} width={800} height={400} />
+      ))}
+    </>
+  );
+};
+
+export default FacetLineChart;
+```
+
+```jsx
+  return (
+    <>
+      <div className="grid">
+        {dataGrouped.map((data, i) => (
+          <Line key={i} data={data.value} width={800} height={400} />
+        ))}
+      </div>
+    </>
+```
+
+```css
+.grid {
+  display: grid;
+  height: 600px;
+  width: 100%;
+  row-gap: 10px;
+
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
+  grid-template-rows: repeat(2, minmax(100px, 1fr));
+}
+
+.grid > div {
+  position: relative;
+}
+
+@media only screen and (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    grid-template-rows: repeat(5, minmax(100px, 1fr));
+    height: 800px;
+  }
+}
+```
+
+FacetLineChart.js
+
+```jsx
+import ParentSize from "@visx/responsive/lib/components/ParentSize";
+```
+
+```jsx
+return (
+  <>
+    <div className='grid'>
+      {dataGrouped.map((data, i) => (
+        <ParentSize key={i}>
+          {({ width, height }) => (
+            <Line data={data.value} width={width} height={height} />
+          )}
+        </ParentSize>
+      ))}
+    </div>
+  </>
+);
+```
+
+```jsx
+import { AxisLeft, AxisBottom } from "@visx/axis";
+import { format } from "d3";
+```
+
+```jsx
+  return (
+    <svg width={width} height={height}>
+      ...
+      <AxisBottom
+        scale={xScale}
+        top={innerHeight + margin.top}
+        tickFormat={format("d")}
+        numTicks={4}
+      />
+      <AxisLeft
+        scale={yScale}
+        left={margin.left}
+        tickFormat={format("~s")}
+        numTicks={8}
+      />
+      ...
+  )
+```
+
+```jsx
+return (
+  ...
+  <ParentSize key={i}>
+    {({ width, height }) => (
+      <Line dataKey={data.key} data={data.value} width={width} height={height} />
+    )}
+  </ParentSize>
+  ...
+)
+```
+
+```jsx
+const Line = ({
+  dataKey,
+  data,
+  width,
+  height,
+  margin = { top: 40, left: 40, right: 15, bottom: 25 }
+}) => {
+  ...
+}
+```
+
+```jsx
+  return (
+    <svg width={width} height={height}>
+      <Text
+        x={width / 2}
+        width={width}
+        textAnchor="middle"
+        y={margin.top / 2}
+        fontSize={14}
+      >
+        {dataKey}
+      </Text>
+      ...
+  )
+```
+
+```jsx
+const FacetLineChart = () => {
+  let data = gdpPerCapData;
+
+  const order = data
+    .filter((row) => row.year === 2019)
+    .sort((a, b) => a.gdpPerCap - b.gdpPerCap)
+    .map((row) => row.country);
+
+  data = data.sort(
+    (a, b) => order.indexOf(b.country) - order.indexOf(a.country)
+  );
+  ...
+}
+```
+
+```jsx
+import React, { useCallback } from "react";
+import { format, min, max } from "d3";
+import { useTooltip, TooltipWithBounds } from "@visx/tooltip";
+import { localPoint } from "@visx/event";
+```
+
+```jsx
+const handleTooltip = useCallback(
+  (event) => {
+    const { x } = localPoint(event) || { x: 0 };
+    let x0 = xScale.invert(x);
+    x0 = Math.round(x0);
+    if (x0 > max(data, xAccessor)) x0 = max(data, xAccessor);
+    if (x0 < min(data, xAccessor)) x0 = min(data, xAccessor);
+
+    let d = data.filter((row) => row.year === x0);
+    let yMax = max(d, yAccessor);
+
+    showTooltip({
+      tooltipData: d,
+      tooltipLeft: xScale(x0),
+      tooltipTop: yScale(yMax),
+    });
+  },
+  [data, showTooltip, yScale, xScale]
+);
+```
+
+```jsx
+return (
+  <svg width={width} height={height}>
+  ...
+  <rect
+        x={margin.left}
+        y={margin.top}
+        width={innerWidth}
+        height={innerHeight}
+        fill="transparent"
+        onTouchStart={handleTooltip}
+        onTouchMove={handleTooltip}
+        onMouseMove={handleTooltip}
+        onMouseLeave={() => hideTooltip()}
+      />
+      {tooltipData &&
+        tooltipData.map((row) => (
+          <circle
+            cx={xScale(xAccessor(row))}
+            cy={yScale(yAccessor(row))}
+            r={5}
+            stroke="black"
+            fill="#ffcb8f"
+            strokeWidth={2}
+            pointerEvents="none"
+          />
+        ))}
+    </svg>
+  );
+)
+```
+
+```jsx
+return (
+  <>
+    <svg width={width} height={height}>
+      ...
+    </svg>
+    {tooltipData && (
+      <TooltipWithBounds
+        key={Math.random()}
+        top={tooltipTop - 12}
+        left={tooltipLeft + 12}
+      >
+        {tooltipData.map((row) => format("$.2~s")(yAccessor(row)))}
+      </TooltipWithBounds>
+    )}
+  </>
+);
+```

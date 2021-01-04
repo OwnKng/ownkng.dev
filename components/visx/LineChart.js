@@ -7,7 +7,7 @@ import { LinePath, AreaClosed } from "@visx/shape";
 import { curveLinear } from "@visx/curve";
 import { format, min, max } from "d3";
 import { localPoint } from "@visx/event";
-import { withTooltip, TooltipWithBounds } from "@visx/tooltip";
+import { useTooltip, TooltipWithBounds } from "@visx/tooltip";
 
 const Line = ({
   width,
@@ -17,11 +17,6 @@ const Line = ({
   x,
   y,
   margin = { left: 15, right: 15, top: 40, bottom: 25 },
-  showTooltip,
-  hideTooltip,
-  tooltipData,
-  tooltipLeft = 0,
-  tooltipTop = 0,
 }) => {
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
@@ -44,6 +39,14 @@ const Line = ({
   });
 
   // Handle the tooltip
+  const {
+    showTooltip,
+    hideTooltip,
+    tooltipData,
+    tooltipLeft = 0,
+    tooltipTop = 0,
+  } = useTooltip();
+
   const handleTooltip = useCallback(
     (event) => {
       const { x } = localPoint(event) || { x: 0 };
@@ -140,6 +143,7 @@ const Line = ({
         {tooltipData &&
           tooltipData.map((row) => (
             <circle
+              key={row}
               cx={xScale(xAccessor(row))}
               cy={yScale(yAccessor(row))}
               r={5}
@@ -163,4 +167,4 @@ const Line = ({
   );
 };
 
-export default withTooltip(Line);
+export default Line;

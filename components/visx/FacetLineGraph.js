@@ -28,6 +28,10 @@ const StyledGrid = styled.div`
     grid-template-rows: repeat(5, minmax(100px, 1fr));
     height: 800px;
   }
+
+  div {
+    position: relative;
+  }
 `;
 
 const FacetLineGraph = () => {
@@ -52,7 +56,7 @@ const FacetLineGraph = () => {
       <h3>GDP Per Capita ($)</h3>
       <StyledGrid>
         {dataGrouped.map((data, i) => (
-          <ParentSize>
+          <ParentSize key={i}>
             {({ width, height }) => (
               <LineChart
                 dataKey={data.key}
