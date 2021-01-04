@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 const Tech = ({ className }) => (
   <div className={className}>
-    <h3>Tech I enjoy using</h3>
+    <h3>The technologies I use often are</h3>
     <div className='grid'>
       <div className='web'>
-        <h4>Web Dev</h4>
+        <h4>Web dev</h4>
         <ul>
           <li>
             <a href='https://reactjs.org/'>React</a>
@@ -35,6 +35,9 @@ const Tech = ({ className }) => (
           </li>
           <li>
             <a href='https://www.tidyverse.org/'>Tidyverse</a>
+          </li>
+          <li>
+            <a href='https://www.tidymodels.org/'>Tidymodels</a>
           </li>
           <li>
             <a href='https://r-spatial.github.io/sf/'>sf</a>

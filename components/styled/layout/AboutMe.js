@@ -53,10 +53,8 @@ const AboutMe = ({ className }) => {
             </p>
           </div>
           <p>
-            This site is a collection of my personal projects, mainly written in
-            R. My R code makes extensive use of the Tidyverse, ggplot and R
-            Shiny. I also have experience in package development and apply the
-            principals of functional programming across my work.
+            This site is a collection of my personal projects, with a focus on
+            data analysis, visulisation and web development.
           </p>
         </div>
         <div className='tech'>

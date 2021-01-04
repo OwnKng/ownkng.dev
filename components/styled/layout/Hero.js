@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Voronoi from "../../visx/Voronoi";
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
 import { DownArrowAlt } from "@styled-icons/boxicons-regular/DownArrowAlt";
+import { elevation } from "../utilities";
 
 const divVariants = {
   initial: {},
