@@ -264,43 +264,26 @@ return (
 
 **Add the legend**
 
-We're still missing the legend to match the color of our points to regions. To do this, we'll first import several legend components from the `@visx/legend` library.
+We're still missing the legend to match the color of our points to regions. To do this, we'll import the `<LegendOrdinal>` components from the `@visx/legend` library.
 
 ```jsx
-import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
+import { LegendOrdinal } from "@visx/legend";
 ```
 
-We'll can then modify our return statement to include the legend. Note that the legend is separate to the svg element where are visualisation is contained. This means we'll need to wrap our whole component in a React fragment.
+We'll can then modify our return statement to include the legend. Note that the legend is separate to the `<svg>` element where are visualisation is contained. This means we'll need to wrap our whole component in a React fragment.
 
 ```jsx
 return (
   <>
-    <LegendOrdinal scale={colorScale} labelFormat={(label) => `${label}`}>
-      {(labels) => (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-around",
-          }}
-        >
-          {labels.map((label, i) => (
-            <LegendItem key={i} margin='0 10px'>
-              <svg width={10} height={10}>
-                <rect fill={label.value} width={10} height={10} rx={5} />
-              </svg>
-              <LegendLabel
-                style={{ margin: `0 0 0 10px`, fontSize: "10px" }}
-                align='left'
-              >
-                {label.text}
-              </LegendLabel>
-            </LegendItem>
-          ))}
-        </div>
-      )}
-    </LegendOrdinal>
+  <LegendOrdinal
+    scale={colorScale}
+    direction="row"
+    shape="circle"
+    style={{
+      display: "flex",
+      justifyContent: "space-around"
+      }}
+    />
     <svg width={width} height={height}>
     ...
   </>

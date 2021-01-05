@@ -35,4 +35,8 @@ export const Article = styled(motion.article)`
   strong {
     color: ${({ theme }) => theme.colors.headline};
   }
+
+  ul {
+    font-size: 1.4rem;
+  }
 `;

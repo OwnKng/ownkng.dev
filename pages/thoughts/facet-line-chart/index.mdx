@@ -2,9 +2,9 @@ import BlogPost from "../../../components/BlogPost";
 import FacetLineChart from "../../../components/visx/FacetLineGraph";
 
 export const meta = {
-  title: "Creating faceted visualisations in visx",
-  description: "Faceting plots using CSS grid",
-  date: "Aug 04, 2020",
+  title: "Faceting charts with visx and CSS grid",
+  description: "How to create faceted line charts",
+  date: "Jan 05, 2020",
   img: "/lineChart.png",
   readTime: 2,
   tags: ["Data Visualisation"],
@@ -15,17 +15,44 @@ export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
 <FacetLineChart />
 <br />
 
-[Visx](https://airbnb.io/visx/) is a collection of visualisation packages for React developed by Airbnb. The power of visx is that it combines low-level primitives for constructing data visulisations out of basic geometries and scales, while also providing high-level components and functions to handle the more finicky elements of creating graphs for the web like tooltips, legends or resizing. This makes visx an extremely flexible and expressive library for data visualisation.
+[Visx](https://airbnb.io/visx/) is a collection of visualisation packages for React developed by Airbnb. The power of visx is that it combines low-level primitives for constructing data visulisations out of basic geometries and scales, while also providing high-level components and functions to handle the more finicky elements of creating graphs for the web - such as tooltips, legends or resizing. This makes visx a highly expressive library for data visualisation, while also conforming with the declarative syntax of React.
 
 I've written a more extensive [post about the fundamentals of data visualisation with visx](https://ownkng.vercel.app/thoughts/data-viz-react). This post is to intended to instead demonstrate how to create a visualisation feature I use extensively when working with R and [ggplot](https://ggplot2.tidyverse.org/index.html): facets.
 
-Facetted visualisations are composed by a matrix of plot panels where each plot shares the same x and y variables. Each panel represents another variable that the observations share. In the example above, time is represented on the x axis; GDP per capita ($) is represented on the y axis; and each facet represents a country. This is an alternative to a line graph in which we encode country using different colors, which with ten countries to encode would be difficult to do effectively.
+A faceted visualisations (also known as [small multiple charts](https://en.wikipedia.org/wiki/Small_multiple)) is composed of a matrix of plot panels where each plot shares the same x and y variables. Each panel represents another variable that the observations share. In the example above, time is represented on the x axis; GDP per capita ($) is represented on the y axis. Each facet represents a country. This is an alternative to a line graph in which we encode country using different colors and plot onto a single panel, which with ten countries would be difficult to do effectively.
 
-The other advantage we have with using facets is that we can meaningfully order them. Here, our facets are ordered by GDP per capita in 2019. This makes it easy to discern that India is the poorest country in our sample, and that the United Kingdom is richer than Japan.
+Another advantage we have when using facets is that we can meaningfully order them. Here, our facets are ordered by GDP per capita in 2019. This makes it easy to discern that India is the poorest country in our sample, and that the United Kingdom has a higher GDP per capita than Japan.
 
-### Creating a faceted visualisation with visx
+# Creating a faceted visualisation with visx
 
-[here](https://codesandbox.io/s/upbeat-sun-kzolv?file=/src/Line.js)
+The finished visualisation we're going to create, the code and data are all available [here](https://codesandbox.io/s/upbeat-sun-kzolv?file=/src/Line.js). The data comes from the [World Bank Open Data](https://data.worldbank.org/) portal.
+
+We'll need to install our visx packages for this project. Visx is provided as several standalone packages, but as we'll be using many of them in this project the easiest way to install them is by running the following command.
+
+```bash
+npm i @visx/visx
+```
+
+We're also going to be using some functions from the [D3](https://d3js.org/) library, so we'll need to install D3 too.
+
+```bash
+npm i d3
+```
+
+## Creating our lines
+
+When developing a visualisation with visx, I've found it helpful to divide the process into four fundamental stages that we repeat for all our projects. These are:
+
+- Set the chart dimensions
+- Create accessor functions to select our data
+- Create scales to translate our data into coordinates
+- Return the visualisation
+
+After we've done these tasks, we can then work on any elements that are more specific to a particular visualisation, like interactions or specific layouts.
+
+### Set the chart dimensions
+
+Let's create a new function component in our React application. This function component will take several props - data, width, height, and margin (which we'll provide with some sensible default values). Add the following code in a new file called `Line.js`.
 
 ```jsx
 import React from "react";
@@ -51,15 +78,28 @@ const Line = ({
 export default Line;
 ```
 
+### Create accessor functions to select our data
+
+Our visualisations are going have year on the x axis and GDP per capita on the y axis. Let's create some accessor functions to make selecting these values easier.
+
 ```jsx
 // create accessor functions
 const xAccessor = (d) => d.year;
 const yAccessor = (d) => d.gdpPerCap;
+...
 ```
+
+### Create scales to translate our data into coordinates
+
+We'll need to convert our year and GDP per capita values to units of pixels that fit inside our `<svg>` element. We'll do this with the `scaleLinear()` function from the visx.
+
+Import the `scaleLinear()` function into our _Line.js_ file.
 
 ```jsx
 import { scaleLinear } from "@visx/scale";
 ```
+
+We can then use this function to create our scales. Note that we've provided fixed values to the `domain` argument, rather than mapping them to the minimum and maximum of the values. This is because we want all our lines to share the same scales to make comparisons across the charts simpler.
 
 ```jsx
 // Create scales
@@ -76,12 +116,21 @@ const yScale = scaleLinear({
 });
 ```
 
+### Return the visualisation
+
+With our accessor functions and scales created, we can now return the visalisation from our `<Line />` component.
+
+Import the geometry primitives into our _Line.js_ file, as well as the curve type we're going to use in the visulisation.
+
 ```jsx
 import { LinePath, AreaClosed } from "@visx/shape";
 import { curveLinear } from "@visx/curve";
 ```
 
+We can now use these geometries inside our return statement, providing them with the scales and accessors we've defined.
+
 ```jsx
+...
 // Return our chart
 return (
   <svg width={width} height={height}>
@@ -104,14 +153,18 @@ return (
 );
 ```
 
+## Setting up our facets
+
+We'll create another function component to house our facets. This component will supply our data to the `<Line />` component.
+
+Create a new file called `FacetLineChart.js` and add the following code.
+
 ```jsx
 import React from "react";
 import Line from "./Line";
 import { group } from "d3";
 import { gdpPerCapData } from "./data";
-```
 
-```jsx
 const FacetLineChart = () => {
   const data = gdpPerCapData;
 
@@ -132,6 +185,12 @@ const FacetLineChart = () => {
 export default FacetLineChart;
 ```
 
+The above code makes use of the [`group()` function](https://observablehq.com/@d3/d3-group) from D3. The `group()` function takes an array and a key, and returns a [map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) from the key to the array values.
+
+By wrapping this in `Array.from()`, we've constructed a nested array in which each element represents a country. Inside each element is another array with all the values for that country. This allows us to map through the array, and supply the values individually as the `data` prop to our `<Line />` component.
+
+However, if we run this code, we'll see that our lines are stacked on top of each other, rather than paginated in panels. To arrange construct our facets, we're going to add a wrapper and apply some css.
+
 ```jsx
   return (
     <>
@@ -142,6 +201,8 @@ export default FacetLineChart;
       </div>
     </>
 ```
+
+Add the following css in our _styles.css_ file.
 
 ```css
 .grid {
@@ -167,11 +228,15 @@ export default FacetLineChart;
 }
 ```
 
-FacetLineChart.js
+This css arranges each plot in a grid. The width of the grid will fill 100% of its parent container, but the height will change between 600px and 800px depending on the screen size. Our media query will also rearrange our grid for smaller screens so that on a mobile device the grid is arranged vertically, rather than horizontally.
+
+We'll now want to make our individual lines responsive so that they fill the dimensions of our grid cells. In our _FacetLineChart.js_ file, import the `<ParentSize />` component from visx library.
 
 ```jsx
 import ParentSize from "@visx/responsive/lib/components/ParentSize";
 ```
+
+Then amend our return statement to use the the `<ParentSize />` component, which supplies the width and height props to our `<Line />` component.
 
 ```jsx
 return (
@@ -189,10 +254,22 @@ return (
 );
 ```
 
+## Improving our line charts
+
+Now we have our facets set up, we'll add axes to the visualisations and a facet label to each chart to show which country the data is showing. We'll also reorder our visualisations from richest country to poorest.
+
+### Adding axes
+
+Adding axes to our chart is extremely simple using the `@visx/axis` package. We're also going to nicely format our axes text with the [`format()` function](https://observablehq.com/@d3/d3-format) from D3.
+
+Add the following imports to the _Line.js_ file.
+
 ```jsx
 import { AxisLeft, AxisBottom } from "@visx/axis";
 import { format } from "d3";
 ```
+
+We'll then modify our return statement to include our axes.
 
 ```jsx
   return (
@@ -214,17 +291,25 @@ import { format } from "d3";
   )
 ```
 
+### Adding facet labels
+
+When we created `dataGrouped` array, we used the country name as the key for each group. We can provide this key as an additional prop to our `<Line />` component.
+
 ```jsx
 return (
   ...
+  {dataGrouped.map((data, i) => (
   <ParentSize key={i}>
     {({ width, height }) => (
       <Line dataKey={data.key} data={data.value} width={width} height={height} />
     )}
   </ParentSize>
+  ))}
   ...
 )
 ```
+
+We'll then destructure this prop in our `<Line />` component.
 
 ```jsx
 const Line = ({
@@ -238,7 +323,12 @@ const Line = ({
 }
 ```
 
+To add the `dataKey` to our line charts, we'll use the `<Text />` component from the '@visx/text' library. Add the following code to our _Line.js_ file.
+
 ```jsx
+import { Text } from "@visx/text";
+...
+
   return (
     <svg width={width} height={height}>
       <Text
@@ -254,21 +344,36 @@ const Line = ({
   )
 ```
 
+### Reordering our facets
+
+At the moment, our facets are not in any particular order. To aid interpretation, we want our charts to be ordered from the highest GDP per capita to the lowest.
+
+We can do this by creating a new array for country names - ordered by GDP per capita - and then using this in a `sort()` method on our original data array.
+
 ```jsx
 const FacetLineChart = () => {
   let data = gdpPerCapData;
 
+  // Create a new array of country names from richest to poorest
   const order = data
     .filter((row) => row.year === 2019)
     .sort((a, b) => a.gdpPerCap - b.gdpPerCap)
     .map((row) => row.country);
 
+  // Sort our data array using our ordered country names
   data = data.sort(
     (a, b) => order.indexOf(b.country) - order.indexOf(a.country)
   );
+
   ...
 }
 ```
+
+### Adding a tooltip
+
+Lastly, it's helpful to add a tooltip to each of our charts to show the GDP per capita figure when the reader hovers over a particular location.
+
+In our _Line.js_ file, add the following imports.
 
 ```jsx
 import React, { useCallback } from "react";
@@ -276,6 +381,20 @@ import { format, min, max } from "d3";
 import { useTooltip, TooltipWithBounds } from "@visx/tooltip";
 import { localPoint } from "@visx/event";
 ```
+
+We'll use the `useTooltip()` hook from `@visx/tooltip`, which provides several functions to place our tooltip and set the data to show.
+
+```jsx
+const {
+  showTooltip,
+  hideTooltip,
+  tooltipData,
+  tooltipLeft = 0,
+  tooltipTop = 0,
+} = useTooltip();
+```
+
+Let's write an event handler that will get the coordinates of our hover position and translate it into an x and y value to display in our tooltip.
 
 ```jsx
 const handleTooltip = useCallback(
@@ -297,7 +416,16 @@ const handleTooltip = useCallback(
   },
   [data, showTooltip, yScale, xScale]
 );
+
+return (
+  ...
 ```
+
+Note that the `if` statements are necessary here because our axes run to 2020 (where we currently have no data) and we also don't have any data for Indonesia before 1967. The `if` statements handle this by returning the closest value to the missing year - so if we hover over 2020, our tooltip will stay at 2019 rather than showing an empty container.
+
+In our return statement, we can now add a `<rect>` element which will register hovering or a touch event.
+
+When tooltipData is not empty, we'll also add a `<circle>` to show the point that the user is hovering over.
 
 ```jsx
 return (
@@ -331,6 +459,10 @@ return (
 )
 ```
 
+Finally, we'll add our tooltip using the `<TooltipWithBounds />` component. Our tooltip only shows the GDP per capita value, but could easily be expanded to show additional data.
+
+Note that our tooltip goes outside our closing `<svg>` tag, and so we need to wrap our whole return statement in a React fragment.
+
 ```jsx
 return (
   <>
@@ -349,3 +481,5 @@ return (
   </>
 );
 ```
+
+The completed code for our faceted visualisation is available [here](https://codesandbox.io/s/upbeat-sun-kzolv?file=/src/Line.js).
