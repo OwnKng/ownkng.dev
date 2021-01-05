@@ -42,7 +42,7 @@ const tooltipStyles = {
 const ScatterPlot = ({
   width,
   height,
-  margin = { top: 30, left: 60, right: 40, bottom: 50 },
+  margin = { top: 30, left: 60, right: 10, bottom: 50 },
 }) => {
   // set the dimensions of the plot
   const innerWidth = width - margin.left - margin.right;

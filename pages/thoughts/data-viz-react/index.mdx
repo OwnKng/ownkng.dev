@@ -15,6 +15,7 @@ export const meta = {
 export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
 
 <h2>Economic development improves life expectancy</h2>
+<span>GDP per capita and life expectancy. Point size shows population</span>
 <div
   style={{
     height: 550,
@@ -27,10 +28,13 @@ export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
     {({ width, height }) => <ScatterPlot width={width} height={height} />}
   </ParentSize>
 </div>
+<span style={{ display: "flex", marginTop: 10, justifyContent: "flex-end" }}>
+  Source: World Bank, 2020
+</span>
 
 <br />
 
-Powerful visualisation libraries in JavaScript are surprisingly few in number. While popular charting libraries like [Chart.js](https://www.chartjs.org/) and [Plotly](https://plotly.com/graphing-libraries/) offer good functionality, they're relatively limited in the types of visualisations they support and the extent to which their visualisations can be customised.
+Powerful visualisation libraries in JavaScript are surprisingly few in number. While popular charting libraries like [Chart.js](https://www.chartjs.org/) and [Plotly](https://plotly.com/graphing-libraries/) offer good functionality, they're relatively limited in the types of visualisations they support and the extent to which they can be customised.
 
 [D3](https://d3js.org/) is often the tool of choice for anyone creating more intricate and crafted data visualisations for the web. However, D3 is notoriously challenging library to master and, because much of its functionality is centered on manipulating the DOM, it's difficult to integrate D3 into a React application.
 
@@ -38,19 +42,17 @@ Powerful visualisation libraries in JavaScript are surprisingly few in number. W
 
 Enter [visx](https://airbnb.io/visx/), a collection of low-level visualisation primitives for React developed by Airbnb. Though much of visx is built on D3, the library delegates DOM management to React and uses D3 only for mathematical calculations.
 
-Visx isn't a charting library. It doesn't provide any template visualisations to simply supply data to. Instead, it offers a collections of geometry components, like lines, bars or arcs, that can be used to construct visualisations. Consequently, visx has a very declarative syntax - which will be familiar to any React developer.
+Visx isn't a charting library. It doesn't provide any chart components to simply supply data to. Instead, it offers a collections of geometry components, like lines, bars or arcs, that can be used to construct visualisations. Consequently, visx has a very declarative syntax that will be familiar to any React developer.
 
 Visx does, however, provide several high level components and functions to handle things like tooltips, legends or making charts responsive - all of which are very time-consuming to code manually.
 
-The upshot of this is that visx is highly _expressive_ - allowing developers to combine different geometries and scales to create any visualisation they can imagine - while also being much easier to learn than _D3_.
+The upshot of this is that visx is highly expressive. It allows developers to combine arbitrary collections of geometries and scales to create any visualisation they can imagine, while also being much easier to learn than D3.
 
 # Creating a scatter plot with visx
 
-To show this in practice, we'll create a scatter plot, based on the fantastic [Gapminder chart](https://s3-eu-west-1.amazonaws.com/static.gapminder.org/GapminderMedia/wp-uploads/20161215212516/countries_health_wealth_2016_v151.pdf) of GDP per capita and life expectancy.
+To show this in practice, we'll create a scatter plot, based on the fantastic [Gapminder chart](https://s3-eu-west-1.amazonaws.com/static.gapminder.org/GapminderMedia/wp-uploads/20161215212516/countries_health_wealth_2016_v151.pdf) of GDP per capita and life expectancy. The data we're going to use comes from the [WorldBank Open Data](https://data.worldbank.org/) portal. The completed visualisation, code and data are all available [here](https://codesandbox.io/s/objective-snow-txbsr?file=/src/App.js).
 
-The data we're going to use comes from the [WorldBank Open Data](https://data.worldbank.org/) portal. The completed visualisation and the code is available [here](https://codesandbox.io/s/objective-snow-txbsr?file=/src/App.js).
-
-There are a few things to note about this chart before we start writing any code. First, the x axis is a logarithmic scale. This is necessary to allow the reader to discern the significant variation in GDP per capita (particularly at the lower ends of the scale), which would be lost using an arithmetic scale. For readability, the x axis labels are repeated on both the bottom and top of the chart.
+There are a few things to note about this chart before we start writing any code. First, the x axis is a logarithmic scale. This is necessary to discern the significant variation in GDP per capita (particularly at the lower ends of the scale), which would be lost using an arithmetic scale. For readability, the x axis labels are repeated on both the bottom and top of the chart.
 
 Each point represents a country. The radius of the point is proportional to the country's population and the color shows which world region it is located in. We have a tooltip, which snaps to the closest country to the cursor or touch position. The chart is also responsive and will rescale when we adjust the size of the browser window.
 
@@ -64,7 +66,11 @@ Airbnb have released visx as several different packages, which can be used toget
 npm install @visx/scale @visx/legend @visx/group @visx/shape @visx/axis @visx/grid @visx/tooltip @visx/event @visx/voronoi
 ```
 
-or we can install all the visx packages by running `npm install @visx/visx`.
+or we can install all the visx packages by running
+
+```bash
+npm install @visx/visx
+```
 
 We're also going to be using a couple functions from D3 too, so we'll also need to run the following command:
 
@@ -76,15 +82,15 @@ After these libraries have been installed, create a new file called _ScatterPlot
 
 ## Creating a visx visualisation in four steps
 
-When designing a chart with visx, there are four steps we need to go through: setting the chart dimensions; creating accessor functions to select our data; creating scales to translate our data into coordinates; and then returning the visualisation.
+When designing a chart with visx, I've found it helpful to divide the process into four fundamental stages that we repeat for all our projects: setting the chart dimensions; creating accessor functions to select our data; creating scales to translate our data into coordinates; and then returning the visualisation.
 
-After we've done this, we can then improve our visualisation by adding a tooltip or customising the styling.
+After we've been through these stages, we can then work on any elements that are more specific to a particular visualisation, like adding a tooltip or applying specific stylings.
 
 ### Step 1: Set chart dimensions
 
-We're going to write a function component to return our scatter plot. This component will take three props to help set the dimensions of our visualisation - width, height and margin. We'll provide sensible defaults in our component.
+We're going to write a [function component](https://reactjs.org/docs/components-and-props.html) to return our scatter plot. This component will take three props to help set the dimensions of our visualisation - width, height and margin. We'll provide sensible defaults in our component.
 
-We'll then create two new variables - `innerWidth` and `innerHeight` - which we'll use later to set the dimensions of our chart's plot area.
+We'll then create two new variables - `innerWidth` and `innerHeight` - which we'll use in our scales and to the dimensions of our chart's plot area.
 
 ```jsx
 import React from "react";
@@ -129,9 +135,9 @@ const color = (d) => d.region;
 
 We're going to use several different scales in our visualisation - a logarithmic scale for our x axis; a linear scale for our y axis; a square root scale for our radius; and an ordinal scale for our colors.
 
-Visx provides functions to create each of these scales. We simply provide these functions with the _range_ of the scale in pixels and the data we want to scale, referred to as the _domain_. We'll also use `extent()` function from D3, which extracts the minimum and maximum value from our data.
+The `@visx/scale` package provides functions to create each of these scales.[^1] We simply provide these functions with the _range_ of the scale in pixels and the data we want to scale, referred to as the _domain_. We'll also use [`extent()`](https://observablehq.com/@d3/d3-extent) function from D3, which extracts the minimum and maximum value from our data.
 
-Let's first add the following import statements to the top of the _ScatterPlot.js_ file:
+Let's first add the following import statements to the top of the _ScatterPlot.js_ file.
 
 ```jsx
 import { scaleLinear, scaleLog, scaleSqrt, scaleOrdinal } from "@visx/scale";
@@ -165,14 +171,14 @@ const rScale = scaleSqrt({
 
 ### Step 4: Return the visualisation
 
-The geometry we're mapping our data to are points. Visx provides a `Circle` component, which we'll need to import.
+With a scatter plot, the geometry we're mapping our data to are points. Visx provides a `<Circle />` component, which we'll need to import. We'll also import the `<Group />` component, which will act as a single container for all of our points.
 
 ```jsx
 import { Circle } from "@visx/shape";
 import { Group } from "@visx/group";
 ```
 
-We can now add a map method into `<svg>` tags to return a circle for every item in our array.
+We can now add a map method inside our `<svg>` element to return a circle for every item in our array (i.e. each country).
 
 ```jsx
 return (
@@ -193,7 +199,7 @@ return (
 );
 ```
 
-**Add the axes**
+**Add axes**
 
 Our scatter plot component now returns a set of points mapped to our data. However, we can't yet read the values of the points because our visualisation has no axes. We can fix this using the `<Axis />` components that visx provides.
 
@@ -203,7 +209,7 @@ Let's add the following import statements to the top of the _ScatterPlot.js_ fil
 import { Axis, AxisLeft } from "@visx/axis";
 ```
 
-We'll also want to import the `format()` function from D3 to make our axis labels more readable.
+We'll also want to import the [`format()`](https://observablehq.com/@d3/d3-format) function from D3 to make our axis labels more readable.
 
 ```jsx
 import { extent, format } from "d3";
@@ -236,6 +242,8 @@ return (
   </svg>
 );
 ```
+
+**Add grid lines**
 
 To make the chart more readable, we'll also want to add some grid lines along the x axis. As before, we'll import the desired component from the visx library and modify our return statement.
 
@@ -332,9 +340,9 @@ Let's also change our default export statement to export our wrapper, rather tha
 export default ScatterPlotWrapper;
 ```
 
-In our _App.js_ file, we can now provide dimensions to the containing div. Here, we've set the width to 100% - so the chart will always fill the width of the reader's screen - while fixing the height at 600px.
+In our _App.js_ file, we can now provide dimensions to the containing div. Here, we've set the width to 100% - so the chart will fill the width of the reader's screen - while fixing the height at 600px.
 
-Note that we've added `position: 'relative'` here because this is necessary for the tooltip we'll add shortly.
+Note that we've added `position: "relative"` here because it's necessary for the tooltip which we'll add shortly.
 
 ```jsx
 export default function App() {
@@ -370,9 +378,9 @@ We're also going to use several React hooks in our tooltip event handlers, and s
 import { useRef, useMemo, useCallback } from "react";
 ```
 
-visx/tooltip provides a custom React hook, `useTooltip`, which returns an object with several properties that we'll use to manage our tooltip's data, position and visibility.
+`@visx/tooltip` provides a custom React hook, `useTooltip()`, which returns an object with several properties that we'll use to manage our tooltip's data, position and visibility.
 
-Our tooltip will also rely on tracking the state of our SVG directly, so we'll create a ref using the `useRef` hook, which we'll add to our return statement later.
+Our tooltip will also rely on tracking the state of our SVG directly, so we'll create a ref using the `useRef()` hook, which we'll add to our return statement later.
 
 ```jsx
 const {
@@ -387,7 +395,7 @@ const {
 const svgRef = useRef(null);
 ```
 
-Our tooltip will rely on a [Voronoi](https://en.wikipedia.org/wiki/Voronoi_diagram) partition of the chart area, which allows us to find the closest point to hover position. A Voronoi diagram is are a way of partitioning a plane into a series of regions defined by the location of a set of points. In a Voronoi diagram, every point is surrounded by a region that covers the area of the plane that is closer to that point than any other.
+Our tooltip will rely on a [Voronoi](https://en.wikipedia.org/wiki/Voronoi_diagram) partition of the chart area, which allows us to find the closest point to hover position. A Voronoi partition is are a way of separating a plane into a series of regions defined by the location of a set of points. In a Voronoi diagram, every point is surrounded by a region that covers the area of the plane that is closer to that point than any other.
 
 Let's create our Voronoi diagram by adding the following code inside our `<ScatterPlot />` component.
 
@@ -406,11 +414,11 @@ const voronoiLayout = useMemo(
 
 When a user moves their cursor over the plot area of our chart, we want our component to return the Voronoi zone that defines the closest point.
 
-To do this, we'll use the `localPoint()` function from the `visx/event` package, which returns an object with the coordinates of the cursor position. We'll then uses these coordinates in the `find()` method of our `voronoiLayout`. This returns the data of the closest point to the cursor position, which we provide to showTooltip function.
+To do this, we'll use the `localPoint()` function from the `@visx/event` package, which returns an object with the coordinates of the cursor position. We'll then use these coordinates in the `find()` method of our `voronoiLayout`. This method returns the data of the closest point to the cursor position, which we provide to `showTooltip()` function.
 
-We'll also created a `tooltipTimeout` variable, which we'll use to display the tooltip only for a second or so after the user moves their cursor position off the chart area.
+We'll also create a `tooltipTimeout` variable, which we'll use to display the tooltip only for a second or so after the user moves their cursor position off the chart area.
 
-All of this is wrapped in a useCallback() hook, as the operation is computationally expensive, and so prevents unnecessary re-rendering when our `voronoiLayout` or tooltip haven't changed.
+All of this is wrapped in a `useCallback()` hook. As our event handler is computationally expensive, wrapping it in `useCallback()` prevents unnecessary re-rendering when our `voronoiLayout` or tooltip haven't changed.
 
 ```jsx
 let tooltipTimeout;
@@ -436,7 +444,7 @@ const handleMouseMove = useCallback(
 );
 ```
 
-We'll also need an event handler for when the cursor position leaves the plot area. This function simply sets our `tooltipTimeout` variable to a 1500ms timeout and calls the `hideTooltip()` function.
+We'll also need an event handler for when the cursor position leaves the plot area. This function simply sets our `tooltipTimeout` variable to a 1500ms and calls the `hideTooltip()` function.
 
 ```jsx
 const handleMouseLeave = useCallback(() => {
@@ -458,7 +466,7 @@ return (
 
 ```
 
-and place a `<rect />` inside the `<svg>`. This `<rect />` fills the dimensions of the plot area and will detect when a mouse enters or leaves the area.
+and place a `<rect />` inside the `<svg>`. This `<rect />` fills the dimensions of the plot area and will detect when a mouse enters or leaves the chart.
 
 ```jsx
 return (
@@ -478,7 +486,7 @@ return (
 )
 ```
 
-Below our closing `svg` tag, we now need to add the tooltip using the `<TooltipWithBounds />` component. This component also allows us to wrap any data we want to show to the user and apply any arbitrary styles.
+Below our closing `svg` tag, we now need to add the tooltip using the `<TooltipWithBounds />` component. This component also allows us to wrap any data we want to show and apply any arbitrary styles.
 
 ```jsx
 {
@@ -520,7 +528,7 @@ Below our closing `svg` tag, we now need to add the tooltip using the `<TooltipW
 }
 ```
 
-We'll also amend our `<Cicle />` components by applying a highlight effect to the point that that's returned by our tooltip. We can do this by adding some logic to the `stroke` attribute.
+We'll also amend our `<Cicle />` components by applying a highlight effect to the point that that's returned by our tooltip. We can do this by adding some simple logic to the `stroke` attribute.
 
 ```jsx
 <Circle
@@ -536,12 +544,14 @@ We'll also amend our `<Cicle />` components by applying a highlight effect to th
 
 # Wrap up
 
-The full code four our visualisation is available [here](https://codesandbox.io/s/objective-snow-txbsr?file=/src/App.js).
+The full code for our visualisation is available [here](https://codesandbox.io/s/objective-snow-txbsr?file=/src/App.js).
 
-This may seem like a lot of code to produce a scatter plot. However, it's important to consider that many of the features of our chart (logarithmic scales, duplicated axes, custom tooltips) aren't well supported by simple charting libraries.
+This may seem like a lot of code to produce a scatter plot. However, it's important to consider that many of the features of our chart (logarithmic scales, duplicated axes, custom tooltip behaviours) aren't well supported by other visualisation libraries.
 
-The version of the chart that appears on this page also features text annotations (easily added with [@visx/text](https://airbnb.io/visx/docs/text)) and further custom styling. Again, these are features which are often difficult to achieve with other JavaScript libraries.
+The version of the chart that appears on this page also features text annotations (easily added with [@visx/text](https://airbnb.io/visx/docs/text) and some custom styling. Again, these are features which are often difficult to achieve with other JavaScript libraries.
 
 In theory, we could have built this visualisation using D3 - though not using a typical D3 workflow of selecting and appending data, because these methods aren't compatible with React's model of DOM manipulation. Moreover, constructing legends or positioning tooltips is often an agonisingly frustrating process in D3.
 
-This really is where visx shines: visx is modular enough to create highly expressive data visualisations, but abstracts away much of the drudgery of things like responsiveness or interaction.
+This really is where visx shines: visx is modular enough to create highly expressive data visualisations, but abstracts away much of the drudgery of things like responsiveness, legends or interaction. I'll certainly be using visx a lot in my own projects.
+
+[^1]: visx's scale functions are actually wrappers around [D3's scale functions](https://observablehq.com/@d3/introduction-to-d3s-scales), but the syntax is a little cleaner.

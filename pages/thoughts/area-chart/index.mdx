@@ -15,10 +15,14 @@ export const meta = {
 export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
 
 <AreaChartWrapper />
+<span style={{ display: "flex", justifyContent: "flex-end" }}>
+  Source: World Bank, 2020
+</span>
+<br />
 
 [Visx](https://airbnb.io/visx/) is a collection of visualisation packages for React developed by Airbnb. The power of visx is that it combines low-level primitives for constructing data visualisation out of basic geometries and scales, while also providing high-level components and functions to handle the more finicky elements of creating graphs for the web - such as tooltips, legends and resizing. This makes visx a highly expressive library for data visualisation, while also conforming with the declarative syntax of React.
 
-I've written a more [extensive introduction to visx](https://ownkng.vercel.app/thoughts/data-viz-react), as well as a post demoing how to [create faceted charts with the library](https://ownkng.vercel.app/thoughts/facet-line-chart). This is a shorter post on creating animated visualisations, such as the one above.
+I've written a more [extensive introduction to visx](https://ownkng.vercel.app/thoughts/data-viz-react), as well as a post showing how to [create faceted charts with the library](https://ownkng.vercel.app/thoughts/facet-line-chart). This is a shorter post focused on animating visualisations.
 
 In contrast to most other visualisation libraries, Visx is largely un-opinionated on animation. While there is a visx package, [@visx/react-spring](https://airbnb.io/visx/docs/react-spring), that provides animated components, developers are free to bring their own animation library.
 
@@ -32,7 +36,7 @@ With Framer Motion, it's possible to animate any HTML or SVG element by simply a
 </motion.div>
 ```
 
-We can add the apply the same technique to our visx visualisations. For instance, stacked area charts can be constructed with visx using the `<AreaStack />` component, which we can provide with children to define our own render functions using `<path>` elements. This would typically look something like the following:
+We can add the apply the same technique to our visx visualisations. For instance, stacked area charts can be constructed with visx using the `<AreaStack />` component, which we can provide with children to define our own render functions using SVG `<path>` elements. This would typically look something like the following:
 
 ```jsx
 const MyAreaChart = ({ data, height, width, margin }) => {

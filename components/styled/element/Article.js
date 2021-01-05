@@ -39,4 +39,13 @@ export const Article = styled(motion.article)`
   ul {
     font-size: 1.4rem;
   }
+
+  .footnotes {
+    margin-top: 100px;
+  }
+
+  hr {
+    border: 1px solid ${({ theme }) => theme.colors.paragraph};
+    opacity: 0.5;
+  }
 `;
