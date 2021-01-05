@@ -444,7 +444,7 @@ const handleMouseMove = useCallback(
 );
 ```
 
-We'll also need an event handler for when the cursor position leaves the plot area. This function simply sets our `tooltipTimeout` variable to a 1500ms and calls the `hideTooltip()` function.
+We'll also need an event handler for when the cursor position leaves the plot area. This function simply sets our `tooltipTimeout` variable to 1500ms and calls the `hideTooltip()` function.
 
 ```jsx
 const handleMouseLeave = useCallback(() => {
@@ -456,7 +456,7 @@ const handleMouseLeave = useCallback(() => {
 
 ### Adding our tooltip to our chart
 
-To add our tooltip to our chart, we need to add our `svgRef` as the ref of our `<svg>` tag
+To add our tooltip to our chart, we need to add our `svgRef` to our `<svg>` tag
 
 ```jsx
 return (
@@ -466,7 +466,7 @@ return (
 
 ```
 
-and place a `<rect />` inside the `<svg>`. This `<rect />` fills the dimensions of the plot area and will detect when a mouse enters or leaves the chart.
+and place a `<rect>` inside the `<svg>`. This `<rect>` fills the dimensions of the plot area and will detect when a mouse enters or leaves the chart.
 
 ```jsx
 return (
@@ -548,7 +548,7 @@ The full code for our visualisation is available [here](https://codesandbox.io/s
 
 This may seem like a lot of code to produce a scatter plot. However, it's important to consider that many of the features of our chart (logarithmic scales, duplicated axes, custom tooltip behaviours) aren't well supported by other visualisation libraries.
 
-The version of the chart that appears on this page also features text annotations (easily added with [@visx/text](https://airbnb.io/visx/docs/text) and some custom styling. Again, these are features which are often difficult to achieve with other JavaScript libraries.
+The version of the chart that appears on this page also features text annotations (easily added with [@visx/text](https://airbnb.io/visx/docs/text)) and some custom styling. Again, these are features which are often difficult to achieve with other JavaScript libraries.
 
 In theory, we could have built this visualisation using D3 - though not using a typical D3 workflow of selecting and appending data, because these methods aren't compatible with React's model of DOM manipulation. Moreover, constructing legends or positioning tooltips is often an agonisingly frustrating process in D3.
 
