@@ -1,5 +1,5 @@
 import BlogPost from "../../../components/BlogPost";
-import YueLongXueShan from "./YueLongXueShan";
+import YueLongXueShan from "../../../components/threejs/YueLongXueShan";
 
 export const meta = {
   title: "3D Mapping with Rayshader and ThreeJS",
@@ -14,9 +14,75 @@ export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
 
 <YueLongXueShan />
 
-## My Headline
+[Rayshader](https://www.rayshader.com/) is an open source R package for turning elevation data into 2D and 3D visualisations with accurate lighting effects using a combination of raytracing, spherical texture mapping, overlays and ambient occlusion.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque maximus pellentesque dolor non egestas. In sed tristique elit. Cras vehicula, nisl vel ultricies gravida, augue nibh laoreet arcu, et tincidunt augue dui non elit. Vestibulum semper posuere magna, quis molestie mauris faucibus ut. Praesent ornare velit sit amet enim semper lacinia. Aenean nec sem lacus. Cras porta nunc nec leo lacinia sagittis. Aliquam ornare gravida cursus. Etiam ultrices massa quis erat scelerisque rhoncus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin lacinia sodales augue, non mattis ipsum pretium non. Morbi vehicula tempor blandit. Nam rhoncus, massa a maximus imperdiet, tortor risus aliquet tortor, nec lacinia eros nisi volutpat massa. Maecenas ut augue ipsum.
+Properly deployed, 3D visualisations enable much better understanding of a location's topography. For instance, the `raster` package in R provides `plot()` function which can produce 2D topographic maps.
 
-Sed vehicula libero pulvinar
-tincidunt ligula non, luctus massa. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas arcu purus, aliquam ac molestie ac, luctus eget sem. Sed pellentesque massa eros, condimentum commodo ligula cursus ut. Mauris sit amet molestie ipsum. Nullam venenatis est at purus mollis consectetur. Phasellus a ipsum a quam ullamcorper aliquet. Nunc gravida bibendum placerat.
+```r
+# Read the tif data
+tif <- raster("dem_01.tif")
+
+# Produce the plot
+raster::plot(tif,
+             box = FALSE,
+             axes = FALSE,
+             col = grey(1:100/100))
+```
+
+Using the same data, we can easily produce a realistic 3D visualisation with rayshader.
+
+```r
+library(rayshader)
+library(magrittr)
+
+# Generate a matrix from the tif data
+elmat <- raster_to_matrix(tif)
+
+elmat %>%
+  sphere_shade(texture = "imhof2") %>%
+  add_water(detect_water(elmat), color = "imhof2") %>%
+  add_shadow(ray_shade(elmat), 0.5) %>%
+  plot_3d(elmat, zscale = 10, shadow = FALSE, background = "#0f0e17",
+          fov = 0, theta = 135, zoom = 1, phi = 45,
+          solid = FALSE, windowsize = c(800, 500))
+
+```
+
+Note that rayshader provides a number of functions to enhance our visualisation by applying realistic shadows and shading to the topography, as well as adding water.
+
+This 3D visualisation is much better representation of our elevation data.
+
+# Recreating China's Jade Snow Mountain with rayshader
+
+The Jade Snow Mountain, 玉龙雪山, is a small mountain range in the north of Yunnan province in south-west China. It's highest peak is around 5,600 metres above sea level.
+
+Tyler Morgan-Wall, rayshader's author, has [provided an excellent guide](https://www.tylermw.com/a-step-by-step-guide-to-making-3d-maps-with-satellite-imagery-in-r/) on making 3D maps using satellite imagery. As my code closely follows Tyler's example, I won't post it all here - though it is [available on GitHub]().
+
+One of the advantages of running this analysis in R is that the language has a huge ecosystem of geospatial packages which can be used to prep and clean the data before we produce the visualisation. For instance, the elevation data from [Derek Watkin’s SRTM tile downloader](https://www.tylermw.com/a-step-by-step-guide-to-making-3d-maps-with-satellite-imagery-in-r/) covered a much larger area the Jade Snow Mountain. To remedy this, I used the [`sf`](https://r-spatial.github.io/sf/) package to create a new simple feature collection out of two sets of lat long coordinates. These coordinates are then used to crop the elevation data.
+
+```r
+library(sf)
+
+point_1 <- c(y=100.05, x=27.25)
+point_2 <- c(y=100.3, x=27.0)
+
+extent_latlong <- st_sf(a = 1:2, geom = st_sfc(st_point(point_1), st_point(c(point_2))), crs = 4326)
+
+e <- raster::extent(extent_latlong)
+
+elevation_cropped <- raster::crop(elevation, e)
+```
+
+Our `plot_3d()` call produces the following visualisation.
+
+```r
+plot_3d(hillshade = rgb_contrast,
+        heightmap = yu_long_matrix,
+        zscale = 30, fov = 0, theta = 30, zoom = 0.5,
+        phi = 20, solid = FALSE, windowsize = c(1200, 700),
+        background = "#0f0e17", shadowcolor = "#0f0e17")
+```
+
+When we run the `plot_3d()` function locally, rayshader outputs to an [rgl device](https://cran.r-project.org/web/packages/rgl/vignettes/rgl.html). This allows us to pan around our 3D visualisation. This got me thinking - how could I embed this interactive visualisation into a web application?
+
+# Three.js and react-three-fiber
