@@ -61,7 +61,7 @@ The [Jade Dragon Snow Mountain](https://en.wikipedia.org/wiki/Jade_Dragon_Snow_M
 
 ![](/thoughts/threejs-yulongxueshan/yulongxueshan.jpeg)
 
-Tyler Morgan-Wall, rayshader's author, has [provided an excellent guide](https://www.tylermw.com/a-step-by-step-guide-to-making-3d-maps-with-satellite-imagery-in-r/) on making 3D maps using satellite imagery. As my code closely follows Tyler's example, I won't post it all here - though it is [available on GitHub]().
+Tyler Morgan-Wall, rayshader's author, has [provided an excellent guide](https://www.tylermw.com/a-step-by-step-guide-to-making-3d-maps-with-satellite-imagery-in-r/) on making 3D maps using satellite imagery. As my code closely follows Tyler's example, I won't post it all here - though it is [available on GitHub](https://github.com/OwnKng/yulongxueshan-rayshader).
 
 One of the advantages of running this analysis in R is that the language has a huge ecosystem of spatial packages which can be used to prep and clean the data before we produce the visualisation. For instance, the elevation data from [Derek Watkin’s SRTM tile downloader](https://www.tylermw.com/a-step-by-step-guide-to-making-3d-maps-with-satellite-imagery-in-r/) covered a much larger area the Jade Snow Mountain. To remedy this, I used the [`sf`](https://r-spatial.github.io/sf/) package to create a new simple feature collection out of two sets of lat long coordinates. The extent of these coordinates are then used to crop the elevation data.
 
