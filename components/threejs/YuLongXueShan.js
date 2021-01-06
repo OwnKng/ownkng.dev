@@ -1,52 +1,10 @@
-import { useRef, Suspense } from "react";
+import { useState, useRef, Suspense } from "react";
 import { useLoader, useFrame } from "react-three-fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Canvas } from "react-three-fiber";
 import { OrbitControls } from "drei";
-import { useState } from "react";
 import * as THREE from "three";
 import { Button } from "../styled/element/Button";
-
-const RayshaderModel = ({ overlay }) => {
-  const ref = useRef();
-  const { nodes, materials } = useLoader(GLTFLoader, "/yuelongxueshan.glb");
-
-  useFrame(() => {
-    ref.current.rotation.y += 0.005;
-  });
-
-  const rayProps = {
-    geometry: nodes.yulongxueshan.geometry,
-    rotation: [Math.PI / 2, 0, 0],
-    scale: [0.1, 0.1, 0.1],
-    material: materials.ray_surface,
-  };
-
-  const materialProps = {
-    geometry: nodes.yulongxueshan.geometry,
-    rotation: [Math.PI / 2, 0, 0],
-    scale: [0.1, 0.1, 0.1],
-    receiveShadow: true,
-    castShadow: true,
-  };
-
-  const props = overlay ? rayProps : materialProps;
-
-  return (
-    <group ref={ref}>
-      <mesh {...props}>
-        {!overlay && (
-          <meshStandardMaterial
-            color='#A87A65'
-            side={THREE.DoubleSide}
-            roughness={0.8}
-            metalness={0.4}
-          />
-        )}
-      </mesh>
-    </group>
-  );
-};
 
 const Scene = () => {
   const [orbit, setOrbit] = useState(false);
@@ -57,9 +15,9 @@ const Scene = () => {
       <Button
         onClick={() => toggleOverlay((prevState) => !prevState)}
         style={{
-          background: overlay ? "#2C8CBE" : "",
+          background: overlay ? "#ef4565" : "",
           color: overlay ? "#FFFFFE" : "",
-          opacity: overlay ? 1 : 0.5,
+          opacity: overlay ? 1 : 0.4,
         }}
       >
         Satellite overlay
@@ -67,9 +25,9 @@ const Scene = () => {
       <Button
         onClick={() => setOrbit((prevState) => !prevState)}
         style={{
-          background: orbit ? "#2C8CBE" : "",
+          background: orbit ? "#ef4565" : "",
           color: orbit ? "#FFFFFE" : "",
-          opacity: orbit ? 1 : 0.5,
+          opacity: orbit ? 1 : 0.4,
         }}
       >
         Enable controls
@@ -89,7 +47,7 @@ const Scene = () => {
           />
           <pointLight
             position={[0, 20, 0]}
-            color={overlay ? "#FBAA68" : "#31736C"}
+            color={overlay ? "#FFFFFF" : "#FFFFFF"}
             intensity={0.4}
           />
           <Suspense fallback={null}>
@@ -102,6 +60,47 @@ const Scene = () => {
   );
 };
 
-useLoader.preload(GLTFLoader, "/yuelongxueshan.glb");
+const RayshaderModel = ({ overlay }) => {
+  const ref = useRef();
+  const { nodes, materials } = useLoader(GLTFLoader, "/yulongxueshan.glb");
+
+  useFrame(() => {
+    ref.current.rotation.y += 0.005;
+  });
+
+  const overlayProps = {
+    geometry: nodes.yulongxueshan.geometry,
+    rotation: [Math.PI / 2, 0, 0],
+    scale: [0.1, 0.1, 0.1],
+    material: materials.ray_surface,
+  };
+
+  const materialProps = {
+    geometry: nodes.yulongxueshan.geometry,
+    rotation: [Math.PI / 2, 0, 0],
+    scale: [0.1, 0.1, 0.1],
+    receiveShadow: true,
+    castShadow: true,
+  };
+
+  const props = overlay ? overlayProps : materialProps;
+
+  return (
+    <group ref={ref}>
+      <mesh {...props}>
+        {!overlay && (
+          <meshStandardMaterial
+            color='#A87A65'
+            roughness={0.7}
+            metalness={0.7}
+            side={THREE.DoubleSide}
+          />
+        )}
+      </mesh>
+    </group>
+  );
+};
+
+useLoader.preload(GLTFLoader, "/yulongxueshan.glb");
 
 export default Scene;

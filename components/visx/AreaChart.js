@@ -51,7 +51,7 @@ export const AreaChart = ({
   data,
   width,
   height,
-  margin = { top: 40, bottom: 30, left: 50, right: 50 },
+  margin = { top: 40, bottom: 30, left: 50, right: 20 },
 }) => {
   // create dimensions
   const innerWidth = width - margin.left - margin.right;
