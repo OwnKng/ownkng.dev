@@ -27,11 +27,11 @@ In this article, we're going to explore these text descriptions using
 the `tidytext` package, and then build several machine learning models
 using using the `tidymodels` package. These supervised learning models
 will use the description of the object to identify whether it is an item
-from the the [computing and data](https://collection.sciencemuseumgroup.org.uk/search/categories/computing-&-data-processing) collection, or the [space technology](https://collection.sciencemuseumgroup.org.uk/search/objects/categories/space-technology) collection.
+from the [computing and data](https://collection.sciencemuseumgroup.org.uk/search/categories/computing-&-data-processing) collection, or the [space technology](https://collection.sciencemuseumgroup.org.uk/search/objects/categories/space-technology) collection.
 
 We'll start by loading the `tidyverse` packages, which we'll be using
 throughout our analysis, and reading in the data. I've written a
-separate script to query the api and export the descriptions as a csv,
+separate script to query the api and export the descriptions as a csv file,
 which is [available on my
 github](https://github.com/OwnKng/science-museum/blob/main/data-scraping.Rmd).
 The computing and space objects are in two separate csv files, so we'll
@@ -78,7 +78,7 @@ objects %>%
 
 # Text mining with tidytext
 
-[`tidytext`](https://cran.r-project.org/web/packages/tidytext/readme/README.html)
+[`Tidytext`](https://cran.r-project.org/web/packages/tidytext/readme/README.html)
 is a superb package for manipulating and analysing text data in R,
 originally developed by Julia Silge and David Robinson. The first thing
 we'll do using `tidytext` is tokenise our descriptions - breaking each
@@ -86,7 +86,7 @@ description down into individual words. We'll then remove from these
 words any stop words - extremely common words that don't add much to our
 analysis, such as 'the', 'and' or 'with'.
 
-In our object descriptions, there are also a lot of numbers. Sometimes these
+There are also a lot of numbers in our object descriptions. Sometimes these
 numbers have a particular significance - such as the year the object was
 produced - but often they're an obscure product serial number. For our
 analysis, we'll remove any numbers from our words.
@@ -118,7 +118,7 @@ object_descriptions
     ## # … with 34,625 more rows
 
 Once we've done this we can explore the number of non-common words in
-our descriptions for each item. There are around 2,750 objects in our
+our descriptions for each object. There are around 2,750 objects in our
 dataset, and approximately 1,000 of them have between 5 and 10
 non-common words. A large number, around 850, have fewer than five
 non-common words.
@@ -134,7 +134,7 @@ object_descriptions %>%
 
 ![](/thoughts/textmining/unnamed-chunk-5-1.png)
 
-There are some objects with very long descriptions. We might expect these
+There are also some objects with very long descriptions. We might expect these
 to be the objects with greater historical significance, but this doesn't really
 seem to be the case. While the Apollo 10 command module is among the
 longest descriptions, so are two descriptions for different
@@ -162,7 +162,7 @@ object_descriptions %>%
     ##  9 Space food, chicken curry made in collaboration with Heston … "This chicken curry was developed by celebrity chef, Heston Blu…   129
     ## 10 Soyuz TMA-19M descent module,  S.P. Korolev Rocket and Space… "The Russian made Soyuz TMA-19M spacecraft is the first flown, …   128
 
-# What are the most common words in the descriptions?
+## What are the most common words in the descriptions?
 
 One basic question we can ask of the data is what are the most common
 words in the computing and space collections. Looking at the
@@ -216,12 +216,12 @@ objects_log_odds %>%
 
 ![](/thoughts/textmining/unnamed-chunk-8-1.png)
 
-# How are the words connected?
+## How are the words connected?
 
 We may also be interested in which words often appear together within an
 object's description. We can estimate this for each group with the
 `pairwise_count()` function from the `widyr` package. This code will
-return to use a dataset of the number of times every word in our data
+return a dataset of the number of times every word in our data
 appears with every other word, calculated separately within each
 category.
 
@@ -383,7 +383,7 @@ So far we've explored the descriptions of the computing and space
 objects, getting a feel for the terms they use and the substance of the
 descriptions. One thing we could do to extend this analysis is develop a
 statistical model that predicts from looking at the object
-descriptions whether it belonged in the computing or space collection.
+descriptions whether it belongs in the computing or space collection.
 We'll fit a few different models using the `tidymodels` package.
 
 [`Tidymodels`](https://www.tidymodels.org/) is a collection of modeling packages that provides a
@@ -422,7 +422,7 @@ performance - a model built on the training data might [overfit](https://en.wiki
 producing impressive results which are not generalisable when we apply the
 model to the testing data. If we use cross-validation, this is less
 likely to occur because we're creating ten different datasets to train
-and measure our approach.
+and assess our approach.
 
 ```r
 set.seed(42)
@@ -453,7 +453,7 @@ processing steps we need to undertake.
 
 In `tidymodels`, these processing
 steps are part of a recipe, which specifies our model formula and all
-the transformations we want to apply to our data before we fit the
+the transformations we want to apply to our data before we fit a
 model. `Tidymodels` comes with an extensive number of functions for
 processing text data.
 
@@ -461,12 +461,12 @@ Our recipe involves first tokenizing the data and removing any stop
 words. We also stem the words, which reduces the word to its base or
 root form, using `step_stem()`. This means words like 'astronauts' will be
 reduced to 'astronaut', or 'computation' to 'compute'. This isn't always
-necessary, but given that many of our works are plurals or other
+necessary, but given that many of our words are plurals or other
 variations on more common words, it may help the model identify the
 roots within each category of object. We'll also use only the most common 500
 words in our descriptions by specifying 500 to our `step_tokenfilter()`.
 
-We don't use the words in our model. Instead, we take their _term
+We don't use the actual words in our model. Instead, we take their _term
 frequency inverse document frequency (tf-idf)_. The idea of the tf-idf
 is that it provides a numeric estimate of how important a word is in a
 collection of documents. A word that appears in every document, for
@@ -727,10 +727,9 @@ svm_rs_metrics
 
 One way we could try and boost the SVM's performance further is by
 tuning some of its parameters. In our SVM model, there are two
-parameters we might want to tune.
+parameters we might want to tune - cost and sigma.
 
-First, the cost parameter. The cost parameter is used to adjust a
-penalty that's applied to the model when our hyperplane can't neatly
+The cost parameter is used to adjust a penalty that's applied to the model when our hyperplane can't neatly
 separate our data into meaningful camps. The greater the cost parameter,
 the harder the model will try to achieve total separation. While it may
 sound like a higher cost is always better, it's important to
@@ -738,8 +737,7 @@ recognise that optimising too much to our training data will possibly result
 in worse performance on our testing data as our model won't generalise
 well.
 
-Second, the sigma (often also referred to as the gamma). The sigma
-determines the influence that each observation may exert on where the
+The sigma parameter (often also referred to as the gamma) determines the influence that each observation may exert on where the
 hyperplane is placed.
 
 We can easily identify the optimal values for these parameters using a tuning grid.
@@ -758,7 +756,7 @@ objects_workflow <- objects_workflow %>%
 We'll now generate a grid of these parameters. `Tidymodels`
 provides functions to help us select sensible values for each. We'll set
 levels equal to five, so that we are given five cost values and five
-sigma values. The grid combine each value, giving us 25 different values
+sigma values. The grid combines each value, giving us 25 different
 pairs of cost and sigma to try.
 
 ```r
@@ -787,7 +785,7 @@ tune_rs <- tune_grid(
 We can then collect the performance metrics and identify which parameter
 set produced the best results. Our model with the lowest cost parameter
 and a sigma of one performed the best. Even this model, however, doesn't
-quite achieve the performance seen on our earlier random forest model.
+quite achieve the performance seen in our earlier random forest model.
 
 ```r
 show_best(tune_rs, metric = "accuracy")
@@ -805,7 +803,7 @@ show_best(tune_rs, metric = "accuracy")
 ### Finalising our model
 
 We've now used three different types of model and identified that our random forest model appears to be the best performing one. Let's finalise our model and apply it to our testing data.
-We'll first revert our workflow back to using the random forest
+We'll first amend our workflow to using the random forest
 specification we defined earlier.
 
 ```r
@@ -860,8 +858,8 @@ final_res %>%
 
 ![](/thoughts/textmining/unnamed-chunk-34-1.png)
 
-We can also take a closer look at incorrect predictions. There's nothing
-in these that seems particularly striking, other than some of these
+We can also take a closer look at the incorrect predictions. There's nothing
+in these that seems particularly telling, other than some of these
 contain terms that are likely to be found in both the space and computer
 collections, such as the description of 'Flown NASA Shuttle Main
 Guidance computer, IBM 1980's'. Perhaps even a human would struggle to
@@ -907,7 +905,7 @@ objects[incorrect_preds, ] %>%
 
 In this analysis we've performed some fairly advanced techniques for
 analysing and modelling text data, including fitting three machine
-learning models to identify which collection different items from the
+learning models to identify which collection different objects from the
 Science Museum belong to.
 
 The two packages we used most to do this,
@@ -918,7 +916,7 @@ recommend looking at [Text Minding with
 R](https://www.tidytextmining.com/), [Supervised Machine Learning for
 Text Analysis in R](https://smltar.com/) and Julia Silge's fantastic
 [YouTube
-channel](https://www.youtube.com/channel/UCTTBgWyJl2HrrhQOOc710kA).
+channel](https://www.youtube.com/channel/UCTTBgWyJl2HrrhQOOc710kA) to learn more.
 
 [^1]:
     This implementation of log odds accounts for the frequency of
