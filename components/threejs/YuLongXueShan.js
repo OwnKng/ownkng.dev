@@ -15,7 +15,7 @@ const Scene = () => {
       <Button
         onClick={() => toggleOverlay((prevState) => !prevState)}
         style={{
-          background: overlay ? "#ef4565" : "",
+          background: overlay ? "#00A7E1" : "",
           color: overlay ? "#FFFFFE" : "",
           opacity: overlay ? 1 : 0.4,
         }}
@@ -25,7 +25,7 @@ const Scene = () => {
       <Button
         onClick={() => setOrbit((prevState) => !prevState)}
         style={{
-          background: orbit ? "#ef4565" : "",
+          background: orbit ? "#00A7E1" : "",
           color: orbit ? "#FFFFFE" : "",
           opacity: orbit ? 1 : 0.4,
         }}

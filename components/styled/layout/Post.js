@@ -17,8 +17,8 @@ const StyledPost = styled.div`
     height: 100%;
     background-image: linear-gradient(
       to right,
-      rgba(15, 14, 23, 0.7),
-      rgba(15, 14, 23, 0.4)
+      rgba(2, 10, 18, 0.7),
+      rgba(2, 10, 18, 0.4)
     );
   }
 
@@ -124,7 +124,7 @@ const StyledContent = styled.div`
     justify-self: baseline;
     border-radius: 2px;
     display: flex;
-    background: ${({ theme }) => theme.colors.tertiary};
+    background: ${({ theme }) => theme.colors.button};
     color: ${({ theme }) => theme.colors.headline};
 
     span {

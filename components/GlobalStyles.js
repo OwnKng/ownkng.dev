@@ -15,7 +15,7 @@ html {
 
 body {
   margin: 0;
-  background-color: #0f0e17;
+  background-color: #020A12;
   font-family: 'Saira', sans-serif;
   font-weight: 400;
   line-height: 1.8;

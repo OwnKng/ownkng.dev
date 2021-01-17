@@ -47,7 +47,7 @@ const Form = ({ tags, active, setActive }) => {
       <div className='buttons'>
         <button
           style={{
-            background: active === "Featured" ? "#e53170" : "",
+            background: active === "Featured" ? "#00A7E1" : "",
             color: active === "Featured" ? "white" : "",
           }}
           onClick={() => setActive("Featured")}
@@ -59,7 +59,7 @@ const Form = ({ tags, active, setActive }) => {
               <button
                 key={tag}
                 style={{
-                  background: tag === active ? "#e53170" : "",
+                  background: tag === active ? "#00A7E1" : "",
                   color: tag === active ? "white" : "",
                 }}
                 onClick={() => setActive(tag)}

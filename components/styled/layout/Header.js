@@ -36,7 +36,7 @@ export default styled(Header)`
     height: 100%;
     width: 96%;
     max-width: 1200px;
-    background: rgba(15, 14, 23, 1);
+    background: rgba(2, 10, 18, 1);
     opacity: 0.9;
     backdrop-filter: blur(4px);
     margin: 0 auto;

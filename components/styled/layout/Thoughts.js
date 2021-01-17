@@ -68,7 +68,7 @@ export default styled(Thoughts)`
     font-size: 1.2rem;
 
     :hover {
-      color: ${({ theme }) => theme.colors.tertiary};
+      color: ${({ theme }) => theme.colors.secondary};
     }
 
     :vistied {

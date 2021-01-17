@@ -12,11 +12,11 @@ export const Article = styled(motion.article)`
   }
 
   a {
-    color: ${({ theme }) => theme.colors.tertiary};
+    color: ${({ theme }) => theme.colors.secondary};
   }
 
   a:visited {
-    color: ${({ theme }) => theme.colors.tertiary};
+    color: ${({ theme }) => theme.colors.secondary};
   }
 
   h1,

@@ -36,11 +36,11 @@ const StyledNav = styled(motion.div)`
   }
 
   a:hover {
-    color: ${({ theme }) => theme.colors.tertiary};
+    color: ${({ theme }) => theme.colors.secondary};
   }
 
   a:hover svg {
-    color: ${({ theme }) => theme.colors.tertiary};
+    color: ${({ theme }) => theme.colors.secondary};
   }
   }
 `;
@@ -151,6 +151,6 @@ export default styled(NavWrapper)`
   height: 100vh;
   width: 100vw;
   z-index: 2;
-  background: rgba(15, 14, 23, 0.4);
+  background: rgba(2, 10, 18, 0.4);
   backdrop-filter: blur(4px);
 `;
