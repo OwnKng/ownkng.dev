@@ -8,7 +8,7 @@ const Footer = ({ className }) => (
       Built with <a href='https://nextjs.org/'>Next.js</a> and{" "}
       <a href='https://vercel.com/'>Vercel</a>
     </p>
-    <p>&#169; 2020 Owen King</p>
+    <p>&#169; 2021 Owen King</p>
   </footer>
 );
 

@@ -2,21 +2,23 @@ import { Post } from "./Post";
 import { PostWrapper } from "../element/PostWrapper";
 import styled from "styled-components";
 
-const Posts = ({ className, posts }) => (
-  <div className={className}>
-    {posts
-      ? posts.map((post, i) => (
-          <div className='grid' key={`post-${i}`}>
-            <div />
-            <PostWrapper className='wrapper'>
-              <Post post={post} />
-            </PostWrapper>
-            <div />
-          </div>
-        ))
-      : null}
-  </div>
-);
+const Posts = ({ className, posts }) => {
+  return (
+    <div className={className}>
+      {posts
+        ? posts.map((post, i) => (
+            <div className='grid' key={`post-${i}`}>
+              <div />
+              <PostWrapper className='wrapper'>
+                <Post post={post} />
+              </PostWrapper>
+              <div />
+            </div>
+          ))
+        : null}
+    </div>
+  );
+};
 
 export default styled(Posts)`
   .grid {
