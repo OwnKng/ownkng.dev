@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { elevation } from "../utilities";
+import styled from "styled-components"
 
 const StyledForm = styled.div`
   display: grid;
@@ -20,57 +19,71 @@ const StyledForm = styled.div`
     color: ${({ theme }) => theme.colors.paragraph};
   }
 
-  border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
-
   button {
+    position: relative;
     font-size: 1.2rem;
     padding: 0.5rem 1rem;
-    background: ${({ theme }) => theme.colors.paragraph};
-    color: ${({ theme }) => theme.colors.background};
-    border-radius: 5px;
+    background: none;
+    color: ${({ theme }) => theme.colors.paragraph};
     border: none;
     margin: 5px;
-    ${elevation[2]};
+
+    :before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: ${({ theme }) => theme.colors.button};
+      visibility: hidden;
+      transition: all 0.2s ease-in-out;
+    }
+
+    :hover:before {
+      visibility: visible;
+      width: 100%;
+    }
   }
 
   button:focus {
     outline: none;
   }
-`;
+`
 
 const Form = ({ tags, active, setActive }) => {
   return (
     <StyledForm>
-      <div>
-        <p>Filter</p>
-      </div>
       <div className='buttons'>
-        <button
-          style={{
-            background: active === "Featured" ? "#00A7E1" : "",
-            color: active === "Featured" ? "white" : "",
-          }}
-          onClick={() => setActive("Featured")}
-        >
-          Featured
-        </button>
+        <div>
+          <button
+            style={{
+              color: active === "Featured" ? "#00A7E1" : "",
+            }}
+            onClick={() => setActive("Featured")}
+          >
+            Featured
+          </button>
+        </div>
+
         {tags
           ? tags.map((tag) => (
-              <button
-                key={tag}
-                style={{
-                  background: tag === active ? "#00A7E1" : "",
-                  color: tag === active ? "white" : "",
-                }}
-                onClick={() => setActive(tag)}
-              >
-                {tag}
-              </button>
+              <div>
+                <button
+                  key={tag}
+                  style={{
+                    color: tag === active ? "#00A7E1" : "",
+                  }}
+                  onClick={() => setActive(tag)}
+                >
+                  {tag}
+                </button>
+              </div>
             ))
           : null}
       </div>
     </StyledForm>
-  );
-};
+  )
+}
 
-export default Form;
+export default Form

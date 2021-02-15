@@ -1,44 +1,44 @@
-import { useState, useEffect } from "react";
-import { posts } from "../../../getAllPosts";
-import { SectionHeader } from "../element/SectionHeader";
-import Form from "./Form";
-import Posts from "./Posts";
-import Link from "next/link";
-import styled from "styled-components";
+import { useState, useEffect } from "react"
+import { posts } from "../../../getAllPosts"
+import { SectionHeader } from "../element/SectionHeader"
+import Form from "./Form"
+import Posts from "./Posts"
+import Link from "next/link"
+import styled from "styled-components"
 
 const Thoughts = ({ className }) => {
-  const [active, setActive] = useState("Featured");
-  const [filteredPosts, setFiltered] = useState();
+  const [active, setActive] = useState("Featured")
+  const [filteredPosts, setFiltered] = useState()
 
   let tags = posts
     .map((mod) => {
       const {
         module: { meta },
-      } = mod;
-      return meta;
+      } = mod
+      return meta
     })
     .map((meta) => meta.tags)
-    .flat();
+    .flat()
 
   useEffect(() => {
-    let withTag;
+    let withTag
 
     withTag = posts.filter((post) => {
       const {
         module: { meta },
-      } = post;
-      return meta.tags.includes(active);
-    });
+      } = post
+      return meta.tags.includes(active)
+    })
 
-    if (!active) withTag = posts;
+    if (!active) withTag = posts
 
-    setFiltered(withTag);
-  }, [active]);
+    setFiltered(withTag)
+  }, [active])
 
   return (
     <div className={className}>
       <SectionHeader id='thoughts'>
-        <SectionHeader.Title>Thoughts</SectionHeader.Title>
+        <SectionHeader.Title>thoughts</SectionHeader.Title>
         <SectionHeader.Subtitle>
           Articles and how-to's from some of my personal projects
         </SectionHeader.Subtitle>
@@ -57,12 +57,10 @@ const Thoughts = ({ className }) => {
         <div />
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default styled(Thoughts)`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
-
   a {
     color: ${({ theme }) => theme.colors.paragraph};
     font-size: 1.2rem;
@@ -89,12 +87,10 @@ export default styled(Thoughts)`
 
   .footer {
     text-align: center;
-    border-left: 1px solid ${({ theme }) => theme.colors.boxShadow};
-    border-right: 1px solid ${({ theme }) => theme.colors.boxShadow};
     padding: 1rem 0px 1rem 0px;
 
     @media only screen and (max-width: 1000px) {
       border: none;
     }
   }
-`;
+`

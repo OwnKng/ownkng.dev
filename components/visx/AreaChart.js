@@ -1,13 +1,13 @@
-import React, { useCallback } from "react";
-import { AreaStack, Line, Bar } from "@visx/shape";
-import { scaleLinear, scaleOrdinal } from "@visx/scale";
-import { AxisBottom, AxisLeft, Axis } from "@visx/axis";
-import { extent, format } from "d3";
-import { LegendOrdinal, LegendLabel, LegendItem } from "@visx/legend";
-import { localPoint } from "@visx/event";
-import { useTooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip";
-import styled from "styled-components";
-import { motion } from "framer-motion";
+import React, { useCallback } from "react"
+import { AreaStack, Line, Bar } from "@visx/shape"
+import { scaleLinear, scaleOrdinal } from "@visx/scale"
+import { AxisBottom, AxisLeft, Axis } from "@visx/axis"
+import { extent, format } from "d3"
+import { LegendOrdinal, LegendLabel, LegendItem } from "@visx/legend"
+import { localPoint } from "@visx/event"
+import { useTooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip"
+import styled from "styled-components"
+import { motion } from "framer-motion"
 
 const Graph = styled.div`
   font-size: 0.7rem;
@@ -19,7 +19,7 @@ const Graph = styled.div`
       font-size: 0.7rem;
     }
   }
-`;
+`
 
 const tooltipStyles = {
   ...defaultStyles,
@@ -28,7 +28,7 @@ const tooltipStyles = {
   fontSize: "1rem",
   margin: 0,
   padding: "0 0.5rem 0.5rem 0.5rem",
-};
+}
 
 const StyledTooltip = styled.div`
   h5 {
@@ -45,7 +45,7 @@ const StyledTooltip = styled.div`
     grid-auto-flow: rows;
     padding-bottom: 2px;
   }
-`;
+`
 
 export const AreaChart = ({
   data,
@@ -54,33 +54,33 @@ export const AreaChart = ({
   margin = { top: 40, bottom: 30, left: 50, right: 20 },
 }) => {
   // create dimensions
-  const innerWidth = width - margin.left - margin.right;
-  const innerHeight = height - margin.top - margin.bottom;
-  const legendGlyphSize = 10;
+  const innerWidth = width - margin.left - margin.right
+  const innerHeight = height - margin.top - margin.bottom
+  const legendGlyphSize = 10
 
   // create accessor functions
-  const x = (d) => d.year;
-  const y0 = (d) => d[0];
-  const y1 = (d) => d[1];
+  const x = (d) => d.year
+  const y0 = (d) => d[0]
+  const y1 = (d) => d[1]
 
   const keys = Object.keys(data[0]).filter(
     (k) => k !== "iso2c" && k !== "country" && k !== "year"
-  );
+  )
 
   // create scales
   const xScale = scaleLinear({
     range: [margin.left, innerWidth + margin.left],
     domain: extent(data, x),
-  });
+  })
 
   const yScale = scaleLinear({
     range: [innerHeight + margin.top, margin.top],
-  });
+  })
 
   const fillScale = scaleOrdinal({
     domain: keys,
     range: ["#045A8D", "#2B8CBE", "#74A9CF", "#BDC9E1", "#F1EEF6"],
-  });
+  })
 
   const {
     showTooltip,
@@ -88,30 +88,30 @@ export const AreaChart = ({
     tooltipData,
     tooltipTop = 0,
     tooltipLeft = 0,
-  } = useTooltip();
+  } = useTooltip()
 
   // event handler
   const handleTooltip = useCallback(
     (event) => {
-      const { x } = localPoint(event) || { x: 0 };
-      let x0 = xScale.invert(x);
-      x0 = Math.round(x0);
+      const { x } = localPoint(event) || { x: 0 }
+      let x0 = xScale.invert(x)
+      x0 = Math.round(x0)
 
       // for mobile, prevents tooltip from crashing the app
-      if (x0 > 2020) x0 = 2020;
-      if (x0 < 1960) x0 = 1960;
+      if (x0 > 2020) x0 = 2020
+      if (x0 < 1960) x0 = 1960
 
-      let d = data.filter((row) => row.year === x0);
-      const { y } = localPoint(event) || { y: 0 };
+      let d = data.filter((row) => row.year === x0)
+      const { y } = localPoint(event) || { y: 0 }
 
       showTooltip({
         tooltipData: d,
         tooltipLeft: xScale(x0),
         tooltipTop: y,
-      });
+      })
     },
     [data, showTooltip, xScale]
-  );
+  )
 
   return (
     <Graph>
@@ -244,7 +244,7 @@ export const AreaChart = ({
         </TooltipWithBounds>
       )}
     </Graph>
-  );
-};
+  )
+}
 
-export default AreaChart;
+export default AreaChart

@@ -1,5 +1,5 @@
-import { createGlobalStyle } from "styled-components";
-import { normalize } from "polished";
+import { createGlobalStyle } from "styled-components"
+import { normalize } from "polished"
 
 export const GlobalStyles = createGlobalStyle`
 ${normalize()}
@@ -26,18 +26,27 @@ p {
     margin-bottom: 1rem;
 }
 
+h1, h2 {
+  font-family: 'Saira', sans-serif;
+}
+
+h3, h4, h5 {
+  font-family: 'Saira', sans-serif;
+}
+
 h1, h2, h3, h4, h5 {
-  font-family: 'Archivo Black', sans-serif;
   font-weight: 400;
   line-height: 1.2;
   color: #fffffe;
 }
 
+
+
 small, .text_small {font-size: 0.8rem;}
 
 @media screen and (max-width: 600px) {
     html {
-        font-size: 70%;
+        font-size: 80%;
     }
   }
-`;
+`

@@ -1,9 +1,8 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const SectionHeader = styled.div`
   margin: 50px 0 0 0;
   text-align: center;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
 
   :before {
     display: block;
@@ -13,19 +12,22 @@ export const SectionHeader = styled.div`
     visibility: hidden;
     pointer-events: none;
   }
-`;
+`
 
 const SectionTitle = styled.h1`
   color: ${({ theme }) => theme.colors.headline};
-  font-size: 2.2rem;
+  font-size: 2.7rem;
   padding: 0.5rem 0rem;
   margin: 0px;
-`;
+  text-transform: uppercase;
+  font-family: "Saira", sans-serif;
+`
 
 const SectionSubtitle = styled.p`
   padding: 0px;
   margin: 0px;
-`;
+  color: ${({ theme }) => theme.colors.paragraph};
+`
 
-SectionHeader.Title = SectionTitle;
-SectionHeader.Subtitle = SectionSubtitle;
+SectionHeader.Title = SectionTitle
+SectionHeader.Subtitle = SectionSubtitle

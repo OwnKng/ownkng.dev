@@ -1,21 +1,25 @@
-import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos";
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import { useAppState } from "../../state";
-import { useScrollFreeze } from "../../hooks";
-import React from "react";
-import Link from "next/link";
+import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos"
+import styled from "styled-components"
+import { motion } from "framer-motion"
+import { useAppState } from "../../state"
+import { useScrollFreeze } from "../../hooks"
+import React from "react"
+import Link from "next/link"
 
 const StyledNav = styled(motion.div)`
-  width: 96%;
-  max-width: 1200px;
+  width: 100%;
   margin: 0px auto;
   text-align: right;
+  padding: 0px 10%;
+
+  @media only screen and (max-width: 600px) {
+    padding: 0px 5%;
+  }
 
   li {
     list-style-type: none;
     font-size: 2em;
-    margin: 2rem;
+    margin: 2rem 0rem;
     font-weight: bold;
     overflow: hidden;
   }
@@ -43,13 +47,13 @@ const StyledNav = styled(motion.div)`
     color: ${({ theme }) => theme.colors.secondary};
   }
   }
-`;
+`
 
 const variants = {
   open: { opacity: 1 },
   closed: { opacity: 0 },
   transition: { type: "ease" },
-};
+}
 
 const ulVariants = {
   open: {
@@ -58,41 +62,41 @@ const ulVariants = {
     },
   },
   closed: {},
-};
+}
 
 const NavItem = React.forwardRef(({ onClick, href, linkName }, ref) => {
   return (
     <a href={href} onClick={onClick} ref={ref}>
       {linkName}
     </a>
-  );
-});
+  )
+})
 
 const NavWrapper = ({ className }) => {
-  const { isMenuOpen, closeMenu } = useAppState();
-  if (!isMenuOpen) return null;
+  const { isMenuOpen, closeMenu } = useAppState()
+  if (!isMenuOpen) return null
   return (
     <div className={className}>
       <Nav isMenuOpen={isMenuOpen} closeMenu={closeMenu}></Nav>
     </div>
-  );
-};
+  )
+}
 
 const Nav = ({ isMenuOpen, closeMenu }) => {
-  useScrollFreeze();
+  useScrollFreeze()
   const liVariants = {
     open: {
       y: 0,
       opacity: 1,
     },
     closed: { y: 50, opacity: 0 },
-  };
+  }
 
   const links = [
     { name: "Home", url: "/" },
     { name: "Thoughts", url: "/#thoughts" },
     { name: "About me", url: "/#about" },
-  ];
+  ]
 
   return (
     <StyledNav
@@ -142,8 +146,8 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
         </motion.li>
       </motion.ul>
     </StyledNav>
-  );
-};
+  )
+}
 
 export default styled(NavWrapper)`
   position: fixed;
@@ -153,4 +157,4 @@ export default styled(NavWrapper)`
   z-index: 2;
   background: rgba(2, 10, 18, 0.4);
   backdrop-filter: blur(4px);
-`;
+`

@@ -1,9 +1,8 @@
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import Voronoi from "../../visx/Voronoi";
-import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import { DownArrowAlt } from "@styled-icons/boxicons-regular/DownArrowAlt";
-import { elevation } from "../utilities";
+import styled from "styled-components"
+import { motion } from "framer-motion"
+import Voronoi from "../../visx/Voronoi"
+import ParentSize from "@visx/responsive/lib/components/ParentSize"
+import { DownArrowAlt } from "@styled-icons/boxicons-regular/DownArrowAlt"
 
 const divVariants = {
   initial: {},
@@ -12,19 +11,19 @@ const divVariants = {
       staggerChildren: 0.4,
     },
   },
-};
+}
 
 const titleVariants = {
   initial: { y: 100 },
   animate: { y: 0 },
   transition: { type: "easeIn" },
-};
+}
 
 const scrollVariants = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   transition: { type: "easeIn" },
-};
+}
 
 const Hero = ({ className }) => (
   <motion.div
@@ -50,12 +49,11 @@ const Hero = ({ className }) => (
       </motion.div>
     </div>
   </motion.div>
-);
+)
 
 export default styled(Hero)`
   width: 100%;
   position: relative;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.boxShadow};
 
   .heroPlot {
     height: 80vh;
@@ -75,7 +73,7 @@ export default styled(Hero)`
       height: 600px;
     }
   }
-`;
+`
 
 const StyledNameCard = styled(motion.div)`
     position: absolute;
@@ -83,12 +81,14 @@ const StyledNameCard = styled(motion.div)`
     width: 100%;
 
     h1 {
-        margin: 0px 10px;
+        margin: 0px 10%;
+        max-width: 1200px;
         font-size: 4rem;
       }
 
       h2 {
-        margin: 10px 10px;
+        margin: 10px 10%;
+        max-width: 1200px;
         font-size: 2rem;
         color:  ${({ theme }) => theme.colors.paragraph};
         font-family: 'Saira', sans-serif;
@@ -97,17 +97,20 @@ const StyledNameCard = styled(motion.div)`
     .title {
       background: ${({ theme }) => theme.colors.background};
         overflow: hidden;
-        border-top: 2px solid ${({ theme }) => theme.colors.background};
-        border-bottom: 2px solid ${({ theme }) => theme.colors.background};
     }
 
     .subtitle {
       overflow: hidden;
       margin-top: 10px;
       background: ${({ theme }) => theme.colors.background};
-      border-bottom: 2px solid ${({ theme }) => theme.colors.background};
     }
-  }`;
+
+    @media only screen and (max-width: 600px) {
+      h1, h2 {
+        margin: 10px 5%;
+      }
+    }
+  }`
 
 const NameCard = () => (
   <StyledNameCard>
@@ -122,4 +125,4 @@ const NameCard = () => (
       </motion.h2>
     </div>
   </StyledNameCard>
-);
+)

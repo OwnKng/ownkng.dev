@@ -1,13 +1,16 @@
-import AboutMe from "../components/styled/layout/AboutMe";
-import Hero from "../components/styled/layout/Hero";
-import Thoughts from "../components/styled/layout/Thoughts";
+import AboutMe from "../components/styled/layout/AboutMe"
+import Hero from "../components/styled/layout/Hero"
+import Thoughts from "../components/styled/layout/Thoughts"
+import { Main } from "../components/styled/element/Main"
 
 export default function IndexPage() {
   return (
     <>
       <Hero />
-      <Thoughts />
-      <AboutMe />
+      <Main>
+        <Thoughts />
+        <AboutMe />
+      </Main>
     </>
-  );
+  )
 }

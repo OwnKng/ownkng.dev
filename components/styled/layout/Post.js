@@ -1,9 +1,10 @@
-import Link from "next/link";
-import Image from "next/image";
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import { elevation } from "../utilities";
-import { useInView } from "react-intersection-observer";
+import Link from "next/link"
+import Image from "next/image"
+import styled from "styled-components"
+import { motion } from "framer-motion"
+import { elevation } from "../utilities"
+import { useInView } from "react-intersection-observer"
+import { useState } from "react"
 
 const StyledPost = styled.div`
   height: 400px;
@@ -13,6 +14,7 @@ const StyledPost = styled.div`
 
   .imageOverlay {
     position: absolute;
+    z-index: 0;
     width: 100%;
     height: 100%;
     background-image: linear-gradient(
@@ -26,20 +28,18 @@ const StyledPost = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    border: none;
-    opacity: 0;
-    border: 1px solid ${({ theme }) => theme.colors.boxShadow};
-    transition: opacity 0.5s;
-
-    :hover {
-      opacity: 1;
-    }
+    z-index: 1;
+    background: linear-gradient(
+      142.24deg,
+      rgba(0, 8, 15, 0.9) 10%,
+      rgba(93, 253, 202, 0.4) 250%
+    );
   }
 
   @media only screen and (max-width: 500px) {
     height: 300px;
   }
-`;
+`
 
 const StyledContent = styled.div`
   position: absolute;
@@ -47,6 +47,7 @@ const StyledContent = styled.div`
   height: 90%;
   display: grid;
   margin: 0px 15px;
+  z-index: 2;
 
   grid-template-areas:
     "featured"
@@ -133,7 +134,7 @@ const StyledContent = styled.div`
       padding: 5px 10px;
     }
   }
-`;
+`
 
 const variants = {
   initial: {
@@ -147,24 +148,31 @@ const variants = {
       duration: 0.2,
     },
   },
-};
+}
 
 const titleVariants = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { type: "easeIn" },
-};
+}
+
+const hoverVariants = {
+  noHover: { opacity: 0 },
+  hover: { opacity: 1 },
+}
 
 export const Post = ({ post }) => {
   const [ref, inView] = useInView({
     triggerOnce: true,
     rootMargin: "-150px 0px",
-  });
+  })
+
+  const [hover, setHover] = useState(false)
 
   const {
     link,
     module: { meta },
-  } = post;
+  } = post
 
   return (
     <Link href={"/thoughts" + link}>
@@ -205,9 +213,14 @@ export const Post = ({ post }) => {
               <span>Read more &rarr;</span>
             </div>
           </StyledContent>
-          <div className='hoverOverlay' />
+          <motion.div
+            variants={hoverVariants}
+            initial='noHover'
+            animate={hover ? "hover" : "noHover"}
+            className='hoverOverlay'
+          />
         </StyledPost>
       </motion.div>
     </Link>
-  );
-};
+  )
+}

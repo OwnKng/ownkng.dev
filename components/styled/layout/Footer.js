@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { theme } from "../utilities";
+import React from "react"
+import styled from "styled-components"
+import { theme } from "../utilities"
 
 const Footer = ({ className }) => (
   <footer className={className}>
@@ -10,7 +10,7 @@ const Footer = ({ className }) => (
     </p>
     <p>&#169; 2021 Owen King</p>
   </footer>
-);
+)
 
 export default styled(Footer)`
   margin: 0 auto;
@@ -20,8 +20,6 @@ export default styled(Footer)`
   text-align: center;
   color: ${({ theme }) => theme.colors.paragraph};
   border-top: 1px solid ${({ theme }) => theme.colors.boxShadow};
-  border-left: 1px solid ${({ theme }) => theme.colors.boxShadow};
-  border-right: 1px solid ${({ theme }) => theme.colors.boxShadow};
 
   a {
     color: ${({ theme }) => theme.colors.paragraph};
@@ -32,4 +30,4 @@ export default styled(Footer)`
     margin: 0px;
     padding: 0.2rem 0 0.8rem 0;
   }
-`;
+`

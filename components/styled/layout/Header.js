@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import Link from "next/link";
-import MenuButton from "../element/MenuButton";
-import { elevation } from "../utilities";
+import React from "react"
+import styled from "styled-components"
+import Link from "next/link"
+import MenuButton from "../element/MenuButton"
+import { elevation } from "../utilities"
 
 const Header = ({ className }) => {
   return (
@@ -18,14 +18,14 @@ const Header = ({ className }) => {
         </ul>
       </div>
     </header>
-  );
-};
+  )
+}
 
 export default styled(Header)`
   position: sticky;
   top: 0px;
   height: 4rem;
-  width: 100;
+  width: 100%;
   z-index: 4;
   ${elevation[1]};
 
@@ -34,13 +34,16 @@ export default styled(Header)`
     justify-content: space-between;
     place-items: center;
     height: 100%;
-    width: 96%;
-    max-width: 1200px;
+    width: 100%;
     background: rgba(2, 10, 18, 1);
     opacity: 0.9;
     backdrop-filter: blur(4px);
     margin: 0 auto;
-    padding: 0px 5px;
+    padding: 0px 10%;
+
+    @media only screen and (max-width: 600px) {
+      padding: 0px 5%;
+    }
   }
 
   h1 {
@@ -54,4 +57,4 @@ export default styled(Header)`
     color: ${(props) => props.theme.colors.headline};
     padding: 1rem 0rem;
   }
-`;
+`

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 const Tech = ({ className }) => (
   <div className={className}>
@@ -77,7 +77,7 @@ const Tech = ({ className }) => (
       </div>
     </div>
   </div>
-);
+)
 
 export default styled(Tech)`
   .grid {
@@ -95,11 +95,11 @@ export default styled(Tech)`
     font-size: 1.2rem;
 
     :hover {
-      color: ${({ theme }) => theme.colors.tertiary};
+      color: ${({ theme }) => theme.colors.secondary};
     }
 
     :visited {
-      color: ${({ theme }) => theme.colors.stroke};
+      color: ${({ theme }) => theme.colors.paragraph};
     }
   }
 
@@ -133,4 +133,4 @@ export default styled(Tech)`
   .databases {
     grid-area: databases;
   }
-`;
+`

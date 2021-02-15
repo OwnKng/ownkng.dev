@@ -1,8 +1,7 @@
-import Head from "next/head";
-import Header from "./styled/layout/Header";
-import { Main } from "./styled/element/Main";
-import Nav from "./styled/layout/Nav";
-import Footer from "./styled/layout/Footer";
+import Head from "next/head"
+import Header from "./styled/layout/Header"
+import Nav from "./styled/layout/Nav"
+import Footer from "./styled/layout/Footer"
 
 export default function Layout({ children, pageTitle, description }) {
   return (
@@ -16,10 +15,8 @@ export default function Layout({ children, pageTitle, description }) {
       </Head>
       <Header />
       <Nav />
-      <Main>
-        <div className='content'>{children}</div>
-      </Main>
+      <div className='content'>{children}</div>
       <Footer />
     </>
-  );
+  )
 }
