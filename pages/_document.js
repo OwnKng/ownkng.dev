@@ -40,6 +40,10 @@ export default class MyDocument extends Document {
             name='description'
             content='Owen King - I analyse, visualize and model data using modern technology'
           />
+          <meta
+            name='google-site-verification'
+            content='sD34METF4BLgV0FXIoHFFYRWSGG9DCLNrFB95P9Y7gU'
+          />
         </Head>
         <body>
           <Main />
