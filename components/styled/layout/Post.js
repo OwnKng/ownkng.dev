@@ -71,6 +71,7 @@ const Post = ({ className, post }) => {
             </div>
           </div>
           <Image
+            alt='card-background-image'
             src={meta.img}
             layout='fill'
             objectFit='fill'
@@ -202,7 +203,7 @@ export default styled(Post)`
       border-radius: 2px;
       display: flex;
       background: ${({ theme }) => theme.colors.button};
-      color: ${({ theme }) => theme.colors.headline};
+      color: ${({ theme }) => theme.colors.background};
 
       span {
         margin: 0px 3px 0px 0px;
