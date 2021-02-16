@@ -56,8 +56,6 @@ const AboutMe = ({ className }) => {
             This site is a collection of my personal projects, with a focus on
             data analysis, visualisation and web development.
           </p>
-        </div>
-        <div className='tech'>
           <Tech />
         </div>
       </div>
@@ -67,16 +65,13 @@ const AboutMe = ({ className }) => {
 
 export default styled(AboutMe)`
   display: grid;
-  grid-template-areas:
-    "hero bio"
-    "hero tech";
+  grid-template-areas: "hero bio";
   grid-template-columns: 1fr 2fr;
-  grid-template-rows: auto auto;
   grid-gap: 50px 6.66667%;
-  margin-top: 50px;
+  margin: 50px 0px;
 
   @media screen and (max-width: 767px) {
-    grid-template-areas: "hero" "bio" "tech";
+    grid-template-areas: "hero" "bio";
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     grid-gap: 20px;

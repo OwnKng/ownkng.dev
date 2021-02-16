@@ -12,7 +12,7 @@ export default styled(StyledLink)`
     position: relative;
     background: none;
     color: ${({ theme }) => theme.colors.button};
-    padding: 2px 0px 0px 0px;
+    padding: 5px 0px 0px 0px;
     font-size: 1.4rem;
     text-decoration: none;
 
