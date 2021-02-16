@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import StyledExternalLink from "../element/StyledExternalLink"
 
 const Tech = ({ className }) => (
   <div className={className}>
@@ -8,22 +9,34 @@ const Tech = ({ className }) => (
         <h4>Web dev</h4>
         <ul>
           <li>
-            <a href='https://reactjs.org/'>React</a>
+            <StyledExternalLink href='https://reactjs.org/'>
+              React
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://nextjs.org/'>Next.js</a>
+            <StyledExternalLink href='https://nextjs.org/'>
+              Next.js
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://www.netlify.com/'>Netlify</a>
+            <StyledExternalLink href='https://www.netlify.com/'>
+              Netlify
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://vercel.com/'>Vercel</a>
+            <StyledExternalLink href='https://vercel.com/'>
+              Vercel
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://nodejs.org/en/'>Node.js</a>
+            <StyledExternalLink href='https://nodejs.org/en/'>
+              Node.js
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://shiny.rstudio.com/'>R Shiny</a>
+            <StyledExternalLink href='https://shiny.rstudio.com/'>
+              R Shiny
+            </StyledExternalLink>
           </li>
         </ul>
       </div>
@@ -31,16 +44,24 @@ const Tech = ({ className }) => (
         <h4>Analysis</h4>
         <ul>
           <li>
-            <a href='https://www.r-project.org/'>R</a>
+            <StyledExternalLink href='https://www.r-project.org/'>
+              R
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://www.tidyverse.org/'>Tidyverse</a>
+            <StyledExternalLink href='https://www.tidyverse.org/'>
+              Tidyverse
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://www.tidymodels.org/'>Tidymodels</a>
+            <StyledExternalLink href='https://www.tidymodels.org/'>
+              Tidymodels
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://r-spatial.github.io/sf/'>sf</a>
+            <StyledExternalLink href='https://r-spatial.github.io/sf/'>
+              sf
+            </StyledExternalLink>
           </li>
         </ul>
       </div>
@@ -48,16 +69,22 @@ const Tech = ({ className }) => (
         <h4>Visualisation</h4>
         <ul>
           <li>
-            <a href='https://ggplot2.tidyverse.org/index.html'>ggplot</a>
+            <StyledExternalLink href='https://ggplot2.tidyverse.org/index.html'>
+              ggplot
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://gganimate.com/index.html'>gganimate</a>
+            <StyledExternalLink href='https://gganimate.com/index.html'>
+              gganimate
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://airbnb.io/visx/'>visx</a>
+            <StyledExternalLink href='https://airbnb.io/visx/'>
+              visx
+            </StyledExternalLink>
           </li>
           <li>
-            <a href='https://d3js.org/'>D3</a>
+            <StyledExternalLink href='https://d3js.org/'>D3</StyledExternalLink>
           </li>
         </ul>
       </div>
@@ -65,13 +92,17 @@ const Tech = ({ className }) => (
         <h4>Databases and APIs</h4>
         <ul>
           <li>
-            <a href='https://www.mongodb.com/'>MongoDB</a>
+            <StyledExternalLink href='https://www.mongodb.com/'>
+              MongoDB
+            </StyledExternalLink>
           </li>
           <li>
-            <a href=''>SQL</a>
+            <StyledExternalLink href=''>SQL</StyledExternalLink>
           </li>
           <li>
-            <a href='https://www.apollographql.com/'>Apollo</a>
+            <StyledExternalLink href='https://www.apollographql.com/'>
+              Apollo
+            </StyledExternalLink>
           </li>
         </ul>
       </div>
@@ -87,20 +118,6 @@ export default styled(Tech)`
       "viz databases";
     grid-template-rows: auto;
     grid-template-columns: 1fr 1fr;
-  }
-
-  a {
-    color: ${({ theme }) => theme.colors.paragraph};
-    padding: 2px 0px 0px 0px;
-    font-size: 1.2rem;
-
-    :hover {
-      color: ${({ theme }) => theme.colors.secondary};
-    }
-
-    :visited {
-      color: ${({ theme }) => theme.colors.paragraph};
-    }
   }
 
   h3 {

@@ -4,6 +4,13 @@ import { normalize } from "polished"
 export const GlobalStyles = createGlobalStyle`
 ${normalize()}
 
+:root {
+  --z-index-low: ${({ theme }) => theme.levels.low};
+  --z-index-med: ${({ theme }) => theme.levels.medium};
+  --z-index-high: ${({ theme }) => theme.levels.high};
+  --z-index-highest: ${({ theme }) => theme.levels.highest};
+}
+
 html {
     box-sizing: border-box;
     font-size: 100%;

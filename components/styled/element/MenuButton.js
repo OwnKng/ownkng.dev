@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { useAppState } from "../../state";
+import styled from "styled-components"
+import { useAppState } from "../../state"
 
 const MenuWrapper = styled.button`
   display: flex;
@@ -39,17 +39,17 @@ const MenuWrapper = styled.button`
       transform: ${({ open }) => (open ? "rotate(-45deg)" : "rotate(0)")};
     }
   }
-`;
+`
 
 export const Menu = () => {
-  const { isMenuOpen, toggleMenu } = useAppState();
+  const { isMenuOpen, toggleMenu } = useAppState()
   return (
-    <MenuWrapper open={isMenuOpen} onClick={toggleMenu}>
+    <MenuWrapper aria-label='menu' open={isMenuOpen} onClick={toggleMenu}>
       <div />
       <div />
       <div />
     </MenuWrapper>
-  );
-};
+  )
+}
 
-export default Menu;
+export default Menu

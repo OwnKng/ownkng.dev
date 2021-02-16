@@ -154,7 +154,7 @@ export default styled(NavWrapper)`
   top: 4rem;
   height: 100vh;
   width: 100vw;
-  z-index: 2;
+  z-index: var(--z-index-highest);
   background: rgba(2, 10, 18, 0.4);
   backdrop-filter: blur(4px);
 `

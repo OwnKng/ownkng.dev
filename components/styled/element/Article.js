@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { motion } from "framer-motion";
+import styled from "styled-components"
+import { motion } from "framer-motion"
 
 export const Article = styled(motion.article)`
   max-width: 800px;
@@ -12,11 +12,30 @@ export const Article = styled(motion.article)`
   }
 
   a {
-    color: ${({ theme }) => theme.colors.secondary};
-  }
+    position: relative;
+    background: none;
+    color: ${({ theme }) => theme.colors.button};
+    text-decoration: none;
 
-  a:visited {
-    color: ${({ theme }) => theme.colors.secondary};
+    :before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: 0;
+      left: 0px;
+      background-color: ${({ theme }) => theme.colors.paragraph};
+      visibility: visible;
+      transition: all 0.2s ease-in-out;
+    }
+
+    :hover:before {
+      background-color: ${({ theme }) => theme.colors.button};
+    }
+
+    :visited {
+      color: ${({ theme }) => theme.colors.button};
+    }
   }
 
   h1,
@@ -48,4 +67,4 @@ export const Article = styled(motion.article)`
     border: 1px solid ${({ theme }) => theme.colors.paragraph};
     opacity: 0.5;
   }
-`;
+`

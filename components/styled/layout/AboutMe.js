@@ -1,12 +1,12 @@
-import React from "react";
-import styled from "styled-components";
-import Image from "next/image";
-import img from "../../../public/bio.png";
-import Link from "next/link";
-import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos";
-import { SectionHeader } from "../element/SectionHeader";
-import Tech from "./Tech";
-import { elevation } from "../utilities";
+import React from "react"
+import styled from "styled-components"
+import Image from "next/image"
+import img from "../../../public/bio.png"
+import Link from "next/link"
+import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos"
+import { SectionHeader } from "../element/SectionHeader"
+import Tech from "./Tech"
+import { elevation } from "../utilities"
 
 const AboutMe = ({ className }) => {
   return (
@@ -20,7 +20,7 @@ const AboutMe = ({ className }) => {
       <div className={className}>
         <div className='hero'>
           <div className='imgWrapper'>
-            <Image src={img} layout='fill' objectFit='cover' />
+            <Image alt='bio' src={img} layout='fill' objectFit='cover' />
           </div>
           <div>
             <h1>Owen King</h1>
@@ -62,8 +62,8 @@ const AboutMe = ({ className }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 export default styled(AboutMe)`
   display: grid;
@@ -141,4 +141,4 @@ export default styled(AboutMe)`
       margin-top: 0px;
     }
   }
-`;
+`

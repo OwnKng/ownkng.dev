@@ -3,8 +3,8 @@ import { posts } from "../../../getAllPosts"
 import { SectionHeader } from "../element/SectionHeader"
 import Form from "./Form"
 import Posts from "./Posts"
-import Link from "next/link"
 import styled from "styled-components"
+import StyledLink from "../element/StyedLink"
 
 const Thoughts = ({ className }) => {
   const [active, setActive] = useState("Featured")
@@ -51,8 +51,8 @@ const Thoughts = ({ className }) => {
       <Posts posts={filteredPosts} />
       <div className='grid'>
         <div />
-        <div className='footer'>
-          <Link href='/archive'>See all articles &#x2192;</Link>
+        <div className='thoughtsFooter'>
+          <StyledLink href='/archive'>See all articles &#x2192;</StyledLink>
         </div>
         <div />
       </div>
@@ -61,19 +61,6 @@ const Thoughts = ({ className }) => {
 }
 
 export default styled(Thoughts)`
-  a {
-    color: ${({ theme }) => theme.colors.paragraph};
-    font-size: 1.2rem;
-
-    :hover {
-      color: ${({ theme }) => theme.colors.secondary};
-    }
-
-    :vistied {
-      color: ${({ theme }) => theme.colors.stroke};
-    }
-  }
-
   .grid {
     display: grid;
     grid-template-columns: 1fr minmax(auto, 1000px) 1fr;
@@ -85,12 +72,8 @@ export default styled(Thoughts)`
     }
   }
 
-  .footer {
+  .thoughtsFooter {
     text-align: center;
     padding: 1rem 0px 1rem 0px;
-
-    @media only screen and (max-width: 1000px) {
-      border: none;
-    }
   }
 `

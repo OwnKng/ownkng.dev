@@ -1,4 +1,4 @@
-import { Post } from "./Post"
+import Post from "./Post"
 import { PostWrapper } from "../element/PostWrapper"
 import styled from "styled-components"
 
