@@ -5,14 +5,9 @@ import { motion } from "framer-motion"
 import { elevation } from "../utilities"
 import { useInView } from "react-intersection-observer"
 
-const StyledContent = styled.div``
-
 const variants = {
-  initial: {
-    opacity: 0,
-  },
+  initial: {},
   animate: {
-    opacity: 1,
     transition: {
       staggerChildren: 0.15,
       delayChildren: 0.2,
@@ -42,7 +37,7 @@ const Post = ({ className, post }) => {
     <Link href={"/thoughts" + link}>
       <motion.div
         ref={ref}
-        key={Math.random()}
+        key={link}
         variants={variants}
         initial='initial'
         animate={inView ? "animate" : "initial"}
@@ -75,7 +70,12 @@ const Post = ({ className, post }) => {
               <span>Read more &rarr;</span>
             </div>
           </div>
-          <Image src={meta.img} layout='fill' objectFit='fill' />
+          <Image
+            src={meta.img}
+            layout='fill'
+            objectFit='fill'
+            priority={true}
+          />
           <div className='imageOverlay' />
         </div>
       </motion.div>
