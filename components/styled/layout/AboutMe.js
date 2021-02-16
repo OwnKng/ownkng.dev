@@ -43,7 +43,7 @@ const AboutMe = ({ className }) => {
         </div>
         <div className='bio'>
           <div>
-            <h3>Hi, I'm Owen</h3>
+            <h2>Hi, I'm Owen</h2>
             <p>
               I'm a quantitative researcher in the property sector, based in
               London. In my professional work, I apply skills in data

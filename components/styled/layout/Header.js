@@ -13,9 +13,7 @@ const Header = ({ className }) => {
             <h1>Own Kng</h1>
           </a>
         </Link>
-        <ul>
-          <MenuButton />
-        </ul>
+        <MenuButton />
       </div>
     </header>
   )

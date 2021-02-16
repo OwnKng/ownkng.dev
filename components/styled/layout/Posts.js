@@ -5,33 +5,20 @@ import styled from "styled-components"
 const Posts = ({ className, posts }) => {
   return (
     <div className={className}>
-      {posts
-        ? posts.map((post, i) => (
-            <div className='grid' key={`post-${i}`}>
-              <div />
+      <ul>
+        {posts
+          ? posts.map((post, i) => (
               <PostWrapper className='wrapper'>
                 <Post post={post} />
               </PostWrapper>
-              <div />
-            </div>
-          ))
-        : null}
+            ))
+          : null}
+      </ul>
     </div>
   )
 }
 
 export default styled(Posts)`
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr minmax(auto, 1000px) 1fr;
-    grid-template-rows: 1fr;
-    grid-auto-flow: rows;
-
-    @media only screen and (max-width: 1000px) {
-      grid-template-columns: 0px 100% 0px;
-    }
-  }
-
   .wrapper {
     border-top: none;
     width: 100%;
