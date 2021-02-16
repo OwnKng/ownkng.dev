@@ -19,6 +19,10 @@ const Posts = ({ className, posts }) => {
 }
 
 export default styled(Posts)`
+  ul {
+    padding: 0px;
+  }
+
   .wrapper {
     border-top: none;
     width: 100%;
