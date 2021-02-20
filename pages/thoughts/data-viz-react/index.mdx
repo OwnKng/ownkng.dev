@@ -1,6 +1,6 @@
-import BlogPost from "../../../components/BlogPost";
-import ScatterPlot from "../../../components/visx/ScatterPlot";
-import ParentSize from "@visx/responsive/lib/components/ParentSize";
+import BlogPost from "../../../components/BlogPost"
+import ScatterPlot from "../../../components/visx/ScatterPlot"
+import ParentSize from "@visx/responsive/lib/components/ParentSize"
 
 export const meta = {
   title: "Data visualisation in React",
@@ -10,9 +10,9 @@ export const meta = {
   img: "/dataViz.png",
   readTime: 2,
   tags: ["Data Visualisation", "Featured"],
-};
+}
 
-export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
+export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>
 
 <h2>Economic development improves life expectancy</h2>
 <span>GDP per capita and life expectancy. Point size shows population</span>
@@ -36,7 +36,7 @@ export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
 
 Powerful visualisation libraries in JavaScript are surprisingly few in number. While popular charting libraries like [Chart.js](https://www.chartjs.org/) and [Plotly](https://plotly.com/graphing-libraries/) offer good functionality, they're relatively limited in the types of visualisations they support and the extent to which they can be customised.
 
-[D3](https://d3js.org/) is often the tool of choice for anyone creating more intricate and crafted data visualisations for the web. However, D3 is notoriously challenging library to master and, because much of its functionality is centered on manipulating the DOM, it's difficult to integrate D3 into a React application.
+[D3](https://d3js.org/) is often the tool of choice for anyone creating more intricate and crafted data visualisations for the web. However, D3 is a notoriously challenging library to master and, because much of its functionality is centered on manipulating the DOM, it's difficult to integrate D3 into a React application.
 
 ### visx: an expressive visualisation library from Airbnb
 
@@ -93,8 +93,8 @@ We're going to write a [function component](https://reactjs.org/docs/components-
 We'll then create two new variables - `innerWidth` and `innerHeight` - which we'll use in our scales and to the dimensions of our chart's plot area.
 
 ```jsx
-import React from "react";
-import { wbData } from "./worldBankData.js";
+import React from "react"
+import { wbData } from "./worldBankData.js"
 
 const ScatterPlot = ({
   data = wbData,
@@ -102,13 +102,13 @@ const ScatterPlot = ({
   height = 500,
   margin = { top: 30, left: 60, right: 40, bottom: 40 },
 }) => {
-  const innerWidth = width - margin.left - margin.right;
-  const innerHeight = height - margin.top - margin.bottom;
+  const innerWidth = width - margin.left - margin.right
+  const innerHeight = height - margin.top - margin.bottom
 
-  return <svg width={width} height={height}></svg>;
-};
+  return <svg width={width} height={height}></svg>
+}
 
-export default ScatterPlot;
+export default ScatterPlot
 ```
 
 ### Step 2: Create accessor functions
@@ -120,15 +120,15 @@ Our data is an array of objects with keys for 'gdpPerCap' and 'lifeExpectancy'. 
 Let's create our accessor functions for our x and y variables.
 
 ```jsx
-const x = (d) => d.gdpPerCap;
-const y = (d) => d.lifeExpectancy;
+const x = (d) => d.gdpPerCap
+const y = (d) => d.lifeExpectancy
 ```
 
 We'll also create two additional accessor functions to scale the radius of our points, and to color them according to world region.
 
 ```jsx
-const radius = (d) => d.population;
-const color = (d) => d.region;
+const radius = (d) => d.population
+const color = (d) => d.region
 ```
 
 ### Step 3: Create scales
@@ -140,8 +140,8 @@ The `@visx/scale` package provides functions to create each of these scales.[^1]
 Let's first add the following import statements to the top of the _ScatterPlot.js_ file.
 
 ```jsx
-import { scaleLinear, scaleLog, scaleSqrt, scaleOrdinal } from "@visx/scale";
-import { extent } from "d3";
+import { scaleLinear, scaleLog, scaleSqrt, scaleOrdinal } from "@visx/scale"
+import { extent } from "d3"
 ```
 
 We can now use these functions to create our scales.
@@ -150,23 +150,23 @@ We can now use these functions to create our scales.
 const xScale = scaleLog({
   range: [margin.left, innerWidth + margin.left],
   domain: extent(data, x),
-});
+})
 
 const yScale = scaleLinear({
   range: [innerHeight + margin.top, margin.top],
   domain: extent(data, y),
   nice: true,
-});
+})
 
 const colorScale = scaleOrdinal({
   range: ["#ff8906", "#3da9fc", "#ef4565", "#7f5af0", "#2cb67d"],
   domain: [...new Set(data.map(color))],
-});
+})
 
 const rScale = scaleSqrt({
   range: [3, 30],
   domain: extent(data, radius),
-});
+})
 ```
 
 ### Step 4: Return the visualisation
@@ -174,8 +174,8 @@ const rScale = scaleSqrt({
 With a scatter plot, the geometry we're mapping our data to are points. Visx provides a `<Circle />` component, which we'll need to import. We'll also import the `<Group />` component, which will act as a single container for all of our points.
 
 ```jsx
-import { Circle } from "@visx/shape";
-import { Group } from "@visx/group";
+import { Circle } from "@visx/shape"
+import { Group } from "@visx/group"
 ```
 
 We can now add a map method inside our `<svg>` element to return a circle for every item in our array (i.e. each country).
@@ -196,7 +196,7 @@ return (
       ))}
     </Group>
   </svg>
-);
+)
 ```
 
 **Add axes**
@@ -206,13 +206,13 @@ Our scatter plot component now returns a set of points mapped to our data. Howev
 Let's add the following import statements to the top of the _ScatterPlot.js_ file.
 
 ```jsx
-import { Axis, AxisLeft } from "@visx/axis";
+import { Axis, AxisLeft } from "@visx/axis"
 ```
 
 We'll also want to import the [`format()`](https://observablehq.com/@d3/d3-format) function from D3 to make our axis labels more readable.
 
 ```jsx
-import { extent, format } from "d3";
+import { extent, format } from "d3"
 ```
 
 Now we can add our axes to our return statement.
@@ -240,7 +240,7 @@ return (
     />
     ...
   </svg>
-);
+)
 ```
 
 **Add grid lines**
@@ -248,7 +248,7 @@ return (
 To make the chart more readable, we'll also want to add some grid lines along the x axis. As before, we'll import the desired component from the visx library and modify our return statement.
 
 ```jsx
-import { GridColumns } from "@visx/grid";
+import { GridColumns } from "@visx/grid"
 ```
 
 We'll add these `<GridColumns />` to our return statement.
@@ -267,7 +267,7 @@ return (
     />
     ...
   </svg>
-);
+)
 ```
 
 **Add the legend**
@@ -275,7 +275,7 @@ return (
 We're still missing the legend to match the color of our points to regions. To do this, we'll import the `<LegendOrdinal>` components from the `@visx/legend` library.
 
 ```jsx
-import { LegendOrdinal } from "@visx/legend";
+import { LegendOrdinal } from "@visx/legend"
 ```
 
 We'll can then modify our return statement to include the legend. Note that the legend is separate to the `<svg>` element where are visualisation is contained. This means we'll need to wrap our whole component in a React fragment.
@@ -321,7 +321,7 @@ Again, this is easy to accomplish with visx. We simply need to wrap our ScatterP
 Let's import the `<ParentSize />` component with the following statement.
 
 ```jsx
-import ParentSize from "@visx/responsive/lib/components/ParentSize";
+import ParentSize from "@visx/responsive/lib/components/ParentSize"
 ```
 
 Now, underneath our ScatterPlot component, let's create a new function component called `ScatterPlotWrapper`.
@@ -331,13 +331,13 @@ const ScatterPlotWrapper = () => (
   <ParentSize>
     {({ width, height }) => <ScatterPlot width={width} height={height} />}
   </ParentSize>
-);
+)
 ```
 
 Let's also change our default export statement to export our wrapper, rather than our ScatterPlot.
 
 ```jsx
-export default ScatterPlotWrapper;
+export default ScatterPlotWrapper
 ```
 
 In our _App.js_ file, we can now provide dimensions to the containing div. Here, we've set the width to 100% - so the chart will fill the width of the reader's screen - while fixing the height at 600px.
@@ -356,7 +356,7 @@ export default function App() {
     >
       <ScatterPlot />
     </div>
-  );
+  )
 }
 ```
 
@@ -367,15 +367,15 @@ Finally, let's add a tooltip to the chart to show users each country's GDP per c
 Visx provides several utilities for adding tooltips to visualisations. To use these, we'll need to add the following import statements at the top of our _ScatterPlot.js_ file.
 
 ```jsx
-import { useTooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip";
-import { localPoint } from "@visx/event";
-import { voronoi } from "@visx/voronoi";
+import { useTooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip"
+import { localPoint } from "@visx/event"
+import { voronoi } from "@visx/voronoi"
 ```
 
 We're also going to use several React hooks in our tooltip event handlers, and so will need to import these too.
 
 ```jsx
-import { useRef, useMemo, useCallback } from "react";
+import { useRef, useMemo, useCallback } from "react"
 ```
 
 `@visx/tooltip` provides a custom React hook, `useTooltip()`, which returns an object with several properties that we'll use to manage our tooltip's data, position and visibility.
@@ -390,9 +390,9 @@ const {
   tooltipOpen,
   tooltipTop = 0,
   tooltipLeft = 0,
-} = useTooltip();
+} = useTooltip()
 
-const svgRef = useRef(null);
+const svgRef = useRef(null)
 ```
 
 Our tooltip will rely on a [Voronoi](https://en.wikipedia.org/wiki/Voronoi_diagram) partition of the chart area, which allows us to find the closest point to hover position. A Voronoi partition is are a way of separating a plane into a series of regions defined by the location of a set of points. In a Voronoi diagram, every point is surrounded by a region that covers the area of the plane that is closer to that point than any other.
@@ -409,7 +409,7 @@ const voronoiLayout = useMemo(
       height,
     })(data),
   [data, width, height, xScale, yScale]
-);
+)
 ```
 
 When a user moves their cursor over the plot area of our chart, we want our component to return the Voronoi zone that defines the closest point.
@@ -421,27 +421,27 @@ We'll also create a `tooltipTimeout` variable, which we'll use to display the to
 All of this is wrapped in a `useCallback()` hook. As our event handler is computationally expensive, wrapping it in `useCallback()` prevents unnecessary re-rendering when our `voronoiLayout` or tooltip haven't changed.
 
 ```jsx
-let tooltipTimeout;
+let tooltipTimeout
 
 const handleMouseMove = useCallback(
   (event) => {
-    if (tooltipTimeout) clearTimeout(tooltipTimeout);
-    if (!svgRef.current) return;
+    if (tooltipTimeout) clearTimeout(tooltipTimeout)
+    if (!svgRef.current) return
 
-    const point = localPoint(svgRef.current, event);
-    if (!point) return;
-    const neighborRadius = 100;
-    const closest = voronoiLayout.find(point.x, point.y, neighborRadius);
+    const point = localPoint(svgRef.current, event)
+    if (!point) return
+    const neighborRadius = 100
+    const closest = voronoiLayout.find(point.x, point.y, neighborRadius)
     if (closest) {
       showTooltip({
         tooltipLeft: xScale(x(closest.data)),
         tooltipTop: yScale(y(closest.data)),
         tooltipData: closest.data,
-      });
+      })
     }
   },
   [xScale, yScale, showTooltip, voronoiLayout, tooltipTimeout]
-);
+)
 ```
 
 We'll also need an event handler for when the cursor position leaves the plot area. This function simply sets our `tooltipTimeout` variable to 1500ms and calls the `hideTooltip()` function.
@@ -449,9 +449,9 @@ We'll also need an event handler for when the cursor position leaves the plot ar
 ```jsx
 const handleMouseLeave = useCallback(() => {
   tooltipTimeout = window.setTimeout(() => {
-    hideTooltip();
-  }, 1500);
-}, [hideTooltip]);
+    hideTooltip()
+  }, 1500)
+}, [hideTooltip])
 ```
 
 ### Adding our tooltip to our chart
@@ -524,7 +524,7 @@ Below our closing `svg` tag, we now need to add the tooltip using the `<TooltipW
         )}m`}</div>
       </div>
     </TooltipWithBounds>
-  );
+  )
 }
 ```
 
