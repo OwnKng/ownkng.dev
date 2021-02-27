@@ -10,7 +10,7 @@ export default styled(StyledExternalLink)`
   position: relative;
   background: none;
   color: ${({ theme }) => theme.colors.button};
-  padding: 15px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
   font-size: 1.5rem;
   text-decoration: none;
 

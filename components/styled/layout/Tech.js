@@ -122,6 +122,10 @@ export default styled(Tech)`
     justify-content: space-between;
   }
 
+  li {
+    padding: 5px 0px 0px 0px;
+  }
+
   h3 {
     padding-top: 20px;
   }

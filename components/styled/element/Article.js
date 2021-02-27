@@ -16,22 +16,7 @@ export const Article = styled(motion.article)`
     background: none;
     color: ${({ theme }) => theme.colors.button};
     text-decoration: none;
-
-    :before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      bottom: 0;
-      left: 0px;
-      background-color: ${({ theme }) => theme.colors.paragraph};
-      visibility: visible;
-      transition: all 0.2s ease-in-out;
-    }
-
-    :hover:before {
-      background-color: ${({ theme }) => theme.colors.button};
-    }
+    border-bottom: 1px solid ${({ theme }) => theme.colors.paragraph};
 
     :visited {
       color: ${({ theme }) => theme.colors.button};

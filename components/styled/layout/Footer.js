@@ -4,10 +4,6 @@ import { theme } from "../utilities"
 
 const Footer = ({ className }) => (
   <footer className={className}>
-    <p>
-      Built with <a href='https://nextjs.org/'>Next.js</a> and{" "}
-      <a href='https://vercel.com/'>Vercel</a>
-    </p>
     <p>&#169; 2021 Owen King</p>
   </footer>
 )
@@ -16,7 +12,8 @@ export default styled(Footer)`
   margin: 0 auto;
   width: 96%;
   max-width: 1200px;
-  padding-top: 20px;
+  margin-top: 20px;
+  padding-top: 40px;
   text-align: center;
   color: ${({ theme }) => theme.colors.paragraph};
   border-top: 1px solid ${({ theme }) => theme.colors.boxShadow};
