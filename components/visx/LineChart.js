@@ -1,13 +1,13 @@
-import { useCallback } from "react";
-import { AxisLeft, AxisBottom } from "@visx/axis";
-import { Text } from "@visx/text";
-import { GridRows } from "@visx/grid";
-import { scaleLinear } from "@visx/scale";
-import { LinePath, AreaClosed } from "@visx/shape";
-import { curveLinear } from "@visx/curve";
-import { format, min, max } from "d3";
-import { localPoint } from "@visx/event";
-import { useTooltip, TooltipWithBounds } from "@visx/tooltip";
+import { useCallback } from "react"
+import { AxisLeft, AxisBottom } from "@visx/axis"
+import { Text } from "@visx/text"
+import { GridRows } from "@visx/grid"
+import { scaleLinear } from "@visx/scale"
+import { LinePath, AreaClosed } from "@visx/shape"
+import { curveLinear } from "@visx/curve"
+import { format, min, max } from "d3"
+import { localPoint } from "@visx/event"
+import { useTooltip, TooltipWithBounds } from "@visx/tooltip"
 
 const Line = ({
   width,
@@ -18,25 +18,25 @@ const Line = ({
   y,
   margin = { left: 15, right: 15, top: 40, bottom: 25 },
 }) => {
-  const innerWidth = width - margin.left - margin.right;
-  const innerHeight = height - margin.top - margin.bottom;
+  const innerWidth = width - margin.left - margin.right
+  const innerHeight = height - margin.top - margin.bottom
 
   // create accessor functions
-  const xAccessor = (d) => d[x];
-  const yAccessor = (d) => d[y];
+  const xAccessor = (d) => d[x]
+  const yAccessor = (d) => d[y]
 
   // create scales
   const xScale = scaleLinear({
     range: [margin.left, innerWidth + margin.left],
     domain: [1960, 2019],
     nice: true,
-  });
+  })
 
   const yScale = scaleLinear({
     range: [innerHeight + margin.top, margin.top],
     domain: [0, 70000],
     nice: true,
-  });
+  })
 
   // Handle the tooltip
   const {
@@ -45,27 +45,27 @@ const Line = ({
     tooltipData,
     tooltipLeft = 0,
     tooltipTop = 0,
-  } = useTooltip();
+  } = useTooltip()
 
   const handleTooltip = useCallback(
     (event) => {
-      const { x } = localPoint(event) || { x: 0 };
-      let x0 = xScale.invert(x);
-      x0 = Math.round(x0);
-      if (x0 > max(data, xAccessor)) x0 = max(data, xAccessor);
-      if (x0 < min(data, xAccessor)) x0 = min(data, xAccessor);
+      const { x } = localPoint(event) || { x: 0 }
+      let x0 = xScale.invert(x)
+      x0 = Math.round(x0)
+      if (x0 > max(data, xAccessor)) x0 = max(data, xAccessor)
+      if (x0 < min(data, xAccessor)) x0 = min(data, xAccessor)
 
-      let d = data.filter((row) => row.year === x0);
-      let yMax = max(d, yAccessor);
+      let d = data.filter((row) => row.year === x0)
+      let yMax = max(d, yAccessor)
 
       showTooltip({
         tooltipData: d,
         tooltipLeft: xScale(x0),
         tooltipTop: yScale(yMax),
-      });
+      })
     },
     [data, yAccessor, showTooltip, yScale, xScale]
-  );
+  )
 
   return (
     <>
@@ -84,14 +84,14 @@ const Line = ({
           y={margin.top}
           width={innerWidth}
           height={innerHeight}
-          fill='#2e2f3e'
+          fill='#111E2D'
         />
         <GridRows
           scale={yScale}
           width={innerWidth}
           height={height - margin.top - margin.bottom}
           left={margin.left}
-          stroke='#0f0e17'
+          stroke='#020A13'
           numTicks={6}
         />
         <AxisBottom
@@ -164,7 +164,7 @@ const Line = ({
         </TooltipWithBounds>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Line;
+export default Line

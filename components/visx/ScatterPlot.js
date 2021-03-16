@@ -1,17 +1,17 @@
-import React, { useEffect, useCallback, useRef, useMemo } from "react";
-import { scaleLinear, scaleLog, scaleSqrt, scaleOrdinal } from "@visx/scale";
-import { extent, format } from "d3";
-import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
-import { Group } from "@visx/group";
-import { Circle } from "@visx/shape";
-import { Axis, AxisLeft } from "@visx/axis";
-import { GridColumns } from "@visx/grid";
-import { useTooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip";
-import { localPoint } from "@visx/event";
-import { voronoi } from "@visx/voronoi";
-import styled from "styled-components";
-import { data } from "../data/gdpPerCap";
-import { Text } from "@visx/text";
+import React, { useEffect, useCallback, useRef, useMemo } from "react"
+import { scaleLinear, scaleLog, scaleSqrt, scaleOrdinal } from "@visx/scale"
+import { extent, format } from "d3"
+import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend"
+import { Group } from "@visx/group"
+import { Circle } from "@visx/shape"
+import { Axis, AxisLeft } from "@visx/axis"
+import { GridColumns } from "@visx/grid"
+import { useTooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip"
+import { localPoint } from "@visx/event"
+import { voronoi } from "@visx/voronoi"
+import styled from "styled-components"
+import { data } from "../data/gdpPerCap"
+import { Text } from "@visx/text"
 
 const Graph = styled.div`
   color: #a7a9be;
@@ -22,13 +22,13 @@ const Graph = styled.div`
       font-size: 1rem;
     }
   }
-`;
+`
 
 const StyledTooltip = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
-`;
+`
 
 const tooltipStyles = {
   ...defaultStyles,
@@ -37,7 +37,7 @@ const tooltipStyles = {
   color: "#5f6c7b",
   fontSize: "1rem",
   padding: "0.5rem",
-};
+}
 
 const ScatterPlot = ({
   width,
@@ -45,37 +45,37 @@ const ScatterPlot = ({
   margin = { top: 30, left: 60, right: 10, bottom: 50 },
 }) => {
   // set the dimensions of the plot
-  const innerWidth = width - margin.left - margin.right;
-  const innerHeight = height - margin.top - margin.bottom;
-  const legendGlyphSize = 10;
+  const innerWidth = width - margin.left - margin.right
+  const innerHeight = height - margin.top - margin.bottom
+  const legendGlyphSize = 10
 
   // accessors
-  const x = (d) => d.gdpPerCap;
-  const y = (d) => d.lifeExpectancy;
-  const radius = (d) => d.population;
-  const color = (d) => d.region;
+  const x = (d) => d.gdpPerCap
+  const y = (d) => d.lifeExpectancy
+  const radius = (d) => d.population
+  const color = (d) => d.region
 
   // scales
   const xScale = scaleLog({
     range: [margin.left, innerWidth + margin.left],
     domain: extent(data, x),
-  });
+  })
 
   const yScale = scaleLinear({
     range: [innerHeight + margin.top, margin.top],
     domain: extent(data, y),
     nice: true,
-  });
+  })
 
   const colorScale = scaleOrdinal({
     range: ["#ff8906", "#3da9fc", "#ef4565", "#7f5af0", "#2cb67d"],
     domain: [...new Set(data.map(color))],
-  });
+  })
 
   const rScale = scaleSqrt({
     range: [3, 30],
     domain: extent(data, radius),
-  });
+  })
 
   // Event handlers for tooltips
   const {
@@ -85,7 +85,7 @@ const ScatterPlot = ({
     tooltipOpen,
     tooltipTop = 0,
     tooltipLeft = 0,
-  } = useTooltip();
+  } = useTooltip()
 
   const voronoiLayout = useMemo(
     () =>
@@ -96,42 +96,42 @@ const ScatterPlot = ({
         height,
       })(data),
     [data, width, height, xScale, yScale]
-  );
+  )
 
-  let tooltipTimeout;
-  const svgRef = useRef(null);
+  let tooltipTimeout
+  const svgRef = useRef(null)
 
   const handleMouseMove = useCallback(
     (event) => {
-      if (tooltipTimeout) clearTimeout(tooltipTimeout);
-      if (!svgRef.current) return;
+      if (tooltipTimeout) clearTimeout(tooltipTimeout)
+      if (!svgRef.current) return
 
       // find the nearest polygon to the current mouse position
-      const point = localPoint(svgRef.current, event);
-      if (!point) return;
-      const neighborRadius = 100;
-      const closest = voronoiLayout.find(point.x, point.y, neighborRadius);
+      const point = localPoint(svgRef.current, event)
+      if (!point) return
+      const neighborRadius = 100
+      const closest = voronoiLayout.find(point.x, point.y, neighborRadius)
       if (closest) {
         showTooltip({
           tooltipLeft: xScale(x(closest.data)),
           tooltipTop: yScale(y(closest.data)),
           tooltipData: closest.data,
-        });
+        })
       }
     },
     [xScale, yScale, showTooltip, voronoiLayout, tooltipTimeout]
-  );
+  )
 
   const handleMouseLeave = useCallback(() => {
     tooltipTimeout = window.setTimeout(() => {
-      hideTooltip();
-    }, 1500);
-  }, [hideTooltip]);
+      hideTooltip()
+    }, 1500)
+  }, [hideTooltip])
 
   // Sort the data so that the largest populations are plotted first
   useEffect(() => {
-    data.sort((a, b) => b.population - a.population);
-  }, [data]);
+    data.sort((a, b) => b.population - a.population)
+  }, [data])
 
   return (
     <Graph>
@@ -169,7 +169,7 @@ const ScatterPlot = ({
           y={margin.top}
           width={innerWidth}
           height={innerHeight}
-          fill='#2e2f3e'
+          fill='#111E2D'
           stroke='#a7a9be'
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
@@ -316,7 +316,7 @@ const ScatterPlot = ({
         </TooltipWithBounds>
       )}
     </Graph>
-  );
-};
+  )
+}
 
-export default ScatterPlot;
+export default ScatterPlot
