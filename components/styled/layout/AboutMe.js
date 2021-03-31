@@ -7,6 +7,7 @@ import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos"
 import { SectionHeader } from "../element/SectionHeader"
 import Tech from "./Tech"
 import { elevation } from "../utilities"
+import StyledExternalLink from "../element/StyledExternalLink"
 
 const AboutMe = ({ className }) => {
   return (
@@ -45,8 +46,11 @@ const AboutMe = ({ className }) => {
           <div>
             <h2>Hi, I'm Owen</h2>
             <p>
-              I'm a quantitative researcher in the property sector, based in
-              London. In my professional work, I apply skills in data
+              I'm a quantitative researcher at{" "}
+              <StyledExternalLink href='https://www.jll.com'>
+                JLL
+              </StyledExternalLink>
+              , based in London. In my professional work, I apply skills in data
               visualisation, geospatial analysis, automation and machine
               learning to generate insights, automate processes and create new
               products.

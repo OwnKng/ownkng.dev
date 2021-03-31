@@ -1,14 +1,14 @@
-import { useState, useRef, Suspense } from "react";
-import { useLoader, useFrame } from "react-three-fiber";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { Canvas } from "react-three-fiber";
-import { OrbitControls } from "drei";
-import * as THREE from "three";
-import { Button } from "../styled/element/Button";
+import { useState, useRef, Suspense } from "react"
+import { useLoader, useFrame } from "@react-three/fiber"
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import { Canvas } from "@react-three/fiber"
+import { OrbitControls } from "@react-three/drei"
+import * as THREE from "three"
+import { Button } from "../styled/element/Button"
 
 const Scene = () => {
-  const [orbit, setOrbit] = useState(false);
-  const [overlay, toggleOverlay] = useState(true);
+  const [orbit, setOrbit] = useState(false)
+  const [overlay, toggleOverlay] = useState(true)
 
   return (
     <>
@@ -57,23 +57,23 @@ const Scene = () => {
         </Canvas>
       </div>
     </>
-  );
-};
+  )
+}
 
 const RayshaderModel = ({ overlay }) => {
-  const ref = useRef();
-  const { nodes, materials } = useLoader(GLTFLoader, "/yulongxueshan.glb");
+  const ref = useRef()
+  const { nodes, materials } = useLoader(GLTFLoader, "/yulongxueshan.glb")
 
   useFrame(() => {
-    ref.current.rotation.y += 0.005;
-  });
+    ref.current.rotation.y += 0.005
+  })
 
   const overlayProps = {
     geometry: nodes.yulongxueshan.geometry,
     rotation: [Math.PI / 2, 0, 0],
     scale: [0.1, 0.1, 0.1],
     material: materials.ray_surface,
-  };
+  }
 
   const materialProps = {
     geometry: nodes.yulongxueshan.geometry,
@@ -81,16 +81,17 @@ const RayshaderModel = ({ overlay }) => {
     scale: [0.1, 0.1, 0.1],
     receiveShadow: true,
     castShadow: true,
-  };
+  }
 
-  const props = overlay ? overlayProps : materialProps;
+  const props = overlay ? overlayProps : materialProps
 
   return (
     <group ref={ref}>
       <mesh {...props}>
         {!overlay && (
-          <meshStandardMaterial
-            color='#A87A65'
+          <meshPhongMaterial
+            attach='material'
+            color={"#A87A65"}
             roughness={0.7}
             metalness={0.7}
             side={THREE.DoubleSide}
@@ -98,9 +99,9 @@ const RayshaderModel = ({ overlay }) => {
         )}
       </mesh>
     </group>
-  );
-};
+  )
+}
 
-useLoader.preload(GLTFLoader, "/yulongxueshan.glb");
+useLoader.preload(GLTFLoader, "/yulongxueshan.glb")
 
-export default Scene;
+export default Scene

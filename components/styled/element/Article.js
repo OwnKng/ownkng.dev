@@ -8,7 +8,7 @@ export const Article = styled(motion.article)`
   padding: 2rem 0rem;
 
   @media only screen and (max-width: 600px) {
-    padding: 2rem 5px 2rem 5px;
+    padding: 2rem 8px 2rem 8px;
   }
 
   a {
@@ -27,7 +27,19 @@ export const Article = styled(motion.article)`
   h2,
   h3,
   h4 {
-    margin-top: 2.5rem;
+    margin-top: 5rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.6rem;
   }
 
   img {

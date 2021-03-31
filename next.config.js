@@ -1,22 +1,23 @@
-const withPlugins = require("next-compose-plugins");
+const withPlugins = require("next-compose-plugins")
 
 const withMDX = require("@next/mdx")({
   extension: /\.mdx?$/,
-});
+})
 
 const withTM = require("next-transpile-modules")([
-  "drei",
   "three",
   "postprocessing",
-  "react-three-fiber",
-]);
+  "@react-three/drei",
+])
 
-const withImages = require("next-images");
+const withImages = require("next-images")
 module.exports = withImages({
   webpack(config, options) {
-    return config;
+    return config
   },
-});
+})
+
+const withVideos = require("next-videos")
 
 module.exports = withPlugins([
   [
@@ -27,4 +28,5 @@ module.exports = withPlugins([
   ],
   [withTM],
   [withImages],
-]);
+  [withVideos],
+])
