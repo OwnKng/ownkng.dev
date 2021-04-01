@@ -35,17 +35,21 @@ Enter [GRAPHIX](https://graphix-viz.vercel.app/discover), a prototype React app 
 
 # Graphing with GRAPHIX
 
-[GRAPHIX](https://graphix-viz.vercel.app/discover) is a graph building app that allows users to import csv data, select a geometry (bar, point or line) to visualise their data and then map the variables in their data to aesthetic features - such as the x-axis, y-axis, color and labels.
+[GRAPHIX](https://graphix-viz.vercel.app/discover) is a graph building app that allows users to import csv data, select a geometry (bar, point or line), and then map the variables in their data to aesthetic features - such as the x-axis, y-axis, color and labels.
 
 Users can style their visualisations using in-built themes and color palettes, and then save their creations to their profile. By default, any graph that a user creates will be available to all visitors to GRAPHIX, via the [Discover page](https://graphix-viz.vercel.app/discover). Registered users can also signal their approval of a particular visualisation by 'liking' it.
 
-Each user has their own profile page where they can view and manage their graphs and those that they've liked. Users can also direct other users and visitors to a [public version of their profile](https://graphix-viz.vercel.app/user/6053bd113e4d53000801bd50)
+Each user has their own profile page where they can view and manage their graphs and those that they've liked. Users can also direct other users and visitors to a [public version of their profile](https://graphix-viz.vercel.app/user/6053bd113e4d53000801bd50).
 
 <a href='https://graphix-viz.vercel.app/user/6053bd113e4d53000801bd50'>
   <BlogImage src='/thoughts/graphix/user.png' />
 </a>
 
 Each graph that's created using GRAPHIX generates its own url, which when accessed provides a [full screen version](https://graphix-viz.vercel.app/view/haCZJaXkTXrgvY3wEqIAv) of the visualisation and an attribution back to the creator's public profile.
+
+<a href='https://graphix-viz.vercel.app/view/haCZJaXkTXrgvY3wEqIAv'>
+  <BlogImage src='/thoughts/graphix/graph.png' />
+</a>
 
 GRAPHIX's responsive design scales across mobile, tablets and desktop devices - regardless of whether you're viewing or creating a graph - and the visualisations are designed with pre-configured tooltips, legends and animated axes.
 
@@ -59,7 +63,7 @@ I opted for Next.js as the the framework provides easy page routing as well as [
 
 All the visualisations in GRAPHIX rely on the [visx](https://airbnb.io/visx/)[^1] library, a React library for data viz built by Airbnb, and D3. The app's styles are written in [styled components](https://styled-components.com/), a CSS-in-JS library.
 
-Any csv data that a user inputs is converted to JSON using the [Papa Parse](https://www.papaparse.com/) library before it's stored in the database. The database itself is MongoDB, hosted on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). The schemas and controllers were written using [Mongoose](https://mongoosejs.com/).
+Any csv data that a user inputs is converted to JSON using the [Papa Parse](https://www.papaparse.com/) library before it's stored in the database. The database itself is MongoDB, hosted on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). The schemas are written using [Mongoose](https://mongoosejs.com/).
 
 User authorisation is handled by [NextAuth.js](https://next-auth.js.org/), an excellent library that makes it very easy to integrate authorisation into a Next.js app. Currently, GRAPHIX only supports logging in via a GitHub account.
 
@@ -158,7 +162,7 @@ The `getServerSideProps()` function on this page first checks whether there are 
 
 The data property on each graph object is returned as a string, so we convert this to a JSON object. The `getServerSideProps()` function then returns three properties: an array of graphs; hasNextPage, which is true when there are more graphs on the server; and the offset of the current page.
 
-These props are then passed to the `Discover` component, which iterates through the graphs - passing each one to a `Visualisation` component, which returns an svg graphic for each graph that's passed into it.
+These props are then passed to the `Discover` component, which iterates through the graphs - passing each one to a `Visualisation`. This component returns an svg graphic for each graph that's passed into it.
 
 <a href='https://graphix-viz.vercel.app/discover'>
   <BlogImage src='/thoughts/graphix/discover.png' height={420} />
@@ -172,7 +176,7 @@ A very similar pattern is replicated on the other routes in the app, though the 
 
 One of the reasons that GRAPHIX only supports simple graphs is that more complicated visualisations would require a bewildering list of fields for different visual aesthetic features, scales or design choices. As GRAPHIX provides a graphical user interface, each one of these fields would need to be represented by some form of user input - potentially compromising the appeal of a tool which is designed to make it quick and easy to design a good-looking data visualisations.
 
-The schema for the `graphics` collection, which holds the data for each graph that a user creates, is below. Some of these fields, such as _reordered_ are only relevant for a particular geometry - in this case reordering the categories on the bar graph in descending order.
+The Mongoose schema for the `graphics` collection, which holds the data for each graph that a user creates, is below. Some of these fields, such as _reordered_ are only relevant for a particular geometry - in this case reordering the categories on the bar graph in descending order.
 
 ```jsx
 // graphics.ts

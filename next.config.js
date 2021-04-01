@@ -17,8 +17,6 @@ module.exports = withImages({
   },
 })
 
-const withVideos = require("next-videos")
-
 module.exports = withPlugins([
   [
     withMDX,
@@ -28,5 +26,4 @@ module.exports = withPlugins([
   ],
   [withTM],
   [withImages],
-  [withVideos],
 ])
