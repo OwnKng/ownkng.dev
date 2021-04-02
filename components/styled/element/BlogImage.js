@@ -1,5 +1,6 @@
 import Image from "next/image"
 import styled from "styled-components"
+import { elevation } from "../utilities"
 
 const BlogImage = ({ className, src, width = 800, height = 465 }) => {
   return (
@@ -18,5 +19,5 @@ const BlogImage = ({ className, src, width = 800, height = 465 }) => {
 }
 
 export default styled(BlogImage)`
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6), 0 1px 6px 0px rgba(0, 0, 0, 0.3);
+  ${elevation[1]}
 `

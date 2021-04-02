@@ -2,6 +2,7 @@ import { HeadPost } from "./HeadPost"
 import { BlogHead } from "./styled/element/BlogHead"
 import { Article } from "./styled/element/Article"
 import { motion } from "framer-motion"
+import styled from "styled-components"
 
 const variants = {
   initial: {},
@@ -35,13 +36,28 @@ const articleVariants = {
   },
 }
 
-const BlogPost = ({ children, meta }) => (
-  <motion.div variants={variants} initial='initial' animate='animate'>
-    <BlogHead>
-      <HeadPost meta={meta} variants={titleVariants} />
-    </BlogHead>
-    <Article variants={articleVariants}>{children}</Article>
-  </motion.div>
-)
+const BlogPost = ({ className, children, meta }) => {
+  return (
+    <motion.div
+      className={className}
+      variants={variants}
+      initial='initial'
+      animate='animate'
+    >
+      <BlogHead>
+        <HeadPost meta={meta} variants={titleVariants} />
+      </BlogHead>
+      <Article variants={articleVariants}>{children}</Article>
+    </motion.div>
+  )
+}
 
-export default BlogPost
+export default styled(BlogPost)`
+  background: linear-gradient(
+    0deg,
+    #020a12 0%,
+    #041425 25%,
+    #061e37 75%,
+    #020a12 100%
+  );
+`

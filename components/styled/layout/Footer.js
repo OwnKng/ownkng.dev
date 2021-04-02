@@ -10,7 +10,7 @@ const Footer = ({ className }) => (
 
 export default styled(Footer)`
   margin: 0 auto;
-  width: 96%;
+  width: 100%;
   max-width: 1200px;
   margin-top: 20px;
   padding-top: 40px;

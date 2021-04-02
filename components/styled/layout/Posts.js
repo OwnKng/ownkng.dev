@@ -7,9 +7,9 @@ const Posts = ({ className, posts }) => {
     <div className={className}>
       <ul>
         {posts
-          ? posts.map((post, i) => (
+          ? posts.map((post) => (
               <PostWrapper className='wrapper'>
-                <Post post={post} />
+                <Post post={post} key={post.link} />
               </PostWrapper>
             ))
           : null}
