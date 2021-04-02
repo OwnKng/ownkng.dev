@@ -2,14 +2,10 @@ import { motion } from "framer-motion"
 
 export const HeadPost = ({ meta, variants }) => (
   <div>
-    <motion.h1 variants={variants} initial='initial' animate='animate'>
-      {meta.title}
-    </motion.h1>
-    <div className='details'>
-      <span>
-        <p>{meta.description}</p>
-      </span>
+    <motion.h1 variants={variants}>{meta.title}</motion.h1>
+    <motion.div className='details' variants={variants}>
+      <p>{meta.description}</p>
       <span>{meta.date}</span>
-    </div>
+    </motion.div>
   </div>
 )
