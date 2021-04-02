@@ -1,10 +1,11 @@
-import { useState, useRef, Suspense } from "react"
+import { useState, useRef, Suspense, useEffect } from "react"
 import { useLoader, useFrame } from "@react-three/fiber"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls } from "@react-three/drei"
 import * as THREE from "three"
 import { Button } from "../styled/element/Button"
+import { color } from "d3-color"
 
 const Scene = () => {
   const [orbit, setOrbit] = useState(false)
@@ -45,11 +46,7 @@ const Scene = () => {
             intensity={1}
             position={overlay ? [0, 100, 0] : [70, 20, 30]}
           />
-          <pointLight
-            position={[0, 20, 0]}
-            color={overlay ? "#FFFFFF" : "#FFFFFF"}
-            intensity={0.4}
-          />
+          <pointLight position={[0, 20, 0]} color={"#FFFFFF"} intensity={0.4} />
           <Suspense fallback={null}>
             <RayshaderModel overlay={overlay} />
           </Suspense>
@@ -81,23 +78,19 @@ const RayshaderModel = ({ overlay }) => {
     scale: [0.1, 0.1, 0.1],
     receiveShadow: true,
     castShadow: true,
+    material: new THREE.MeshPhongMaterial({
+      color: 0xa87a65,
+      side: THREE.DoubleSide,
+      roughness: 0.7,
+      metalness: 0.7,
+    }),
   }
 
   const props = overlay ? overlayProps : materialProps
 
   return (
     <group ref={ref}>
-      <mesh {...props}>
-        {!overlay && (
-          <meshPhongMaterial
-            attach='material'
-            color={"#A87A65"}
-            roughness={0.7}
-            metalness={0.7}
-            side={THREE.DoubleSide}
-          />
-        )}
-      </mesh>
+      <mesh {...props}></mesh>
     </group>
   )
 }

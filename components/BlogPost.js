@@ -56,8 +56,8 @@ export default styled(BlogPost)`
   background: linear-gradient(
     0deg,
     #020a12 0%,
-    #041425 25%,
-    #061e37 75%,
+    #020a12 25%,
+    #041425 75%,
     #020a12 100%
   );
 `
