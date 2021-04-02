@@ -28,6 +28,7 @@
     "react-dom": "17.0.1",
     "react-intersection-observer": "^8.31.0",
     "react-map-gl": "^5.3.11",
+    "react-textfit": "^1.1.1",
     "styled-components": "^5.2.3",
     "styled-components-modifiers": "^1.2.5",
     "styled-icons": "^10.31.0",

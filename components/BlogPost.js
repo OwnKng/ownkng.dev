@@ -1,27 +1,47 @@
-import { HeadPost } from "./HeadPost";
-import { BlogHead } from "./styled/element/BlogHead";
-import { Article } from "./styled/element/Article";
+import { HeadPost } from "./HeadPost"
+import { BlogHead } from "./styled/element/BlogHead"
+import { Article } from "./styled/element/Article"
+import { motion } from "framer-motion"
 
 const variants = {
-  initial: { opacity: 0 },
+  initial: {},
   animate: {
-    opacity: 1,
     transition: {
-      delay: 0.2,
-      duration: 0.4,
+      staggerChildren: 0.3,
     },
   },
-};
+}
+
+const titleVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3,
+    },
+  },
+  transition: { type: "easeIn" },
+}
+
+const articleVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.2,
+    },
+  },
+}
 
 const BlogPost = ({ children, meta }) => (
-  <>
+  <motion.div variants={variants} initial='initial' animate='animate'>
     <BlogHead>
-      <HeadPost meta={meta} isBlogPost />
+      <HeadPost meta={meta} variants={titleVariants} />
     </BlogHead>
-    <Article variants={variants} initial='initial' animate='animate'>
-      {children}
-    </Article>
-  </>
-);
+    <Article variants={articleVariants}>{children}</Article>
+  </motion.div>
+)
 
-export default BlogPost;
+export default BlogPost

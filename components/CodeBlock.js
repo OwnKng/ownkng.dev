@@ -1,8 +1,8 @@
-import Highlight, { defaultProps } from "prism-react-renderer";
-import palenight from "prism-react-renderer/themes/palenight";
+import Highlight, { defaultProps } from "prism-react-renderer"
+import palenight from "prism-react-renderer/themes/nightOwl"
 
 const CodeBlock = ({ children, className }) => {
-  const language = className ? className.replace(/language-/, "") : "";
+  const language = className ? className.replace(/language-/, "") : ""
 
   return (
     <Highlight
@@ -26,7 +26,7 @@ const CodeBlock = ({ children, className }) => {
         </pre>
       )}
     </Highlight>
-  );
-};
+  )
+}
 
-export default CodeBlock;
+export default CodeBlock

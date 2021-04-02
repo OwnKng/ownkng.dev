@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const BlogHead = styled.div`
   color: ${({ theme }) => theme.colors.paragraph};
@@ -9,9 +9,10 @@ export const BlogHead = styled.div`
   h1 {
     color: ${({ theme }) => theme.colors.headline};
     margin: 0;
+    font-size: 4rem;
   }
 
   @media only screen and (max-width: 600px) {
-    padding: 3rem 5px 4rem 5px;
+    padding: 3rem 5px 0px 5px;
   }
-`;
+`
