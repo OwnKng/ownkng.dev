@@ -1,5 +1,5 @@
-import BlogPost from "../../../components/BlogPost";
-import YuLongXueShan from "../../../components/threejs/YuLongXueShan";
+import BlogPost from "../../../components/BlogPost"
+import YuLongXueShan from "../../../components/threejs/YuLongXueShan"
 
 export const meta = {
   title: "3D mapping with rayshader and three.js",
@@ -8,9 +8,9 @@ export const meta = {
   img: "/yulongxueshan.png",
   readTime: 2,
   tags: ["Featured", "Geospatial"],
-};
+}
 
-export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
+export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>
 
 <YuLongXueShan />
 
@@ -119,13 +119,13 @@ The 3D model on this page is comprised of two function components - `<Scene />`,
 The `<Scene />` components looks like this. Note that we're importing the `<OrbitControls />` component from the [`drei`](https://github.com/pmndrs/drei) library. Drei provides a number of helper functions and abstractions for react-three-fiber that make it easy to add effects and interactions, such as shaders, controls or complex geometries.
 
 ```jsx
-import { useState, Suspense } from "react";
-import { Canvas } from "react-three-fiber";
-import { OrbitControls } from "drei";
+import { useState, Suspense } from "react"
+import { Canvas } from "react-three-fiber"
+import { OrbitControls } from "drei"
 
 const Scene = () => {
-  const [orbit, setOrbit] = useState(false);
-  const [overlay, toggleOverlay] = useState(true);
+  const [orbit, setOrbit] = useState(false)
+  const [overlay, toggleOverlay] = useState(true)
 
   return (
     <>
@@ -156,8 +156,8 @@ const Scene = () => {
         </Canvas>
       </div>
     </>
-  );
-};
+  )
+}
 ```
 
 The code here is actually very simple. We have a couple of buttons to toggle the model's texture (more on this later) and to enable orbit controls. We then draw the `<Canvas />`, where the 3D model lives as well as several lights for the scene.
@@ -167,25 +167,25 @@ One thing to note about react-three-fibre is that we can use components like `<a
 In our `<Canvas />` component, wrapped in `<Suspense>` tags, is our `<RayshaderModel />`. The code for this component is as follows.
 
 ```jsx
-import { useRef } from "react";
-import { useLoader, useFrame } from "react-three-fiber";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import * as THREE from "three";
+import { useRef } from "react"
+import { useLoader, useFrame } from "react-three-fiber"
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import * as THREE from "three"
 
 const RayshaderModel = ({ overlay }) => {
-  const ref = useRef();
-  const { nodes, materials } = useLoader(GLTFLoader, "/yuelongxueshan.glb");
+  const ref = useRef()
+  const { nodes, materials } = useLoader(GLTFLoader, "/yuelongxueshan.glb")
 
   useFrame(() => {
-    ref.current.rotation.y += 0.005;
-  });
+    ref.current.rotation.y += 0.005
+  })
 
   const overlayProps = {
     geometry: nodes.yulongxueshan.geometry,
     rotation: [Math.PI / 2, 0, 0],
     scale: [0.1, 0.1, 0.1],
     material: materials.ray_surface,
-  };
+  }
 
   const materialProps = {
     geometry: nodes.yulongxueshan.geometry,
@@ -193,9 +193,9 @@ const RayshaderModel = ({ overlay }) => {
     scale: [0.1, 0.1, 0.1],
     receiveShadow: true,
     castShadow: true,
-  };
+  }
 
-  const props = overlay ? overlayProps : materialProps;
+  const props = overlay ? overlayProps : materialProps
 
   return (
     <group ref={ref}>
@@ -210,10 +210,10 @@ const RayshaderModel = ({ overlay }) => {
         )}
       </mesh>
     </group>
-  );
-};
+  )
+}
 
-useLoader.preload(GLTFLoader, "/yuelongxueshan.glb");
+useLoader.preload(GLTFLoader, "/yuelongxueshan.glb")
 ```
 
 Let's take a closer look at this component. One of the advantages of using gltfjsx is that it creates a nested graph of all the objects and materials inside our model. The boilerplate code returned to us by running gltfjsx provides these objects via the `useLoader()` hook.[^1]
