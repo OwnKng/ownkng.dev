@@ -5,6 +5,7 @@ import Form from "./Form"
 import Posts from "./Posts"
 import styled from "styled-components"
 import StyledLink from "../element/StyedLink"
+import SectionTitle from "../element/SectionTitle"
 
 const Thoughts = ({ className }) => {
   const [active, setActive] = useState("Featured")
@@ -38,7 +39,9 @@ const Thoughts = ({ className }) => {
   return (
     <div className={className}>
       <SectionHeader id='thoughts'>
-        <SectionHeader.Title>thoughts</SectionHeader.Title>
+        <SectionTitle>
+          <h1>Thoughts</h1>
+        </SectionTitle>
         <SectionHeader.Subtitle>
           Articles and how-to's from some of my personal projects
         </SectionHeader.Subtitle>

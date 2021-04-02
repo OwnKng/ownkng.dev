@@ -8,12 +8,15 @@ import { SectionHeader } from "../element/SectionHeader"
 import Tech from "./Tech"
 import { elevation } from "../utilities"
 import StyledExternalLink from "../element/StyledExternalLink"
+import SectionTitle from "../element/SectionTitle"
 
 const AboutMe = ({ className }) => {
   return (
     <>
       <SectionHeader className='title' id='about'>
-        <SectionHeader.Title>About me</SectionHeader.Title>
+        <SectionTitle>
+          <h1>About me</h1>
+        </SectionTitle>
         <SectionHeader.Subtitle>
           The tools and technologies I use
         </SectionHeader.Subtitle>

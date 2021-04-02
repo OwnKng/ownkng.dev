@@ -115,7 +115,7 @@ export default styled(Post)`
   }
 
   @media only screen and (max-width: 500px) {
-    height: 300px;
+    margin: 0px;
   }
 
   .content {
