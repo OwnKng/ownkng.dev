@@ -82,7 +82,7 @@ const Post = ({ className, post }) => {
 }
 
 export default styled(Post)`
-  height: 400px;
+  min-height: 400px;
   margin: 0rem 1rem 1rem 1rem;
   position: relative;
   ${elevation[2]};
@@ -102,7 +102,8 @@ export default styled(Post)`
   }
 
   @media only screen and (max-width: 500px) {
-    margin: 0px;
+    min-height: 300px;
+    margin: 0px 10px;
   }
 
   .content {
@@ -119,7 +120,7 @@ export default styled(Post)`
       "description"
       "tags";
 
-    grid-template-rows: 1fr;
+    grid-template-rows: 2fr 2fr auto auto;
     grid-template-columns: 1fr;
 
     h2,
