@@ -155,6 +155,6 @@ export default styled(NavWrapper)`
   height: 100vh;
   width: 100vw;
   z-index: var(--z-index-highest);
-  background: rgba(2, 10, 18, 0.4);
+  background: rgba(8, 18, 28, 0.4);
   backdrop-filter: blur(4px);
 `

@@ -66,9 +66,6 @@ const Post = ({ className, post }) => {
             <div className='featured'>
               {meta.tags.includes("Featured") && <span>Featured</span>}
             </div>
-            <div className='link'>
-              <span>Read more &rarr;</span>
-            </div>
           </div>
           <Image
             alt='card-background-image'
@@ -95,22 +92,12 @@ export default styled(Post)`
     z-index: var(--z-index-low);
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(
-      to right,
-      rgba(2, 10, 18, 0.7),
-      rgba(2, 10, 18, 0.4)
-    );
-  }
 
-  .hoverOverlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: var(--z-index-med);
     background: linear-gradient(
-      142.24deg,
-      rgba(0, 8, 15, 0.9) 10%,
-      rgba(93, 253, 202, 0.4) 250%
+      0deg,
+      rgba(8, 18, 28, 0.6) 20%,
+      rgba(8, 18, 28, 0.5) 70%,
+      rgba(8, 18, 28, 0.3) 100%
     );
   }
 
@@ -120,20 +107,19 @@ export default styled(Post)`
 
   .content {
     position: absolute;
-    width: 95%;
+    width: 100%;
     height: 90%;
     display: grid;
-    margin: 0px 15px;
+    padding: 30px 15px 0px 15px;
     z-index: 2;
 
     grid-template-areas:
       "featured"
       "title"
       "description"
-      "tags"
-      "link";
+      "tags";
 
-    grid-template-rows: 0.5fr 1fr 0.5fr 0.5fr 0.5fr;
+    grid-template-rows: 1fr;
     grid-template-columns: 1fr;
 
     h2,
@@ -145,7 +131,7 @@ export default styled(Post)`
     .title {
       grid-area: title;
       display: flex;
-      align-self: start;
+      align-self: end;
       overflow: hidden;
 
       h2 {
@@ -161,7 +147,7 @@ export default styled(Post)`
 
     .description {
       grid-area: description;
-      align-self: end;
+      align-self: start;
       overflow: hidden;
       justify-self: baseline;
     }
@@ -169,7 +155,7 @@ export default styled(Post)`
     .tags {
       grid-area: tags;
       display: flex;
-      align-self: end;
+      align-self: start;
 
       span {
         color: ${({ theme }) => theme.colors.background};
@@ -183,8 +169,7 @@ export default styled(Post)`
 
     .featured {
       grid-area: featured;
-      display: flex;
-      align-self: end;
+      align-self: top;
 
       span {
         color: ${({ theme }) => theme.colors.background};
@@ -193,22 +178,6 @@ export default styled(Post)`
         margin: 3px 3px 0px 0px;
         border-radius: 2px;
         padding: 3px 5px;
-      }
-    }
-
-    .link {
-      grid-area: link;
-      align-self: end;
-      justify-self: baseline;
-      border-radius: 2px;
-      display: flex;
-      background: ${({ theme }) => theme.colors.button};
-      color: ${({ theme }) => theme.colors.background};
-
-      span {
-        margin: 0px 3px 0px 0px;
-        border-radius: 2px;
-        padding: 5px 10px;
       }
     }
   }

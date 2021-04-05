@@ -1,6 +1,6 @@
 export const theme = {
   colors: {
-    background: "#020A12",
+    background: "#08121C",
     headline: "#fffffe",
     paragraph: "#a7a9be",
     cardParagraph: "#a7a9be",

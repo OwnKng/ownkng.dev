@@ -22,7 +22,7 @@ html {
 
 body {
   margin: 0;
-  background-color: #020A12;
+  background-color: ${({ theme }) => theme.colors.background};
   font-family: 'Saira', sans-serif;
   font-weight: 400;
   line-height: 1.8;
