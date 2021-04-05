@@ -33,8 +33,7 @@ export default styled(Header)`
     place-items: center;
     height: 100%;
     width: 100%;
-    background: ${({ theme }) => theme.colors.background};
-    opacity: 0.9;
+    background: rgba(8, 18, 28, 0.8);
     backdrop-filter: blur(4px);
     margin: 0 auto;
     padding: 0px 10%;
