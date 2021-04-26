@@ -1,8 +1,49 @@
+import { Suspense, useRef } from "react"
+import { Canvas } from "@react-three/fiber"
+import { useFrame, useLoader } from "@react-three/fiber"
+import * as THREE from "three"
 import styled from "styled-components"
-import { motion } from "framer-motion"
-import Voronoi from "../../visx/Voronoi"
-import ParentSize from "@visx/responsive/lib/components/ParentSize"
 import { DownArrowAlt } from "@styled-icons/boxicons-regular/DownArrowAlt"
+import { motion } from "framer-motion"
+
+const generateParticles = (width, length) => {
+  const numPoints = width * length
+
+  const positions = new Float32Array(numPoints * 3)
+  const colors = new Float32Array(numPoints * 3)
+
+  const colorHigh = new THREE.Color("#4DE7DA")
+  const colorLow = new THREE.Color("#5B7FE9")
+
+  let k = 0
+
+  for (let i = 0; i < width; i++) {
+    for (let j = 0; j < length; j++) {
+      const u = i / width
+      const v = j / length
+
+      const x = u - 0.5
+      const y = (Math.sin(u * Math.PI * 10) + Math.sin(v * Math.PI * 6)) / 20
+      const z = v - 0.5
+
+      positions[3 * k] = x
+      positions[3 * k + 1] = y
+      positions[3 * k + 2] = z
+
+      //* Color
+      const mixedColor = colorHigh.clone()
+      mixedColor.lerp(colorLow, u)
+
+      colors[k * 3 + 0] = mixedColor.r
+      colors[k * 3 + 1] = mixedColor.g
+      colors[k * 3 + 2] = mixedColor.b
+
+      k++
+    }
+  }
+
+  return { positions, colors }
+}
 
 const divVariants = {
   initial: {},
@@ -25,60 +66,54 @@ const scrollVariants = {
   transition: { type: "easeIn" },
 }
 
-const Hero = ({ className }) => (
-  <motion.div
-    className={className}
-    variants={divVariants}
-    initial='initial'
-    animate='animate'
-  >
-    <div className='heroPlot'>
-      <NameCard />
-      <ParentSize>
-        {({ width, height }) => <Voronoi width={width} height={height} />}
-      </ParentSize>
-    </div>
-    <div style={{ overflow: "hidden" }}>
-      <motion.div
-        className='scrollPrompt'
-        variants={scrollVariants}
-        transition='transition'
-      >
-        <DownArrowAlt size={50} color={"#a7a9be"} />
-        <DownArrowAlt size={50} color={"#a7a9be"} />
-      </motion.div>
-    </div>
-  </motion.div>
-)
+const Points = () => {
+  const mesh = useRef()
+  const [particleTexture] = useLoader(THREE.TextureLoader, ["particle.png"])
 
-export default styled(Hero)`
-  width: 100%;
-  position: relative;
+  const { positions, colors } = generateParticles(200, 200)
 
-  .heroPlot {
-    height: 80vh;
-  }
+  useFrame(({ clock, camera, mouse }) => {
+    camera.position.y = mouse.y + 1.5
+    camera.position.z = mouse.x
+    camera.lookAt(mesh.current.position)
+    mesh.current.rotation.y = clock.elapsedTime / 10
+  })
 
-  .scrollPrompt {
-    align-items: top;
-    width: 100%;
-    height: 9vh;
-    display: flex;
-    color: white;
-    justify-content: space-between;
-  }
-
-  @media only screen and (max-width: 480px) {
-    .heroPlot {
-      height: 600px;
-    }
-  }
-`
+  return (
+    <points ref={mesh} scale={[20, 10, 20]}>
+      <bufferGeometry attach='geometry'>
+        <bufferAttribute
+          attachObject={["attributes", "position"]}
+          count={positions.length / 3}
+          array={positions}
+          itemSize={3}
+        />
+        <bufferAttribute
+          attachObject={["attributes", "color"]}
+          count={colors.length}
+          array={colors}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        attach='material'
+        size={0.1}
+        vertexColors={true}
+        transparent
+        alphaTest={0.001}
+        alphaMap={particleTexture}
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+      />
+    </points>
+  )
+}
 
 const StyledNameCard = styled(motion.div)`
     position: absolute;
     top: 40%;
     width: 100%;
+    z-index: 1;
 
     h1 {
         margin: 0px 10%;
@@ -95,14 +130,16 @@ const StyledNameCard = styled(motion.div)`
       }
 
     .title {
-      background: ${({ theme }) => theme.colors.background};
-        overflow: hidden;
+      background: rgba(8, 18, 28, 0.8);
+      backdrop-filter: blur(4px);
+      overflow: hidden;
     }
 
     .subtitle {
       overflow: hidden;
       margin-top: 10px;
-      background: ${({ theme }) => theme.colors.background};
+      background: rgba(8, 18, 28, 0.8);
+      backdrop-filter: blur(4px);
     }
 
     @media only screen and (max-width: 600px) {
@@ -126,3 +163,45 @@ const NameCard = () => (
     </div>
   </StyledNameCard>
 )
+
+const Hero = ({ className }) => (
+  <motion.div
+    className={className}
+    variants={divVariants}
+    initial='initial'
+    animate='animate'
+  >
+    <NameCard />
+    <Canvas
+      camera={{ fov: 75, position: [6, 0, 6] }}
+      onCreated={({ gl }) => {
+        gl.toneMapping = THREE.NoToneMapping
+      }}
+    >
+      <Suspense fallback={null}>
+        <color attach='background' args={["#08121C"]} />
+        <Points />
+      </Suspense>
+    </Canvas>
+    <div></div>
+    <motion.div className='scrollPrompt'>
+      <DownArrowAlt size={50} color={"#a7a9be"} />
+      <DownArrowAlt size={50} color={"#a7a9be"} />
+    </motion.div>
+  </motion.div>
+)
+
+export default styled(Hero)`
+  height: 80vh;
+  width: 100%;
+  position: relative;
+
+  .scrollPrompt {
+    align-items: top;
+    width: 100%;
+    height: 9vh;
+    display: flex;
+    color: white;
+    justify-content: space-between;
+  }
+`
