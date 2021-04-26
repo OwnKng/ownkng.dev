@@ -8,8 +8,8 @@ const Posts = ({ className, posts }) => {
       <ul>
         {posts
           ? posts.map((post) => (
-              <PostWrapper className='wrapper'>
-                <Post post={post} key={post.link} />
+              <PostWrapper key={post.link} className='wrapper'>
+                <Post post={post} />
               </PostWrapper>
             ))
           : null}
