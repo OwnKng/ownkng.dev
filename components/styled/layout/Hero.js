@@ -1,4 +1,4 @@
-import { Suspense, useRef } from "react"
+import { Suspense, useRef, useEffect, useState } from "react"
 import { Canvas } from "@react-three/fiber"
 import { useFrame, useLoader } from "@react-three/fiber"
 import * as THREE from "three"
@@ -68,12 +68,20 @@ const scrollVariants = {
 
 const Points = () => {
   const mesh = useRef()
+  const [scroll, setScroll] = useState(0)
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setScroll(window.scrollY)
+    })
+  }, [])
+
   const [particleTexture] = useLoader(THREE.TextureLoader, ["particle.png"])
 
   const { positions, colors } = generateParticles(200, 200)
 
   useFrame(({ clock, camera, mouse }) => {
-    camera.position.y = mouse.y + 1.5
+    camera.position.y = (scroll * -1) / 100 + 1.5
     camera.position.z = mouse.x
     camera.lookAt(mesh.current.position)
     mesh.current.rotation.y = clock.elapsedTime / 10
