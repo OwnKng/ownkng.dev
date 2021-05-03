@@ -52,10 +52,10 @@ export default styled(Form)`
     content: "";
     position: absolute;
     width: 0;
-    height: 2px;
+    height: 3px;
     bottom: 0;
     left: 0px;
-    background-color: ${({ theme }) => theme.colors.button};
+    background-color: ${({ theme }) => theme.colors.paragraph};
     visibility: visible;
     transition: all 0.2s ease-in-out;
     width: 100%;
@@ -63,21 +63,25 @@ export default styled(Form)`
 
   button {
     position: relative;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     padding: 0.5rem 1rem;
     background: none;
     color: ${({ theme }) => theme.colors.paragraph};
     border: none;
     margin: 5px;
 
+    :hover {
+      color: ${({ theme }) => theme.colors.button};
+    }
+
     :before {
       content: "";
       position: absolute;
       width: 0;
-      height: 2px;
+      height: 3px;
       bottom: 0;
       left: 0px;
-      background-color: ${({ theme }) => theme.colors.button};
+      background-color: ${({ theme }) => theme.colors.paragraph};
       visibility: hidden;
       transition: all 0.2s ease-in-out;
     }

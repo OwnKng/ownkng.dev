@@ -20,6 +20,16 @@ const Tech = ({ className }) => (
               </StyledExternalLink>
             </li>
             <li>
+              <StyledExternalLink href='https://nodejs.org/en/'>
+                Node.js
+              </StyledExternalLink>
+            </li>
+            <li>
+              <StyledExternalLink href='https://www.typescriptlang.org/'>
+                TypeScript
+              </StyledExternalLink>
+            </li>
+            <li>
               <StyledExternalLink href='https://www.netlify.com/'>
                 Netlify
               </StyledExternalLink>
@@ -27,11 +37,6 @@ const Tech = ({ className }) => (
             <li>
               <StyledExternalLink href='https://vercel.com/'>
                 Vercel
-              </StyledExternalLink>
-            </li>
-            <li>
-              <StyledExternalLink href='https://nodejs.org/en/'>
-                Node.js
               </StyledExternalLink>
             </li>
             <li>
@@ -89,6 +94,11 @@ const Tech = ({ className }) => (
             <li>
               <StyledExternalLink href='https://d3js.org/'>
                 D3
+              </StyledExternalLink>
+            </li>
+            <li>
+              <StyledExternalLink href='https://threejs.org/'>
+                three.js
               </StyledExternalLink>
             </li>
           </ul>
