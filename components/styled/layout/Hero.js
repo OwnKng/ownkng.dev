@@ -82,47 +82,37 @@ const NameCard = () => (
   </StyledNameCard>
 )
 
-const Hero = ({ className }) => {
-  const scroll = useRef(0)
-
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      scroll.current = window.scrollY
-    })
-  })
-
-  return (
+const Hero = ({ className }) => (
+  <motion.div
+    className={className}
+    variants={divVariants}
+    initial='initial'
+    animate='animate'
+  >
+    <NameCard />
+    <Canvas
+      camera={{ fov: 75, position: [6, 1, 6] }}
+      onCreated={({ gl }) => {
+        gl.toneMapping = THREE.NoToneMapping
+      }}
+    >
+      <Suspense fallback={null}>
+        <color attach='background' args={["#08121C"]} />
+        <Points />
+      </Suspense>
+    </Canvas>
+    <div></div>
     <motion.div
-      className={className}
-      variants={divVariants}
+      className='scrollPrompt'
+      variants={scrollVariants}
       initial='initial'
       animate='animate'
     >
-      <NameCard />
-      <Canvas
-        camera={{ fov: 75, position: [6, 1, 6] }}
-        onCreated={({ gl }) => {
-          gl.toneMapping = THREE.NoToneMapping
-        }}
-      >
-        <Suspense fallback={null}>
-          <color attach='background' args={["#08121C"]} />
-          <Points scroll={scroll} />
-        </Suspense>
-      </Canvas>
-      <div></div>
-      <motion.div
-        className='scrollPrompt'
-        variants={scrollVariants}
-        initial='initial'
-        animate='animate'
-      >
-        <DownArrowAlt size={50} color={"#a7a9be"} />
-        <DownArrowAlt size={50} color={"#a7a9be"} />
-      </motion.div>
+      <DownArrowAlt size={50} color={"#a7a9be"} />
+      <DownArrowAlt size={50} color={"#a7a9be"} />
     </motion.div>
-  )
-}
+  </motion.div>
+)
 
 export default styled(Hero)`
   height: 80vh;

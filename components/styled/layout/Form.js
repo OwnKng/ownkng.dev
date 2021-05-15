@@ -42,6 +42,12 @@ export default styled(Form)`
     margin-bottom: 0px;
   }
 
+  @media only screen and (max-width: 600px) {
+    .buttons {
+      justify-content: space-between;
+    }
+  }
+
   p {
     margin: 5px;
     padding: 0.5rem 1rem;
@@ -67,7 +73,7 @@ export default styled(Form)`
     padding: 0.5rem 1rem;
     background: none;
     color: ${({ theme }) => theme.colors.paragraph};
-    border: none;
+    border: 1px solid rgba(167, 169, 190, 0.2);
     margin: 5px;
 
     :hover {
