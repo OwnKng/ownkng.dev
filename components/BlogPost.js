@@ -53,11 +53,5 @@ const BlogPost = ({ className, children, meta }) => {
 }
 
 export default styled(BlogPost)`
-  background: linear-gradient(
-    0deg,
-    #08121c 0%,
-    #041425 25%,
-    #041425 75%,
-    #08121c 100%
-  );
+  position: relative;
 `

@@ -1,16 +1,16 @@
-import BlogPost from "../../../components/BlogPost";
-import FacetLineChart from "../../../components/visx/FacetLineGraph";
+import BlogPost from "../../../components/BlogPost"
+import FacetLineChart from "../../../components/visx/FacetLineGraph"
 
 export const meta = {
   title: "Faceting charts with visx and CSS grid",
   description: "How to create faceted line charts",
-  date: "Jan 05 2020",
+  date: "Jan 05 2021",
   img: "/lineChart.png",
   readTime: 2,
   tags: ["Data Visualisation"],
-};
+}
 
-export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
+export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>
 
 <FacetLineChart />
 <span style={{ display: "flex", marginTop: 10, justifyContent: "flex-end" }}>
@@ -60,7 +60,7 @@ After we've done these tasks, we can then work on any elements that are more spe
 Let's create a new [function component](https://reactjs.org/docs/components-and-props.html) in our React application. This function component will take several props - data, width, height and margin (which we'll provide with some sensible default values). Add the following code in a new file called `Line.js`.
 
 ```jsx
-import React from "react";
+import React from "react"
 
 const Line = ({
   data,
@@ -69,18 +69,18 @@ const Line = ({
   margin = { top: 40, left: 10, right: 15, bottom: 25 },
 }) => {
   // Set dimensions
-  const innerWidth = width - margin.left - margin.right;
-  const innerHeight = height - margin.top - margin.bottom;
+  const innerWidth = width - margin.left - margin.right
+  const innerHeight = height - margin.top - margin.bottom
 
   // Create accessor functions
 
   // Create scales
 
   // Return our chart
-  return <svg width={width} height={height}></svg>;
-};
+  return <svg width={width} height={height}></svg>
+}
 
-export default Line;
+export default Line
 ```
 
 ### Create accessor functions to select our data
@@ -101,7 +101,7 @@ We'll need to convert our year and GDP per capita values to units of pixels that
 Import the `scaleLinear()` function into our _Line.js_ file.
 
 ```jsx
-import { scaleLinear } from "@visx/scale";
+import { scaleLinear } from "@visx/scale"
 ```
 
 We can then use this function to create our scales. Note that we've provided fixed values to the `domain` argument, rather than mapping them to the minimum and maximum of the values. This is because we want all our lines to share the same scales to make comparisons across the charts simpler.
@@ -112,13 +112,13 @@ const xScale = scaleLinear({
   range: [margin.left, innerWidth + margin.left],
   domain: [1960, 2019],
   nice: true,
-});
+})
 
 const yScale = scaleLinear({
   range: [innerHeight + margin.top, margin.top],
   domain: [0, 70000],
   nice: true,
-});
+})
 ```
 
 ### Return the visualisation
@@ -128,8 +128,8 @@ With our accessor functions and scales created, we can now return the visalisati
 Import the geometry primitives into our _Line.js_ file, as well as the curve type we're going to use in the visulisation.
 
 ```jsx
-import { LinePath, AreaClosed } from "@visx/shape";
-import { curveLinear } from "@visx/curve";
+import { LinePath, AreaClosed } from "@visx/shape"
+import { curveLinear } from "@visx/curve"
 ```
 
 We can now use these geometries inside our return statement, providing them with the scales and accessors we've defined.
@@ -165,18 +165,18 @@ We'll create another function component to house our facets. This component will
 Create a new file called `FacetLineChart.js` and add the following code.
 
 ```jsx
-import React from "react";
-import Line from "./Line";
-import { group } from "d3";
-import { gdpPerCapData } from "./data";
+import React from "react"
+import Line from "./Line"
+import { group } from "d3"
+import { gdpPerCapData } from "./data"
 
 const FacetLineChart = () => {
-  const data = gdpPerCapData;
+  const data = gdpPerCapData
 
   const dataGrouped = Array.from(
     group(data, (d) => d.country),
     ([key, value]) => ({ key, value })
-  );
+  )
 
   return (
     <>
@@ -184,10 +184,10 @@ const FacetLineChart = () => {
         <Line key={i} data={data.value} width={800} height={400} />
       ))}
     </>
-  );
-};
+  )
+}
 
-export default FacetLineChart;
+export default FacetLineChart
 ```
 
 The above code makes use of the [`group()` function](https://observablehq.com/@d3/d3-group) from D3. The `group()` function takes an array and a key, and returns a [map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) from the key to the array values.
@@ -238,7 +238,7 @@ This CSS arranges each plot in a grid. The width of the grid will fill 100% of i
 We'll now want to make our individual lines responsive so that they fill the dimensions of our grid cells. In our _FacetLineChart.js_ file, import the `<ParentSize />` component from `@visx/responsive` library.
 
 ```jsx
-import ParentSize from "@visx/responsive/lib/components/ParentSize";
+import ParentSize from "@visx/responsive/lib/components/ParentSize"
 ```
 
 Then amend the return statement to use the the `<ParentSize />` component, which supplies the width and height props to our `<Line />` component.
@@ -256,7 +256,7 @@ return (
       ))}
     </div>
   </>
-);
+)
 ```
 
 ## Improving our line charts
@@ -270,8 +270,8 @@ Adding axes to our chart is extremely simple using the `@visx/axis` package. We'
 Add the following imports to the _Line.js_ file.
 
 ```jsx
-import { AxisLeft, AxisBottom } from "@visx/axis";
-import { format } from "d3";
+import { AxisLeft, AxisBottom } from "@visx/axis"
+import { format } from "d3"
 ```
 
 We'll then modify our return statement to include our axes.
@@ -381,10 +381,10 @@ Lastly, it's helpful to add a tooltip to each of our charts to show the GDP per 
 In our _Line.js_ file, add the following imports.
 
 ```jsx
-import React, { useCallback } from "react";
-import { format, min, max } from "d3";
-import { useTooltip, TooltipWithBounds } from "@visx/tooltip";
-import { localPoint } from "@visx/event";
+import React, { useCallback } from "react"
+import { format, min, max } from "d3"
+import { useTooltip, TooltipWithBounds } from "@visx/tooltip"
+import { localPoint } from "@visx/event"
 ```
 
 We'll use the `useTooltip()` hook from `@visx/tooltip`, which provides several functions to position our tooltip and set the data to show.
@@ -396,7 +396,7 @@ const {
   tooltipData,
   tooltipLeft = 0,
   tooltipTop = 0,
-} = useTooltip();
+} = useTooltip()
 ```
 
 Let's write an event handler that will get the coordinates of our hover position and translate it into an x and y value to display in our tooltip.
@@ -484,7 +484,7 @@ return (
       </TooltipWithBounds>
     )}
   </>
-);
+)
 ```
 
 And that's it. The completed code for our faceted visualisation is available [here](https://codesandbox.io/s/upbeat-sun-kzolv?file=/src/Line.js).

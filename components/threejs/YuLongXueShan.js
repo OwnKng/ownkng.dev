@@ -5,7 +5,6 @@ import { Canvas } from "@react-three/fiber"
 import { OrbitControls } from "@react-three/drei"
 import * as THREE from "three"
 import { Button } from "../styled/element/Button"
-import { color } from "d3-color"
 
 const Scene = () => {
   const [orbit, setOrbit] = useState(false)

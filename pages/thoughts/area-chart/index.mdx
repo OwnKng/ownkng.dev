@@ -1,18 +1,18 @@
-import BlogPost from "../../../components/BlogPost";
-import ParentSize from "@visx/responsive/lib/components/ParentSize";
-import AreaChartWrapper from "../../../components/visx/AreaChartWrapper";
-import { motion } from "framer-motion";
+import BlogPost from "../../../components/BlogPost"
+import ParentSize from "@visx/responsive/lib/components/ParentSize"
+import AreaChartWrapper from "../../../components/visx/AreaChartWrapper"
+import { motion } from "framer-motion"
 
 export const meta = {
   title: "Animating data visualisations in React",
   description: "Animated visualisations with visx and Framer Motion",
-  date: "Jan 06 2020",
+  date: "Jan 06 2021",
   img: "/area-chart.png",
   readTime: 1,
   tags: ["Data Visualisation"],
-};
+}
 
-export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
+export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>
 
 <AreaChartWrapper />
 <span style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -66,8 +66,8 @@ const MyAreaChart = ({ data, height, width, margin }) => {
         }
       </AreaStack>
     </svg>
-  );
-};
+  )
+}
 ```
 
 To animate this using Framer Motion, all we need to do is to swap the `<path>` element with a `<motion.path>`, and then provide the initial and animate props.

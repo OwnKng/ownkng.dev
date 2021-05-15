@@ -85,23 +85,15 @@ const generateParticles = (width, length) => {
   return { positions, colors }
 }
 
-const Points = () => {
+const Points = ({ scroll }) => {
   const mesh = useRef()
   const material = useRef()
-
-  const [scroll, setScroll] = useState(0)
-
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      setScroll(window.scrollY)
-    })
-  }, [])
 
   const { positions, colors } = generateParticles(200, 200)
 
   useFrame(({ clock, camera, mouse }) => {
-    camera.position.y = (scroll * -1) / 100 + 1.5
     camera.position.z = mouse.x
+    camera.position.y = 1 - scroll.current / 100
     camera.lookAt(mesh.current.position)
     mesh.current.rotation.y = clock.elapsedTime / 10
     material.current.uniforms.uTime.value = clock.elapsedTime
