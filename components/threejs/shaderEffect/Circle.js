@@ -1,20 +1,35 @@
 import { useState, useEffect, useRef, Suspense } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { NoToneMapping, Vector2, Math } from "three"
+import { NoToneMapping, Vector2 } from "three"
 import { vertexShader } from "./glsl/vertexShader"
 import { fragmentShader } from "./glsl/fragmentShader"
 import styled from "styled-components"
 import { useSpring, animated } from "@react-spring/three"
 
-const Circle = ({ scroll }) => {
+const Circle = () => {
   const mesh = useRef()
   const material = useRef()
 
-  useFrame(({ clock, camera, mouse }) => {
+  useFrame(({ clock, mouse }) => {
     material.current.uniforms.uTime.value = clock.elapsedTime
-    camera.lookAt(mesh.current.position)
 
-    const mouseAdjusted = new Vector2((mouse.x + 1) / 2, (mouse.y + 1) / 2)
+    let mousePos = { x: mouse.x || 0, y: mouse.y || 0 }
+
+    if (mousePos.y > 1) {
+      mousePos.y = 1
+    }
+
+    if (mousePos.y < -1) {
+      mousePos.y = -1
+    }
+
+    mesh.current.rotation.y = mousePos.x * 0.4
+    mesh.current.rotation.x = mousePos.y * 0.4 * -1
+
+    const mouseAdjusted = new Vector2(
+      (mousePos.x + 1) / 2,
+      (mousePos.y + 1) / 2
+    )
 
     material.current.uniforms.uBaseCol.value = mouseAdjusted
   })
@@ -47,19 +62,13 @@ const CircleWrapper = ({ className }) => {
       await next({ scale: [1, 1, 1] })
     },
     from: { scale: [0.4, 0.4, 0.4] },
-    config: { duration: 800 },
+    config: { delay: 200, duration: 600 },
   })
 
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      scroll.current = window.scrollY
-    })
-  }, [])
-
   return (
-    <div scroll={scroll} className={className}>
+    <div className={className}>
       <Canvas
-        camera={{ fov: 75, position: [0, 0, 8] }}
+        camera={{ fov: 75, position: [0, 0, 9.5] }}
         onCreated={({ gl }) => {
           gl.toneMapping = NoToneMapping
         }}
@@ -67,7 +76,7 @@ const CircleWrapper = ({ className }) => {
         <Suspense fallback={null}>
           <animated.group {...props}>
             <color attach='background' args={["#08121C"]} />
-            <Circle scroll={scroll} />
+            <Circle />
           </animated.group>
         </Suspense>
       </Canvas>

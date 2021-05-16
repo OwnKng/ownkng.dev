@@ -28,7 +28,7 @@ Vertex shaders manipulate coordinates in 3D space and are called once for every 
 
 Fragment shaders define the colors for each pixel being processed and are called once per pixel. Fragment shaders set an in-built `gl_FragColor` variable, which describes the RBGA (Red, Green, Blue and Alpha) values for each pixel.
 
-### Using Shaders in Three.js
+### Using shaders in three.js
 
 Three.js's in-built materials - such as [`MeshStandardMaterial`](https://threejs.org/docs/#api/en/materials/MeshStandardMaterial) or [`MeshPhongMaterial`](https://threejs.org/docs/?q=meshp#api/en/materials/MeshPhongMaterial) - are all built using WebGL shaders. Three.js also provides two materials, [`RawShaderMaterial`](https://threejs.org/docs/?q=shader#api/en/materials/RawShaderMaterial) and [`ShaderMaterial`](https://threejs.org/docs/?q=shader#api/en/materials/ShaderMaterial), which allow us to define our own WebGL shader. When using either of these materials, we supply our own vertex and fragment shaders.
 
@@ -36,11 +36,11 @@ Three.js's in-built materials - such as [`MeshStandardMaterial`](https://threejs
 
 We'll be writing the circular shader that appears on the top of this page. The starter code is available [here](https://codesandbox.io/s/webgl-shader-starter-88193), and the finished version is [here](https://codesandbox.io/s/webgl-shader-zi5nf?file=/src/script.js). I've also implemented this shader in [React Three Fiber](https://github.com/pmndrs/react-three-fiber), a popular Three.js renderer for React. The code for this is available in this [GitHub repo](https://github.com/OwnKng/r3f-webgl-shader).
 
-Let's take a look at the starter code. In the `script.js` file, we're creating a simple three.js scene with a `PlaneGeometry`. We also create a `ShaderMaterial`, passing it the `vertexShader` and `fragmentShader` that we've saved in the _src/shaders_ directory and import at the top of our file.[^1]
+Let's take a look at the starter code. In the `script.js` file, we're creating a simple three.js scene with a [`PlaneGeometry`](https://threejs.org/docs/?q=planeg#api/en/geometries/PlaneGeometry). We also create a `ShaderMaterial`, passing it the `vertexShader` and `fragmentShader` that we've saved in the _src/shaders_ directory and import at the top of our file.[^1]
 
 While our shaders are written in GLSL, we've placed them inside [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals). This will allow us to easily extend our code with functions written by other developers, while keeping our shaders relatively clean.
 
-In our _script.js_ file, we provide these shaders to `ShaderMaterial`, which is then combined with our geometry in a three.js `mesh` object, which we add to our scene.
+In our _script.js_ file, we provide these shaders to `ShaderMaterial`, which is then combined with our geometry in a three.js [`Mesh`](https://threejs.org/docs/#api/en/objects/Mesh), which we add to our scene.
 
 At the moment, our vertex and fragment shaders are extremely simple. Inside the `main()` function, which we must include in both shaders, we're simply setting values for the in-built `gl_Position` and `gl_FragColor` variables.
 
@@ -134,7 +134,7 @@ Now update the value of the `distortion` variable to use our uniform `uTime`.
  float distortion = sin(transPosition.x * 2.0 + uTime) + cos(transPosition.y * 1.5 + uTime);
 ```
 
-Our mesh's z positions now animates using the value of `uTime` in the calculations.
+Our mesh's z positions now animate using the value of `uTime` in the calculations.
 
 # Using `varying` to pass data between our shaders
 
@@ -349,7 +349,7 @@ We'll then supply alpha to gl_FragColor.
     gl_FragColor = vec4(color, alpha);
 ```
 
-Finally, we need to return to our _script.js_ file to set the transparent option to `true`. This simply means that the `ShaderMaterial` will respect the alpha values returned from our fragment shader.
+Finally, we need to return to our _script.js_ file to set the transparent option of our `ShaderMaterial` to `true`. This simply means that the `ShaderMaterial` will respect the alpha values returned from our fragment shader.
 
 ```glsl
 const material = new THREE.ShaderMaterial({
@@ -371,13 +371,13 @@ Writing WebGL shaders is hard. It not only relies on an understanding of mathema
 
 Despite this, there's definitely something really enjoyable about using code and mathematical concepts to produce artistic and beautiful visualisations. Shaders are also something with a certain 'wow' factor that, even when used around the margins of a website or application, can create really impactful experiences.
 
-# Learn more about WebGL Shaders
+# Learn more about WebGL shaders
 
 In learning about WebGL shaders I've found the following resources extremely helpful.
 
-- [Bruno Simon's](https://bruno-simon.com/) fabulous **[three.js journey](https://threejs-journey.xyz/)** course, which provides extensive material about all about aspects of three.js and WebGL, including shaders.
-- [Matt DesLauriers](https://www.mattdesl.com/) has two excellent courses on creative coding on **[Frontend Masters](https://frontendmasters.com/teachers/matt-deslauriers/)**. Matt has also written a **[fantastic guide](https://mattdesl.github.io/workshop-webgl-glsl/#/)** to WebGL and GLSL.
-- [Patricio Gonzalez Vivo](http://patriciogonzalezvivo.com/) and [Jen Lowe's](http://jenlowe.net/) e-book **[The Book of Shaders](https://thebookofshaders.com/)** is a very comprehensive guide to the topic.
-- Creative coder [Varun Vachhar](https://varun.ca/) recently wrote an **[fantastic article](https://varun.ca/noise/)** on noise algorithms with lots of useful demos.
+- **[Bruno Simon's](https://bruno-simon.com/)** fabulous **[three.js journey](https://threejs-journey.xyz/)** course, which provides extensive material about all about aspects of three.js and WebGL, including shaders.
+- **[Matt DesLauriers](https://www.mattdesl.com/)** has two excellent courses on creative coding on **[Frontend Masters](https://frontendmasters.com/teachers/matt-deslauriers/)**. Matt has also written a **[fantastic guide](https://mattdesl.github.io/workshop-webgl-glsl/#/)** to WebGL and GLSL.
+- **[Patricio Gonzalez Vivo](http://patriciogonzalezvivo.com/)** and **[Jen Lowe's](http://jenlowe.net/)** e-book **[The Book of Shaders](https://thebookofshaders.com/)** is a very comprehensive guide to the topic.
+- Creative coder **[Varun Vachhar](https://varun.ca/)** recently wrote an **[fantastic article](https://varun.ca/noise/)** on noise algorithms with lots of useful demos.
 
 [^1]: I've used a `ShaderMaterial` rather than a `RawShaderMaterial` because the former provides a lot of hidden uniforms and attributes that makes the process of writing shaders simpler.
