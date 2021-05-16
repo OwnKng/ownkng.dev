@@ -23,9 +23,6 @@ const Circle = () => {
       mousePos.y = -1
     }
 
-    mesh.current.rotation.y = mousePos.x * 0.4
-    mesh.current.rotation.x = mousePos.y * 0.4 * -1
-
     const mouseAdjusted = new Vector2(
       (mousePos.x + 1) / 2,
       (mousePos.y + 1) / 2
@@ -87,7 +84,7 @@ const CircleWrapper = ({ className }) => {
 export default styled(CircleWrapper)`
   width: 100vw;
   position: relative;
-  height: 70vh;
+  height: 75vh;
   left: calc(-50vw + 50%);
   overflow: hidden;
 `
