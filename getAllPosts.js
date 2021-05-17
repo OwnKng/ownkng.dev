@@ -7,11 +7,11 @@ function importAll(r) {
     }))
     .sort(
       (a, b) =>
-        new Date(`${b.module.meta.date}z`).getTime() -
-        new Date(`${a.module.meta.date}z`).getTime()
-    );
+        new Date(`${b.module.meta.date}`).getTime() -
+        new Date(`${a.module.meta.date}`).getTime()
+    )
 }
 
 export const posts = importAll(
   require.context("./pages/thoughts/", true, /\.mdx$/)
-);
+)
