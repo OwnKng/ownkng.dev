@@ -9,7 +9,6 @@ import { GridRows } from "@visx/grid"
 import { useColorScale } from "../hooks"
 import { useTooltip, TooltipWithBounds } from "@visx/tooltip"
 import { useCallback } from "react"
-import { Text } from "@visx/text"
 
 const Density = ({
   data,
@@ -160,7 +159,7 @@ const DensityWrapper = ({ className, data, x, color }) => {
   return (
     <div className={className}>
       <h3>{`Density of ${
-        x === "cl_rating" ? "civil liberties" : "political rights"
+        x === "Civil liberties score" ? "civil liberties" : "political rights"
       } scores`}</h3>
       <div className='grid'>
         {dataGrouped.map((d, i) => (
