@@ -27,3 +27,13 @@ module.exports = withPlugins([
   [withTM],
   [withImages],
 ])
+
+// module.exports = {
+//   webpack: (config, { isServer }) => {
+//     if (isServer) {
+//       require("./scripts/generate-sitemap")
+//     }
+
+//     return config
+//   },
+// }

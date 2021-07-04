@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://ownkng.dev/sitemap.xml
