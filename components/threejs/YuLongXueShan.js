@@ -17,7 +17,6 @@ const Scene = () => {
         style={{
           background: overlay ? "#00A7E1" : "",
           color: overlay ? "#FFFFFE" : "",
-          opacity: overlay ? 1 : 0.4,
         }}
       >
         Satellite overlay
@@ -27,7 +26,6 @@ const Scene = () => {
         style={{
           background: orbit ? "#00A7E1" : "",
           color: orbit ? "#FFFFFE" : "",
-          opacity: orbit ? 1 : 0.4,
         }}
       >
         Enable controls

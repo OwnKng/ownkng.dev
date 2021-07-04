@@ -216,7 +216,7 @@ const ScatterPlot = ({
           width={width}
           textAnchor='middle'
           y={yScale(51)}
-          style={{ fontSize: "1.2rem" }}
+          style={{ fontSize: "1.4rem" }}
         >
           Rich &rarr;
         </Text>

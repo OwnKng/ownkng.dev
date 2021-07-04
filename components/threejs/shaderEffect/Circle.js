@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Suspense } from "react"
+import { useRef, Suspense } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { NoToneMapping, Vector2 } from "three"
 import { vertexShader } from "./glsl/vertexShader"
@@ -51,8 +51,6 @@ const Circle = () => {
 }
 
 const CircleWrapper = ({ className }) => {
-  const scroll = useRef(0)
-
   const props = useSpring({
     to: async (next) => {
       await next({ scale: [1, 1, 1] })
