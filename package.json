@@ -16,7 +16,7 @@
     "@react-three/fiber": "^6.0.1",
     "@visx/react-spring": "^1.7.0",
     "@visx/stats": "^1.14.0",
-    "@visx/visx": "^1.7.2",
+    "@visx/visx": "^1.16.0",
     "d3": "^6.7.0",
     "d3-time": "^1.1.0",
     "framer-motion": "^2.9.5",
