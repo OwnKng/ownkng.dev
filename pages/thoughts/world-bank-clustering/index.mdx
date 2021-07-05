@@ -27,17 +27,17 @@ This analysis groups countries into one of four clusters based on around 30 indi
 
 ### Clustering countries using Principal Component Analysis and K-Means
 
-Many of the indicators we explore are correlated with each other. For this reason, we first use a statistical technique called [Principal Component Analysis (PCA)](https://en.wikipedia.org/wiki/Principal_component_analysis) to reduce the dimensionality of the data and identify those variables which are most important in explaining variation between countries. We then use cluster the principal component projections of the data using the [k-means algorithm](https://en.wikipedia.org/wiki/k-means).
+Many of the indicators we explore are correlated with each other. For this reason, we first use a statistical technique called [Principal Component Analysis (PCA)](https://en.wikipedia.org/wiki/Principal_component_analysis) to reduce the dimensionality of the data and identify those variables which are most important in explaining variation between countries. We then cluster the principal component projections of the data using the [k-means algorithm](https://en.wikipedia.org/wiki/k-means).
 
-The k-means algorithm places countries into clusters in which member countries are more similar to each other across the transformed values than they are to countries in the other clusters. Through different data visualisations, we explore some of indicators that determine this clustering and best explain how countries differ.
+Using k-means allows us to place countries into clusters in which member countries are more similar to each other across the transformed values than they are to countries in the other clusters. Through different data visualisations, we explore some of indicators that determine this clustering and best explain how countries differ.
 
 The underlying analysis for this post was written in R. The code is provided at the end of this page as well as in the accompanying [GitHub repo](https://github.com/OwnKng/world-bank-pca). The visualisations were created with [D3](https://d3js.org/) and [visx](https://airbnb.io/visx/).
 
 # Wealth: How rich are people in this country?
 
-One good way of telling countries apart is to look at how much income a typical person within the country has in a given year. Moreover, higher income are often associated with many other desirable traits, such as better public health, access to education or better infrastructure.
+One good way of telling countries apart is to look at how much income a typical person within the country has in a given year. Moreover, higher incomes are often associated with many other desirable traits, such as better public health, access to education or better infrastructure.
 
-The graph below shows GDP per capita and life expectancy across the countries in our dataset in 2019. Two trends are immediately apparent. First, the countries are in the <Span color = '#98A6D4' >Rich, well governed and free</Span> cluster are all positioned towards the top right of the chart. Per capita GDP in these countries is by and large greater than $15k and people in these countries can expect to live to the age of 75 or more.
+The graph below shows GDP per capita and life expectancy across the countries in our dataset in 2019. Two trends are immediately apparent. First, the countries in the <Span color = '#98A6D4' >Rich, well governed and free</Span> cluster are all positioned towards the top right of the chart. Per capita GDP in these countries is by and large greater than $15k and people in these countries can expect to live to the age of 75 or more.
 
 Second, we can see the concentration of the <Span color = '#EF6461' >Poor, but young</Span> countries towards the bottom left of the chart. The richest countries in this group have average incomes of just $7-8k, and most of the countries in this cluster have incomes of less than $2k. The median life expectancy in this cluster is only around 65 years.
 
@@ -50,7 +50,7 @@ Second, we can see the concentration of the <Span color = '#EF6461' >Poor, but y
   color='cluster'
 />
 
-Between these two clusters are our two other groups - <Span color = '#E4B363' >(mostly) big and developing</Span> and <Span color = '#00C49A' >Small, (mostly) free and developing</Span>. These groups have similar levels of GDP per capita and life expectancy, and so looking at income is perhaps not the best way to tell them apart.
+Between these two clusters are our two other groups - <Span color = '#E4B363' >(mostly) big and developing</Span> and <Span color = '#00C49A' >Small, (mostly) free and developing</Span>. These clusters have similar levels of GDP per capita and life expectancy, and so looking at income is perhaps not the best way to tell them apart.
 
 These patterns are broadly similar if we look again at GDP per capita and the percentage of the population in each country using the Internet. However, we can perhaps discern that Internet usage is generally higher in the <Span color = '#E4B363' >(mostly) big and developing</Span> cluster than the <Span color = '#00C49A' >Small, (mostly) free and developing</Span> cluster.
 
@@ -65,7 +65,7 @@ These patterns are broadly similar if we look again at GDP per capita and the pe
 
 # Governance: How well is this country governed?
 
-The quality of government is another good way of identifying countries. The [Worldwide Governance Indicators (WGI) project](https://info.worldbank.org/governance/wgi/) at the World Bank provides a single score for several different governance indicators, including adherence to the rule of law, how well designed regulations are and how effective government in each country is.
+The quality of government is another good way of separating countries. The [Worldwide Governance Indicators (WGI) project](https://info.worldbank.org/governance/wgi/) at the World Bank provides a single score for several different governance indicators, including adherence to the rule of law, how well designed regulations are and how effective government in each country is.
 
 These scores are based on 30 individual data sources produced by a variety of survey institutes, think tanks, non-governmental organisations, international organisations, and private sector firms. The composite measures of governance range approximately between -2.5 (very bad governance) to 2.5 (very good governance).
 
@@ -276,7 +276,7 @@ We can see that governance indicators feature prominently in the first
 principal component, as well as infrastructure variables related to
 Internet connectivity. The number of people under the age of 40 also
 contributes heavily to this component. Given that PC1 explains almost
-half the variation in our data, these are some of the most indicators to explaining variation between countries.
+half the variation in our data, these are some of the most important indicators to explaining variation between countries.
 
 The second principal component contains several variables related to
 absolute size or 'bigness', such as a country's population, economic
