@@ -35,48 +35,50 @@ const Post = ({ className, post }) => {
 
   return (
     <Link href={"/thoughts" + link}>
-      <motion.div
-        ref={ref}
-        key={link}
-        variants={variants}
-        initial='initial'
-        animate={inView ? "animate" : "initial"}
-      >
-        <div className={className} style={{ cursor: "pointer" }}>
-          <div className='content'>
-            <div className='title'>
-              <motion.h2 variants={titleVariants} transition='transition'>
-                {meta.title}
-              </motion.h2>
+      <a>
+        <motion.div
+          ref={ref}
+          key={link}
+          variants={variants}
+          initial='initial'
+          animate={inView ? "animate" : "initial"}
+        >
+          <div className={className} style={{ cursor: "pointer" }}>
+            <div className='content'>
+              <div className='title'>
+                <motion.h2 variants={titleVariants} transition='transition'>
+                  {meta.title}
+                </motion.h2>
+              </div>
+              <div className='description'>
+                <motion.h3 variants={titleVariants} transition='transition'>
+                  {meta.description}
+                </motion.h3>
+              </div>
+              <div className='tags'>
+                {meta.tags
+                  .filter((tag) => tag !== "Featured")
+                  .map((tag, i) => (
+                    <span key={`tag-${i}`} className='tag'>
+                      {tag}
+                    </span>
+                  ))}
+              </div>
+              <div className='featured'>
+                {meta.tags.includes("Featured") && <span>Featured</span>}
+              </div>
             </div>
-            <div className='description'>
-              <motion.h3 variants={titleVariants} transition='transition'>
-                {meta.description}
-              </motion.h3>
-            </div>
-            <div className='tags'>
-              {meta.tags
-                .filter((tag) => tag !== "Featured")
-                .map((tag, i) => (
-                  <span key={`tag-${i}`} className='tag'>
-                    {tag}
-                  </span>
-                ))}
-            </div>
-            <div className='featured'>
-              {meta.tags.includes("Featured") && <span>Featured</span>}
-            </div>
+            <Image
+              alt='card-background-image'
+              src={meta.img}
+              layout='fill'
+              objectFit='fill'
+              priority={true}
+            />
+            <div className='imageOverlay' />
           </div>
-          <Image
-            alt='card-background-image'
-            src={meta.img}
-            layout='fill'
-            objectFit='fill'
-            priority={true}
-          />
-          <div className='imageOverlay' />
-        </div>
-      </motion.div>
+        </motion.div>
+      </a>
     </Link>
   )
 }
