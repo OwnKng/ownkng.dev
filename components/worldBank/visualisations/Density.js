@@ -207,12 +207,13 @@ export default styled(DensityWrapper)`
 
   .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
   }
 
   .panel {
     height: 500px;
     position: relative;
+    width: 100%;
   }
 
   svg text {
@@ -221,12 +222,14 @@ export default styled(DensityWrapper)`
   }
 
   @media only screen and (max-width: 1000px) {
-    width: 100%;
     left: 0px;
+    width: 95vw;
 
     .grid {
-      grid-template-columns: 1fr 1fr;
-      grid-auto-flow: rows;
+      grid-template-columns: repeat(2, minmax(100px, 1fr));
+      grid-template-rows: repeat(2, minmax(100px, 1fr));
+      grid-auto-flow: row;
+      width: 100%;
     }
 
     gap: 20px;

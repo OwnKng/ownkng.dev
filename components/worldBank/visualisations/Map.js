@@ -18,6 +18,7 @@ const colors = [
 const { colorScale } = useColorScale(colors)
 
 const Map = ({ width, height }) => {
+  console.log(width)
   // Set dimensions
   const centerX = width / 2
   const centerY = height / 2
@@ -133,6 +134,7 @@ const MapWrapper = ({ className }) => (
 export default styled(MapWrapper)`
   position: relative;
   overflow: hidden;
+
   display: grid;
   grid-template-areas:
     "legend"
@@ -161,6 +163,7 @@ export default styled(MapWrapper)`
 
     .viz {
       height: 500px;
+      width: 100vw;
     }
 
     .legend {
@@ -171,7 +174,7 @@ export default styled(MapWrapper)`
 
   .visx-legend-item {
     gap: 5px;
-    padding: 0px 10px;
+    padding: 0px;
   }
 
   .tooltip {
