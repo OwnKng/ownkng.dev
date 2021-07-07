@@ -169,6 +169,8 @@ export default styled(MapWrapper)`
     .legend {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      margin: 0px 0px 0px 5px;
+      width: calc(100% - 5px);
     }
   }
 
