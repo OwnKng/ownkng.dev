@@ -18,7 +18,6 @@ const colors = [
 const { colorScale } = useColorScale(colors)
 
 const Map = ({ width, height }) => {
-  console.log(width)
   // Set dimensions
   const centerX = width / 2
   const centerY = height / 2
