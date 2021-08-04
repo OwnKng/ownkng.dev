@@ -48,6 +48,16 @@ h1, h2, h3, h4, h5 {
 }
 
 
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+li::selection,
+p::selection {
+  background: white;
+  color: ${({ theme }) => theme.colors.background};
+}
+
 
 small, .text_small {font-size: 0.8rem;}
 
