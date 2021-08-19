@@ -3,6 +3,7 @@ export const theme = {
     background: "#08121C",
     headline: "#fffffe",
     paragraph: "#a7a9be",
+    blogParagraph: "#fffffe",
     cardParagraph: "#a7a9be",
     button: "#00A7E1",
     buttonText: "#fffffe",

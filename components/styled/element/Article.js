@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 export const Article = styled(motion.article)`
   max-width: 800px;
   margin: 0px auto;
-  color: ${({ theme }) => theme.colors.paragraph};
+  color: var(--colors-paragraph-blog);
   padding: 2rem 0rem;
 
   @media only screen and (max-width: 600px) {
@@ -32,14 +32,17 @@ export const Article = styled(motion.article)`
 
   h1 {
     font-size: 2.5rem;
+    font-weight: bold;
   }
 
   h2 {
     font-size: 1.8rem;
+    font-weight: bold;
   }
 
   h3 {
     font-size: 1.6rem;
+    font-weight: bold;
   }
 
   img {
