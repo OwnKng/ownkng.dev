@@ -21,7 +21,7 @@ module.exports = withPlugins([
   [
     withMDX,
     {
-      pageExtensions: ["js", "jsx", "md", "mdx"],
+      pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
     },
   ],
   [withTM],

@@ -9,6 +9,7 @@ ${normalize()}
   --z-index-med: ${({ theme }) => theme.levels.medium};
   --z-index-high: ${({ theme }) => theme.levels.high};
   --z-index-highest: ${({ theme }) => theme.levels.highest};
+  --colors-paragraph-blog: ${({ theme }) => theme.colors.blogParagraph};
 }
 
 html {
