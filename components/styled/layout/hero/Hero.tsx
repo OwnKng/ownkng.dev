@@ -1,7 +1,11 @@
 import Scene from "./Scene"
 import styled from "styled-components"
 
-const Hero = ({ className }) => (
+type heroProps = {
+  className?: string
+}
+
+const Hero = ({ className }: heroProps) => (
   <div className={className}>
     <Scene />
     <div className='name-card'>
