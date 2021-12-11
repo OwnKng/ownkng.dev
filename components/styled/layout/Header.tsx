@@ -4,7 +4,11 @@ import Link from "next/link"
 import MenuButton from "../element/MenuButton"
 import { elevation } from "../utilities"
 
-const Header = ({ className }) => {
+type headerProps = {
+  className?: string
+}
+
+const Header = ({ className }: headerProps) => {
   return (
     <header className={className}>
       <div className='menu'>
@@ -20,12 +24,11 @@ const Header = ({ className }) => {
 }
 
 export default styled(Header)`
-  position: sticky;
+  position: fixed;
   top: 0px;
   height: 4rem;
   width: 100%;
   z-index: 4;
-  ${elevation[1]};
 
   .menu {
     display: flex;
@@ -33,10 +36,8 @@ export default styled(Header)`
     place-items: center;
     height: 100%;
     width: 100%;
-    background: rgba(8, 18, 28, 0.8);
-    backdrop-filter: blur(4px);
     margin: 0 auto;
-    padding: 0px 10%;
+    padding: 0px 1rem;
 
     @media only screen and (max-width: 600px) {
       padding: 0px 5%;

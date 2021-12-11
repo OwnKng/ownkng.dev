@@ -151,7 +151,9 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
 
 export default styled(NavWrapper)`
   position: fixed;
-  top: 4rem;
+  top: 0px;
+  left: 0px;
+  padding-top: 4rem;
   height: 100vh;
   width: 100vw;
   z-index: var(--z-index-highest);

@@ -15,7 +15,7 @@ export const theme = {
     boxShadow: "#2e2f3e",
   },
   levels: {
-    low: 0,
+    low: -1,
     medium: 1,
     high: 2,
     highest: 3,
