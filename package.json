@@ -12,6 +12,7 @@
     "@mdx-js/loader": "^1.6.22",
     "@next/mdx": "^10.1.2",
     "@react-spring/three": "^9.1.2",
+    "@react-three/cannon": "^4.2.0",
     "@react-three/drei": "^4.0.1",
     "@react-three/fiber": "^6.0.1",
     "@visx/react-spring": "^1.7.0",
@@ -47,6 +48,7 @@
     "typescript": "^4.3.5"
   },
   "devDependencies": {
+    "@types/three": "^0.135.0",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
     "eslint": "^7.32.0",

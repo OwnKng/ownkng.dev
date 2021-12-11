@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useState, useEffect } from "react"
 import { posts } from "../../../getAllPosts"
 import { SectionHeader } from "../element/SectionHeader"
@@ -7,7 +8,11 @@ import styled from "styled-components"
 import StyledLink from "../element/StyedLink"
 import SectionTitle from "../element/SectionTitle"
 
-const Thoughts = ({ className }) => {
+type thoughtsType = {
+  className?: string
+}
+
+const Thoughts = ({ className }: thoughtsType) => {
   const [active, setActive] = useState("Featured")
   const [filteredPosts, setFiltered] = useState()
 

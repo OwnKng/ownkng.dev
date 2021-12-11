@@ -6,8 +6,8 @@ type viewCounterProps = {
   }
 
 const ViewCounter = ({ title }: viewCounterProps) => {
-  const { data } = useSWR(`/api/views/${title}`, async (...args) => {
-    const res = await fetch(...args)
+  const { data } = useSWR(`/api/views/${title}`, async (args) => {
+    const res = await fetch(args)
     return res.json()
   })
 

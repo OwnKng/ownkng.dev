@@ -1,36 +1,34 @@
 import styled from "styled-components"
 
-const Form = ({ className, tags, active, setActive }) => {
-  return (
-    <div className={className}>
-      <div className='buttons'>
-        <button
-          className={active === "Featured" ? "active" : ""}
-          style={{
-            color: active === "Featured" ? "#00A7E1" : "",
-          }}
-          onClick={() => setActive("Featured")}
-        >
-          Featured
-        </button>
-        {tags
-          ? tags.map((tag) => (
-              <button
-                className={tag === active ? "active" : ""}
-                key={tag}
-                style={{
-                  color: tag === active ? "#00A7E1" : "",
-                }}
-                onClick={() => setActive(tag)}
-              >
-                {tag}
-              </button>
-            ))
-          : null}
-      </div>
+const Form = ({ className, tags, active, setActive }) => (
+  <div className={className}>
+    <div className='buttons'>
+      <button
+        className={active === "Featured" ? "active" : ""}
+        style={{
+          color: active === "Featured" ? "#00A7E1" : "",
+        }}
+        onClick={() => setActive("Featured")}
+      >
+        Featured
+      </button>
+      {tags
+        ? tags.map((tag) => (
+            <button
+              className={tag === active ? "active" : ""}
+              key={tag}
+              style={{
+                color: tag === active ? "#00A7E1" : "",
+              }}
+              onClick={() => setActive(tag)}
+            >
+              {tag}
+            </button>
+          ))
+        : null}
     </div>
-  )
-}
+  </div>
+)
 
 export default styled(Form)`
   .buttons {

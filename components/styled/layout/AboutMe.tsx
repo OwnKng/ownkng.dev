@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react"
 import styled from "styled-components"
 import Image from "next/image"
@@ -10,7 +11,11 @@ import { elevation } from "../utilities"
 import StyledExternalLink from "../element/StyledExternalLink"
 import SectionTitle from "../element/SectionTitle"
 
-const AboutMe = ({ className }) => {
+type aboutProps = {
+  className?: string
+}
+
+const AboutMe = ({ className }: aboutProps) => {
   return (
     <>
       <SectionHeader className='title' id='about'>
