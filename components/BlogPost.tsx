@@ -1,8 +1,9 @@
-import { motion } from 'framer-motion'
-import styled from 'styled-components'
-import { HeadPost } from './HeadPost'
-import { BlogHead } from './styled/element/BlogHead'
-import { Article } from './styled/element/Article'
+import { motion } from "framer-motion"
+import styled from "styled-components"
+import { HeadPost } from "./HeadPost"
+import { BlogHead } from "./styled/element/BlogHead"
+import { Article } from "./styled/element/Article"
+import Layout from "./Layout"
 
 const variants = {
   initial: {},
@@ -22,7 +23,7 @@ const titleVariants = {
       duration: 0.3,
     },
   },
-  transition: { type: 'easeIn' },
+  transition: { type: "easeIn" },
 }
 
 const articleVariants = {
@@ -36,25 +37,39 @@ const articleVariants = {
   },
 }
 
+type blogMeta = {
+  title: string
+  description: string
+  date: string
+  img: string
+  url: string
+}
+
 type blogPostProps = {
-  className: string,
-  children: any,
-  meta: []
+  className: string
+  children: any
+  meta: blogMeta
 }
 
 const BlogPost = ({ className, children, meta }: blogPostProps) => (
-  <motion.div
-    className={className}
-    variants={variants}
-    initial="initial"
-    animate="animate"
+  <Layout
+    pageTitle={meta.title}
+    description={meta.description}
+    image={meta.img}
+    url={meta.url}
   >
-    <BlogHead>
-      <HeadPost meta={meta} variants={titleVariants} />
-
-    </BlogHead>
-    <Article variants={articleVariants}>{children}</Article>
-  </motion.div>
+    <motion.div
+      className={className}
+      variants={variants}
+      initial='initial'
+      animate='animate'
+    >
+      <BlogHead>
+        <HeadPost meta={meta} variants={titleVariants} />
+      </BlogHead>
+      <Article variants={articleVariants}>{children}</Article>
+    </motion.div>
+  </Layout>
 )
 
 export default styled(BlogPost)`

@@ -21,9 +21,7 @@ export default function App({ Component, pageProps }) {
         <PageWrapper>
           <ThemeProvider theme={theme}>
             <GlobalStyles />
-            <Layout pageTitle='Owen King' description=''>
-              <Component {...pageProps} />
-            </Layout>
+            <Component {...pageProps} />
           </ThemeProvider>
         </PageWrapper>
       </MDXProvider>

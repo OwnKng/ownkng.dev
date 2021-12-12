@@ -1,8 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { theme } from "../utilities"
 
-const Footer = ({ className }) => (
+const Footer = ({ className }: { className?: string }) => (
   <footer className={className}>
     <p>&#169; 2021 Owen King</p>
   </footer>

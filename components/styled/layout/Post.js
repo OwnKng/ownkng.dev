@@ -89,6 +89,10 @@ export default styled(Post)`
   position: relative;
   ${elevation[2]};
 
+  img {
+    border-radius: 8px;
+  }
+
   .imageOverlay {
     position: absolute;
     z-index: var(--z-index-low);

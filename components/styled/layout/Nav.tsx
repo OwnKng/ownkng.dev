@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos"
 import styled from "styled-components"
 import { motion } from "framer-motion"
@@ -72,7 +73,7 @@ const NavItem = React.forwardRef(({ onClick, href, linkName }, ref) => {
   )
 })
 
-const NavWrapper = ({ className }) => {
+const NavWrapper = ({ className }: { className?: string }) => {
   const { isMenuOpen, closeMenu } = useAppState()
   if (!isMenuOpen) return null
   return (
