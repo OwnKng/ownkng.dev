@@ -1,14 +1,17 @@
-import Link from "next/link";
-import styled from "styled-components";
+import Link from "next/link"
+import styled from "styled-components"
+import Layout from "../components/Layout"
 
-const ErrorPage = ({ className }) => (
-  <div className={className}>
-    <h1>Oh No! Something went wrong</h1>
-    <Link href='/'>
-      <a>Take me home!</a>
-    </Link>
-  </div>
-);
+const ErrorPage = ({ className }: { className?: string }) => (
+  <Layout>
+    <div className={className}>
+      <h1>Oh No! Something went wrong</h1>
+      <Link href='/'>
+        <a>Take me home!</a>
+      </Link>
+    </div>
+  </Layout>
+)
 
 export default styled(ErrorPage)`
   min-height: 100vh;
@@ -28,4 +31,4 @@ export default styled(ErrorPage)`
       color: ${({ theme }) => theme.colors.stroke};
     }
   }
-`;
+`

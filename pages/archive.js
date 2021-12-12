@@ -1,10 +1,11 @@
-import Posts from "../components/styled/layout/Posts";
-import { SectionHeader } from "../components/styled/element/SectionHeader";
-import { posts } from "../getAllPosts";
+import Posts from "../components/styled/layout/Posts"
+import { SectionHeader } from "../components/styled/element/SectionHeader"
+import { posts } from "../getAllPosts"
+import Layout from "../components/Layout"
 
 export default function Archive() {
   return (
-    <>
+    <Layout url='/archive'>
       <SectionHeader id='thoughts'>
         <SectionHeader.Title>Thoughts</SectionHeader.Title>
         <SectionHeader.Subtitle>
@@ -12,6 +13,6 @@ export default function Archive() {
         </SectionHeader.Subtitle>
       </SectionHeader>
       <Posts posts={posts} />
-    </>
-  );
+    </Layout>
+  )
 }
