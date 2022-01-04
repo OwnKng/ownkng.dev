@@ -2,6 +2,10 @@ const withPlugins = require("next-compose-plugins")
 
 const withMDX = require("@next/mdx")({
   extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
 })
 
 const withTM = require("next-transpile-modules")([
@@ -17,6 +21,13 @@ module.exports = withImages({
   },
 })
 
+module.exports = {
+  experimental: {
+    // ssr and displayName are configured by default
+    styledComponents: true,
+  },
+}
+
 module.exports = withPlugins([
   [
     withMDX,
@@ -27,13 +38,3 @@ module.exports = withPlugins([
   [withTM],
   [withImages],
 ])
-
-// module.exports = {
-//   webpack: (config, { isServer }) => {
-//     if (isServer) {
-//       require("./scripts/generate-sitemap")
-//     }
-
-//     return config
-//   },
-// }

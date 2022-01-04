@@ -3,15 +3,6 @@ import styled from "styled-components"
 export const SectionHeader = styled.div`
   margin: 50px 0 0 0;
   text-align: center;
-
-  :before {
-    display: block;
-    content: " ";
-    margin-top: -80px;
-    height: 80px;
-    visibility: hidden;
-    pointer-events: none;
-  }
 `
 
 const SectionTitle = styled.h1`

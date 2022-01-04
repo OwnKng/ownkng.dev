@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const PostWrapper = styled.li`
   list-style: none;
-  padding-top: 1rem;
+  padding-top: 5px;
   overflow: hidden;
-`;
+`

@@ -101,6 +101,11 @@ const Tech = ({ className }) => (
                 three.js
               </StyledExternalLink>
             </li>
+            <li>
+              <StyledExternalLink href='https://www.khronos.org/api/webgl'>
+                WebGL
+              </StyledExternalLink>
+            </li>
           </ul>
         </div>
         <div className='databases'>
