@@ -14,14 +14,7 @@ const withTM = require("next-transpile-modules")([
   "@react-three/drei",
 ])
 
-const withImages = require("next-images")
-module.exports = withImages({
-  webpack(config, options) {
-    return config
-  },
-})
-
-module.exports = {
+config = {
   experimental: {
     // ssr and displayName are configured by default
     styledComponents: true,
@@ -35,13 +28,15 @@ module.exports = {
   },
 }
 
-module.exports = withPlugins([
+module.exports = withPlugins(
   [
-    withMDX,
-    {
-      pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-    },
+    [
+      withMDX,
+      {
+        pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+      },
+    ],
+    [withTM],
   ],
-  [withTM],
-  [withImages],
-])
+  config
+)
