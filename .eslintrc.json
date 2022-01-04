@@ -3,7 +3,6 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["plugin:react/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -17,5 +16,6 @@
     "semi": ["error", "never"],
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off"
-  }
+  },
+  "extends": ["eslint:recommended", "next"]
 }
