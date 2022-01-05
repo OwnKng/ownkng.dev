@@ -19,13 +19,7 @@ config = {
     // ssr and displayName are configured by default
     styledComponents: true,
   },
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
-  },
+  typescript: {},
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
