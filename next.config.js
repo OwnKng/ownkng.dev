@@ -12,6 +12,7 @@ const withTM = require("next-transpile-modules")([
   "three",
   "@react-three/fiber",
   "@react-three/drei",
+  "@react-three/cannon",
 ])
 
 config = {
