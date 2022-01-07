@@ -9,6 +9,7 @@ ${normalize()}
   --z-index-med: ${({ theme }) => theme.levels.medium};
   --z-index-high: ${({ theme }) => theme.levels.high};
   --z-index-highest: ${({ theme }) => theme.levels.highest};
+  --colors-paragraph: ${({ theme }) => theme.colors.paragraph};
   --colors-paragraph-blog: ${({ theme }) => theme.colors.blogParagraph};
 }
 
@@ -32,6 +33,7 @@ body {
 p {
     font-size: 1.4rem;
     margin-bottom: 1rem;
+    color: var(--colors-paragraph);
 }
 
 h1, h2 {

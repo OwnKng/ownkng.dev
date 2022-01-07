@@ -2,7 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import Link from "next/link"
 import MenuButton from "../element/MenuButton"
-import { elevation } from "../utilities"
 
 type headerProps = {
   className?: string
@@ -13,9 +12,7 @@ const Header = ({ className }: headerProps) => {
     <header className={className}>
       <div className='menu'>
         <Link href='/'>
-          <a>
-            <h1>Own Kng</h1>
-          </a>
+          <a>Own Kng</a>
         </Link>
         <MenuButton />
       </div>
@@ -44,15 +41,10 @@ export default styled(Header)`
     }
   }
 
-  h1 {
-    color: ${(props) => props.theme.colors.headline};
-    margin: 0;
-    padding: 0;
-  }
-
   a {
     text-decoration: none;
     color: ${(props) => props.theme.colors.headline};
     padding: 1rem 0rem;
+    font-size: 2rem;
   }
 `

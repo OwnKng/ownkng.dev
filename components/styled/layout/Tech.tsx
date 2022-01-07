@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import StyledExternalLink from "../element/StyledExternalLink"
 
-const Tech = ({ className }: { className: string }) => (
+const Tech = ({ className }: { className?: string }) => (
   <div className={className}>
     <h3>The technologies I frequently use are</h3>
     <div className='flex'>
