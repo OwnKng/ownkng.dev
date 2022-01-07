@@ -17,7 +17,7 @@ const StyledExternalLink = ({
 export default styled(StyledExternalLink)`
   position: relative;
   background: none;
-  color: ${({ theme }) => theme.colors.button};
+  color: ${({ theme }) => theme.colors.buttonText};
   padding: 0px 0px 0px 0px;
   font-size: 1.5rem;
   text-decoration: none;
@@ -29,16 +29,16 @@ export default styled(StyledExternalLink)`
     height: 2px;
     bottom: 0;
     left: 0px;
-    background-color: ${({ theme }) => theme.colors.paragraph};
+    background-color: ${({ theme }) => theme.colors.button};
     visibility: visible;
     transition: all 0.2s ease-in-out;
   }
 
   :hover:before {
-    background-color: ${({ theme }) => theme.colors.button};
+    background-color: ${({ theme }) => theme.colors.buttonText};
   }
 
   :visited {
-    color: ${({ theme }) => theme.colors.button};
+    color: ${({ theme }) => theme.colors.buttonText};
   }
 `

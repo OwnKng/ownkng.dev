@@ -14,12 +14,17 @@ export const Article = styled(motion.article)`
   a {
     position: relative;
     background: none;
-    color: ${({ theme }) => theme.colors.button};
+    color: ${({ theme }) => theme.colors.buttonText};
     text-decoration: none;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.paragraph};
+    border-bottom: 2px solid ${({ theme }) => theme.colors.button};
 
     :visited {
-      color: ${({ theme }) => theme.colors.button};
+      color: ${({ theme }) => theme.colors.buttonText};
+    }
+
+    :hover {
+      border-bottom: 2px solid ${({ theme }) => theme.colors.button};
+      color: ${({ theme }) => theme.colors.buttonText};
     }
   }
 
@@ -64,7 +69,7 @@ export const Article = styled(motion.article)`
   }
 
   hr {
-    border: 1px solid ${({ theme }) => theme.colors.paragraph};
-    opacity: 0.5;
+    border-top: 1px solid ${({ theme }) => theme.colors.headline};
+    opacity: 0.2;
   }
 `

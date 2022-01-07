@@ -22,7 +22,7 @@ const ViewCounter = ({ title }: viewCounterProps) => {
     incrementTracker()
   }, [title])
 
-  return <span>{`${views > 0 ? views.toLocaleString() : "–––"} views`}</span>
+  return <span>{`${views > 0 ? views.toLocaleString() : "–––"}`}</span>
 }
 
 export default ViewCounter

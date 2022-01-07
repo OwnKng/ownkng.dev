@@ -8,6 +8,7 @@ export const Button = styled.button`
   color: ${({ theme }) => theme.colors.paragraph};
   border: 1px solid rgba(167, 169, 190, 0.2);
   margin: 5px;
+  border-radius: 4px;
 
   :hover {
     color: ${({ theme }) => theme.colors.button};

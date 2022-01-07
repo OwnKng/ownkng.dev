@@ -1,9 +1,11 @@
 import { motion } from "framer-motion"
 import styled from "styled-components"
-import { HeadPost } from "./HeadPost"
+import ArticleHead from "./ArticleHead"
 import { BlogHead } from "./styled/element/BlogHead"
 import { Article } from "./styled/element/Article"
 import Layout from "./Layout"
+import Tag from "./styled/element/Tag"
+import NameCard from "./styled/element/NameCard"
 
 const variants = {
   initial: {},
@@ -43,6 +45,7 @@ type blogMeta = {
   date: string
   img: string
   url: string
+  tags: any[]
 }
 
 type blogPostProps = {
@@ -65,13 +68,23 @@ const BlogPost = ({ className, children, meta }: blogPostProps) => (
       animate='animate'
     >
       <BlogHead>
-        <HeadPost meta={meta} variants={titleVariants} />
+        <ArticleHead meta={meta} variants={titleVariants} />
       </BlogHead>
       <Article variants={articleVariants}>{children}</Article>
+      <div className='tags'>
+        {meta.tags && meta.tags.map((tag) => <Tag key={tag} tag={tag} />)}
+      </div>
+      <NameCard />
     </motion.div>
   </Layout>
 )
 
 export default styled(BlogPost)`
-  position: relative;
+  max-width: 800px;
+  margin: 0px auto;
+
+  .tags {
+    display: flex;
+    justify-content: space-around;
+  }
 `

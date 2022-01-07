@@ -11,6 +11,9 @@ ${normalize()}
   --z-index-highest: ${({ theme }) => theme.levels.highest};
   --colors-paragraph: ${({ theme }) => theme.colors.paragraph};
   --colors-paragraph-blog: ${({ theme }) => theme.colors.blogParagraph};
+  --colors-headline: ${({ theme }) => theme.colors.headline};
+  --colors-background: ${({ theme }) => theme.colors.background};
+  --colors-button: ${({ theme }) => theme.colors.button};
 }
 
 html {

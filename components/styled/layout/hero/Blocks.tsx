@@ -53,9 +53,7 @@ const Blocks = ({ colorArray }: any) => {
 const tempColor = new THREE.Color()
 
 const data = Array.from({ length: 40 }, () => ({
-  color: ["#5ADBFF", "#006DAA", "#F15152", "#E4B363", "#41C499"][
-    Math.floor(Math.random() * 6)
-  ],
+  color: ["#5ADBFF", "#006DAA", "#F15152"][Math.floor(Math.random() * 4)],
   scale: 1,
 }))
 

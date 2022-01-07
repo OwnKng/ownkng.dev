@@ -28,9 +28,5 @@ export default styled(Posts)`
     width: 100%;
     max-width: 1000px;
     margin: 0px auto;
-
-    @media only screen and (max-width: 1000px) {
-      border: none;
-    }
   }
 `

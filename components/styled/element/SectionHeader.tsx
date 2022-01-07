@@ -10,7 +10,6 @@ const SectionTitle = styled.h1`
   font-size: 2.7rem;
   padding: 0.5rem 0rem;
   margin: 0px;
-  text-transform: uppercase;
   font-family: "Saira", sans-serif;
 `
 

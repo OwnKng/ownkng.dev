@@ -4,10 +4,10 @@ export const theme: DefaultTheme = {
   colors: {
     background: "#08121C",
     headline: "#fffffe",
-    paragraph: "#a7a9be",
+    paragraph: "#CCCCCC",
     blogParagraph: "#fffffe",
     cardParagraph: "#a7a9be",
-    button: "#00A7E1",
+    button: "#ED254E",
     buttonText: "#fffffe",
     stroke: "#a7a9be",
     main: "#fffffe",

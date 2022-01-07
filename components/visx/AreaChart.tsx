@@ -102,7 +102,7 @@ export const AreaChart = ({
       if (x0 > 2020) x0 = 2020
       if (x0 < 1960) x0 = 1960
 
-      let d = data.filter((row) => row.year === x0)
+      const d = data.filter((row) => row.year === x0)
       const { y } = localPoint(event) || { y: 0 }
 
       showTooltip({

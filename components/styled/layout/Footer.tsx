@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 const Footer = ({ className }: { className?: string }) => (
   <footer className={className}>
-    <p>&#169; 2021 Owen King</p>
+    <p>&#169; 2022 Owen King</p>
   </footer>
 )
 
@@ -12,10 +12,8 @@ export default styled(Footer)`
   width: 100%;
   max-width: 1200px;
   margin-top: 20px;
-  padding-top: 40px;
   text-align: center;
   color: ${({ theme }) => theme.colors.paragraph};
-  border-top: 1px solid ${({ theme }) => theme.colors.boxShadow};
 
   a {
     color: ${({ theme }) => theme.colors.paragraph};

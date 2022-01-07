@@ -13,8 +13,8 @@ const AreaChartWrapper = () => {
 
   return (
     <div style={{ marginBottom: 80, width: "100%" }}>
-      <h2>Share of population by age</h2>
-      <h4>Select a country</h4>
+      <h2>Share of population by age group</h2>
+      <h4 style={{ margin: "10px 0px" }}>Select a country</h4>
       <div
         style={{
           display: "flex",
@@ -25,8 +25,7 @@ const AreaChartWrapper = () => {
           <Button
             key={key}
             style={{
-              background: key === active ? "#2C8CBE" : "",
-              color: key === active ? "#FFFFFE" : "",
+              color: key === active ? "var(--colors-button)" : "",
             }}
             onClick={() => setActive(key)}
           >

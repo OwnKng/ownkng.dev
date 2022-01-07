@@ -41,11 +41,11 @@ const StyledNav = styled(motion.div)`
   }
 
   a:hover {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.button};
   }
 
   a:hover svg {
-    color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.button};
   }
   }
 `
@@ -96,7 +96,7 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
   const links = [
     { name: "Home", url: "/" },
     { name: "Thoughts", url: "/#thoughts" },
-    { name: "About me", url: "/#about" },
+    { name: "About me", url: "/about" },
   ]
 
   return (

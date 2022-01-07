@@ -3,6 +3,7 @@ import Thoughts from "../components/styled/layout/Thoughts"
 import { Main } from "../components/styled/element/Main"
 import Layout from "../components/Layout"
 import { NextPage } from "next"
+import NameCard from "../components/styled/element/NameCard"
 
 const Index: NextPage = () => (
   <Layout
@@ -12,6 +13,7 @@ const Index: NextPage = () => (
     <Hero />
     <Main>
       <Thoughts />
+      <NameCard />
     </Main>
   </Layout>
 )

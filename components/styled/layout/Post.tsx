@@ -57,12 +57,9 @@ const Post = ({ className, post }: { className?: string; post: any }) => {
                   .filter((tag) => tag !== "Featured")
                   .map((tag, i) => (
                     <span key={`tag-${i}`} className='tag'>
-                      {tag}
+                      # {tag}
                     </span>
                   ))}
-              </div>
-              <div className='featured'>
-                {meta.tags.includes("Featured") && <span>Featured</span>}
               </div>
             </div>
             <Image
@@ -72,7 +69,6 @@ const Post = ({ className, post }: { className?: string; post: any }) => {
               objectFit='fill'
               priority={true}
             />
-            <div className='imageOverlay' />
           </div>
         </motion.div>
       </a>
@@ -82,7 +78,7 @@ const Post = ({ className, post }: { className?: string; post: any }) => {
 
 export default styled(Post)`
   min-height: 400px;
-  margin: 0rem 1rem 1rem 1rem;
+  margin: 0px 0px 10px 0px;
   position: relative;
   ${elevation[2]};
 
@@ -90,23 +86,9 @@ export default styled(Post)`
     border-radius: 8px;
   }
 
-  .imageOverlay {
-    position: absolute;
-    z-index: var(--z-index-low);
-    width: 100%;
-    height: 100%;
-
-    background: linear-gradient(
-      0deg,
-      rgba(8, 18, 28, 0.6) 20%,
-      rgba(8, 18, 28, 0.5) 70%,
-      rgba(8, 18, 28, 0.3) 100%
-    );
-  }
-
   @media only screen and (max-width: 500px) {
     min-height: 300px;
-    margin: 0px 10px;
+    margin: 0px 5px;
   }
 
   .content {
@@ -164,7 +146,7 @@ export default styled(Post)`
       span {
         color: ${({ theme }) => theme.colors.background};
         backdrop-filter: blur(4px);
-        background: rgba(255, 255, 255, 0.4);
+        background: rgba(255, 255, 255, 0.6);
         margin: 3px 3px 0px 0px;
         border-radius: 2px;
         padding: 3px 10px;
