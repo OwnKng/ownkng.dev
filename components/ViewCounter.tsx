@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
-import useSWR from 'swr'
+import { useEffect } from "react"
+import useSWR from "swr"
 
 type viewCounterProps = {
-    title: string
-  }
+  title: string
+}
 
 const ViewCounter = ({ title }: viewCounterProps) => {
   const { data } = useSWR(`/api/views/${title}`, async (args) => {
@@ -14,14 +14,15 @@ const ViewCounter = ({ title }: viewCounterProps) => {
   const views = data?.views
 
   useEffect(() => {
-    const incrementTracker = () => fetch(`/api/views/${title}`, {
-      method: 'POST',
-    })
+    const incrementTracker = () =>
+      fetch(`/api/views/${title}`, {
+        method: "POST",
+      })
 
     incrementTracker()
   }, [title])
 
-  return `${views > 0 ? views.toLocaleString() : '–––'} views`
+  return <span>{`${views > 0 ? views.toLocaleString() : "–––"}`}</span>
 }
 
 export default ViewCounter

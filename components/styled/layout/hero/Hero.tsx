@@ -36,11 +36,13 @@ export default styled(Hero)/* css */ `
     justify-content: center;
 
     h1 {
-      font-size: 4rem;
+      font-size: max(4rem, 5vw);
+      margin: 0px;
     }
 
     h2 {
       font-size: 2rem;
+      margin: 10px 0px;
     }
   }
 `

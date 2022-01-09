@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Canvas } from "@react-three/fiber"
 import { Physics } from "@react-three/cannon"
 import Blocks from "./Blocks"

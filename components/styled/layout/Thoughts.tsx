@@ -1,22 +1,18 @@
 //@ts-nocheck
-import { useState, useEffect } from "react"
 import { posts } from "../../../getAllPosts"
 import { SectionHeader } from "../element/SectionHeader"
-import Form from "./Form"
 import Posts from "./Posts"
 import styled from "styled-components"
 import StyledLink from "../element/StyedLink"
 import SectionTitle from "../element/SectionTitle"
+import Tag from "../element/Tag"
 
 type thoughtsType = {
   className?: string
 }
 
 const Thoughts = ({ className }: thoughtsType) => {
-  const [active, setActive] = useState("Featured")
-  const [filteredPosts, setFiltered] = useState()
-
-  let tags = posts
+  const tags = posts
     .map((mod) => {
       const {
         module: { meta },
@@ -25,21 +21,6 @@ const Thoughts = ({ className }: thoughtsType) => {
     })
     .map((meta) => meta.tags)
     .flat()
-
-  useEffect(() => {
-    let withTag
-
-    withTag = posts.filter((post) => {
-      const {
-        module: { meta },
-      } = post
-      return meta.tags.includes(active)
-    })
-
-    if (!active) withTag = posts
-
-    setFiltered(withTag)
-  }, [active])
 
   return (
     <div className={className}>
@@ -51,15 +32,23 @@ const Thoughts = ({ className }: thoughtsType) => {
           Articles and how-to's from some of my personal projects
         </SectionHeader.Subtitle>
       </SectionHeader>
-      <Form
-        tags={[...new Set(tags)].filter((tag) => tag !== "Featured")}
-        active={active}
-        setActive={setActive}
+      <Posts
+        posts={posts.filter((mod) => mod.module.meta.tags.includes("Featured"))}
       />
-      <Posts posts={filteredPosts} />
       <div className='grid'>
         <div />
         <div className='thoughtsFooter'>
+          <p className='tagHeader'>Tags</p>
+          <div className='contentTags'>
+            {tags
+              .reduce(
+                (prev, curr) => (prev.includes(curr) ? prev : [...prev, curr]),
+                []
+              )
+              .map((tag) => (
+                <Tag key={tag} tag={tag} />
+              ))}
+          </div>
           <StyledLink href='/archive'>See all articles &#x2192;</StyledLink>
         </div>
         <div />
@@ -80,8 +69,25 @@ export default styled(Thoughts)`
     }
   }
 
+  .tagHeader {
+    color: var(--colors-headline);
+    text-align: left;
+    font-size: 1rem;
+    margin-top: 0px;
+    margin-bottom: 5px;
+  }
+
   .thoughtsFooter {
     text-align: center;
-    padding: 1rem 0px 1rem 0px;
+    padding: 1rem 0.5rem 1rem 0.5rem;
+  }
+
+  .contentTags {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding-bottom: 1rem;
+    align-items: center;
+    gap: 10px;
   }
 `
