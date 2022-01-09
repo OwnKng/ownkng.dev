@@ -19,6 +19,7 @@ export default class MyDocument extends Document {
         ...initialProps,
         styles: (
           <>
+            <link rel='preconnect' href='https://fonts.googleapis.com'></link>
             <link
               href='https://fonts.googleapis.com/css?family=Saira:400'
               rel='stylesheet'
