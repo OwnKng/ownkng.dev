@@ -31,7 +31,14 @@ const Scene = () => {
       >
         Enable controls
       </Button>
-      <div style={{ height: 450, width: "100%" }}>
+      <div
+        style={{
+          height: "80vh",
+          width: "95vw",
+          left: "calc(-47.5vw + 50%)",
+          position: "relative",
+        }}
+      >
         <Canvas
           camera={{
             fov: 30,

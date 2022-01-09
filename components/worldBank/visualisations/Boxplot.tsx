@@ -223,7 +223,7 @@ const BoxplotWrapper = ({ data, y, color, className }: any) => {
         <span>Select indicator</span>
         <Button
           style={{
-            color: x === "rule_of_law" ? `#00A7E1` : `#a7a9be`,
+            color: x === "rule_of_law" ? `var(--colors-button)` : `#a7a9be`,
           }}
           onClick={() => setX("rule_of_law")}
         >
@@ -231,7 +231,10 @@ const BoxplotWrapper = ({ data, y, color, className }: any) => {
         </Button>
         <Button
           style={{
-            color: x === "government_effectiveness" ? `#00A7E1` : `#a7a9be`,
+            color:
+              x === "government_effectiveness"
+                ? `var(--colors-button)`
+                : `#a7a9be`,
           }}
           onClick={() => setX("government_effectiveness")}
         >
@@ -239,7 +242,8 @@ const BoxplotWrapper = ({ data, y, color, className }: any) => {
         </Button>
         <Button
           style={{
-            color: x === "regulatory_quality" ? `#00A7E1` : `#a7a9be`,
+            color:
+              x === "regulatory_quality" ? `var(--colors-button)` : `#a7a9be`,
           }}
           onClick={() => setX("regulatory_quality")}
         >

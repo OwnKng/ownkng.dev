@@ -23,7 +23,7 @@ export const fragmentSquares = /* glsl */ `
         float checks = cnoise(vec3(ipos * 10.0 + time, 0.1));
         checks *= 5.0;
     
-        vec3 color = hsl2rgb(0.9 + checks * 0.05, 0.8, vStrength);
+        vec3 color = hsl2rgb(0.6, 0.8, vStrength);
 
         gl_FragColor = vec4(color, checks);
     }

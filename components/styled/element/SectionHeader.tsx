@@ -7,7 +7,7 @@ export const SectionHeader = styled.div`
 
 const SectionTitle = styled.h1`
   color: ${({ theme }) => theme.colors.headline};
-  font-size: 2.7rem;
+  font-size: max(4rem, 4vw);
   padding: 0.5rem 0rem;
   margin: 0px;
   font-family: "Saira", sans-serif;

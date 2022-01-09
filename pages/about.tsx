@@ -4,41 +4,39 @@ import Tech from "../components/styled/layout/Tech"
 import styled from "styled-components"
 import { LinkedinSquare, Github } from "@styled-icons/boxicons-logos"
 import Link from "next/link"
-
-import dynamic from "next/dynamic"
-
-const DynamicHeadshot = dynamic(
-  () => import("../components/styled/layout/headshot/Headshot"),
-  {
-    ssr: false,
-  }
-)
+import Headshot from "../components/styled/layout/headshot/Headshot"
 
 const About: any = ({ className }: { className?: string }) => (
   <div className={className}>
-    <Layout>
-      <div className='art'>
-        <DynamicHeadshot />
-      </div>
-      <main>
+    <Layout
+      pageTitle='About Owen King'
+      description="Hi, I'm Owen. I'm a quantitative researcher at JLL in London. I apply skills in data visualisation, machine learning and software engineering to generate insights and create new products."
+      url='/about'
+    >
+      <div className='fold'>
+        <div className='art'>
+          <Headshot />
+        </div>
         <div className='card'>
           <h1>Owen King</h1>
           <p>I analyse, visualise and model data using modern tech</p>
         </div>
-        <ul className='contact'>
-          <li>
-            <a href='https://www.linkedin.com/in/owenrking/'>
-              <LinkedinSquare size={40} />
+      </div>
+      <ul className='contact'>
+        <li>
+          <a href='https://www.linkedin.com/in/owenrking/'>
+            <LinkedinSquare size={40} />
+          </a>
+        </li>
+        <li>
+          <Link href='https://github.com/OwnKng'>
+            <a>
+              <Github size={40} />
             </a>
-          </li>
-          <li>
-            <Link href='https://github.com/OwnKng'>
-              <a>
-                <Github size={40} />
-              </a>
-            </Link>
-          </li>
-        </ul>
+          </Link>
+        </li>
+      </ul>
+      <main>
         <AboutMe />
         <Tech />
       </main>
@@ -53,14 +51,26 @@ export default styled(About)/*css*/ `
   }
 
   .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     text-align: center;
+    height: 15%;
+
+    p {
+      margin: 0px;
+    }
   }
 
   .art {
     top: 0rem;
     left: 0px;
-    height: 80vh;
+    height: 85%;
     width: 100vw;
+  }
+
+  .fold {
+    height: 100vh;
   }
 
   .contact {
@@ -84,7 +94,7 @@ export default styled(About)/*css*/ `
 
   main {
     max-width: 800px;
-    padding: 2rem 0rem;
+    padding: 2rem 0.5rem;
     margin: 0px auto;
   }
 `

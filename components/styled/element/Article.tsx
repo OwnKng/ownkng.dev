@@ -7,6 +7,10 @@ export const Article = styled(motion.article)`
   color: var(--colors-paragraph-blog);
   padding: 2rem 0rem;
 
+  p {
+    color: var(--colors-paragraph-blog);
+  }
+
   @media only screen and (max-width: 600px) {
     padding: 2rem 8px 2rem 8px;
   }

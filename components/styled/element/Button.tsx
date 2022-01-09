@@ -17,4 +17,6 @@ export const Button = styled.button`
   :focus {
     outline: none;
   }
+
+  cursor: pointer;
 `

@@ -13,8 +13,8 @@ const AboutMe = ({ className }: aboutProps) => (
       I'm a quantitative researcher at{" "}
       <StyledExternalLink href='https://www.jll.com'>JLL</StyledExternalLink>,
       based in London. In my professional work, I apply skills in data
-      visualisation, geospatial analysis, automation and machine learning to
-      generate insights, automate processes and create new products.
+      visualisation, machine learning and software engineering to generate
+      insights, communicate trends and create new products.
     </p>
     <p>
       This site is a collection of my personal projects, with a focus on data

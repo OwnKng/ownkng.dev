@@ -29,13 +29,10 @@ export default styled(ArticleHead)`
   }
 
   .details {
-    display: flex;
-    justify-content: space-between;
-
     font-size: 0.8rem;
 
     p {
-      margin: 0px;
+      margin-bottom: 0px;
       font-size: 1rem;
       font-weight: bold;
       color: white;

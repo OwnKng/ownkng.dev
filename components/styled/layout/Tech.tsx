@@ -120,6 +120,11 @@ const Tech = ({ className }: { className?: string }) => (
               <StyledExternalLink href=''>SQL</StyledExternalLink>
             </li>
             <li>
+              <StyledExternalLink href='https://graphql.org/'>
+                GraphQL
+              </StyledExternalLink>
+            </li>
+            <li>
               <StyledExternalLink href='https://www.apollographql.com/'>
                 Apollo
               </StyledExternalLink>

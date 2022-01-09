@@ -96,7 +96,7 @@ const Nav = ({ isMenuOpen, closeMenu }) => {
   const links = [
     { name: "Home", url: "/" },
     { name: "Thoughts", url: "/#thoughts" },
-    { name: "About me", url: "/about" },
+    { name: "About", url: "/about" },
   ]
 
   return (

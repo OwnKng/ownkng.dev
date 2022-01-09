@@ -1,7 +1,6 @@
-import Link from "next/link"
 import styled from "styled-components"
-import { ArrowRightCircle } from "@styled-icons/bootstrap/ArrowRightCircle"
 import Image from "next/image"
+import StyledLink from "./StyedLink"
 
 const NameCard = ({ className }: { className?: string }) => (
   <div className={className}>
@@ -18,12 +17,9 @@ const NameCard = ({ className }: { className?: string }) => (
     <div className='details'>
       <h2>Hi, I'm Owen</h2>
       <p>I analyse, visualise and model data using modern tech</p>
-      <Link href='/about'>
-        <a>
-          <span>Learn more</span>
-          <ArrowRightCircle height={25} />
-        </a>
-      </Link>
+      <StyledLink href='/about'>
+        <a>Learn more &rarr;</a>
+      </StyledLink>
     </div>
   </div>
 )
@@ -46,22 +42,12 @@ export default styled(NameCard)`
   }
 
   h2 {
-    margin-bottom: 0px;
+    margin: 0px;
     font-size: 1.8rem;
   }
 
   p {
     margin-top: 5px;
-  }
-
-  a {
-    text-decoration: none;
-    color: var(--colors-button);
-    font-size: 1.4rem;
-
-    svg {
-      margin-left: 10px;
-    }
   }
 
   @media only screen and (max-width: 600px) {

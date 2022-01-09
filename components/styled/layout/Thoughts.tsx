@@ -39,6 +39,7 @@ const Thoughts = ({ className }: thoughtsType) => {
         <div />
         <div className='thoughtsFooter'>
           <div className='contentTags'>
+            <span className='tagHeader'>Tags</span>
             {tags
               .reduce(
                 (prev, curr) => (prev.includes(curr) ? prev : [...prev, curr]),
@@ -68,6 +69,10 @@ export default styled(Thoughts)`
     }
   }
 
+  .tagHeader {
+    color: var(--colors-headline);
+  }
+
   .thoughtsFooter {
     text-align: center;
     padding: 1rem 0px 1rem 0px;
@@ -76,6 +81,9 @@ export default styled(Thoughts)`
   .contentTags {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
     padding-bottom: 1rem;
+    align-items: center;
+    gap: 10px;
   }
 `

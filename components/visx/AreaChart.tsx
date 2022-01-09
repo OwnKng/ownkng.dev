@@ -119,7 +119,7 @@ export const AreaChart = ({
       <LegendOrdinal scale={fillScale} direction='row' labelMargin='0 15px 0 0'>
         {(labels) => (
           <>
-            <h4>Age</h4>
+            <h4 style={{ marginTop: "1rem" }}>Age</h4>
             <div
               style={{
                 display: "grid",
