@@ -38,8 +38,8 @@ const Thoughts = ({ className }: thoughtsType) => {
       <div className='grid'>
         <div />
         <div className='thoughtsFooter'>
+          <p className='tagHeader'>Tags</p>
           <div className='contentTags'>
-            <span className='tagHeader'>Tags</span>
             {tags
               .reduce(
                 (prev, curr) => (prev.includes(curr) ? prev : [...prev, curr]),
@@ -71,16 +71,20 @@ export default styled(Thoughts)`
 
   .tagHeader {
     color: var(--colors-headline);
+    text-align: left;
+    font-size: 1rem;
+    margin-top: 0px;
+    margin-bottom: 5px;
   }
 
   .thoughtsFooter {
     text-align: center;
-    padding: 1rem 0px 1rem 0px;
+    padding: 1rem 0.5rem 1rem 0.5rem;
   }
 
   .contentTags {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
     padding-bottom: 1rem;
     align-items: center;
