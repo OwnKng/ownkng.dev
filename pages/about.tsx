@@ -66,7 +66,7 @@ export default styled(About)/*css*/ `
     top: 0rem;
     left: 0px;
     height: 85%;
-    width: 100vw;
+    width: 100%;
   }
 
   .fold {
