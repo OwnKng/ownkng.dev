@@ -54,7 +54,7 @@ export const stripesFragment = /* glsl */ `
         vec3 color = hsl2rgb(0.45 + strength * 0.1, 0.7, light * strength);
 
         //* Margins
-        float alpha = step(0.15, fpos.x);
+        float alpha = step(0.2, fpos.x);
 
         gl_FragColor = vec4(color, alpha);
     }
