@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { ParentSize } from "@visx/responsive"
+import { withParentSize } from "@visx/responsive"
 import { scaleLog, scaleLinear, scaleSqrt, scaleOrdinal } from "@visx/scale"
 import { extent, format } from "d3"
 import { Circle } from "@visx/shape"
@@ -20,8 +20,8 @@ import { useColorScale } from "../hooks"
 
 const ScatterPlot = ({
   data,
-  width,
-  height,
+  parentWidth,
+  parentHeight,
   x,
   y,
   size,
@@ -35,8 +35,8 @@ const ScatterPlot = ({
   const getSize = (d) => d[size]
 
   // Set dimensions
-  const innerWidth = width - margin.right - margin.left
-  const innerHeight = height - margin.top - margin.bottom
+  const innerWidth = parentWidth - margin.right - margin.left
+  const innerHeight = parentHeight - margin.top - margin.bottom
 
   data = data.sort((a, b) => getSize(b) - getSize(a))
 
@@ -76,7 +76,7 @@ const ScatterPlot = ({
         (d) => xScale(getX(d)),
         (d) => yScale(getY(d))
       ),
-    [width, height, xScale, yScale]
+    [parentWidth, parentHeight, xScale, yScale]
   )
 
   let tooltipTimeout
@@ -152,7 +152,7 @@ const ScatterPlot = ({
           }
         </LegendSize>
       </div>
-      <svg width={width} height={height} ref={svgRef}>
+      <svg width={parentWidth} height={parentHeight} ref={svgRef}>
         <rect
           x={margin.left}
           y={margin.top}
@@ -276,6 +276,8 @@ const Legend = ({ colorScale }) => (
   </div>
 )
 
+const ResponsiveScatter = withParentSize(ScatterPlot)
+
 const scatterPlotWrapper = ({ title, data, x, y, size, color, className }) => {
   const getColor = (d) => d[color]
 
@@ -288,20 +290,14 @@ const scatterPlotWrapper = ({ title, data, x, y, size, color, className }) => {
       <h3>{title}</h3>
       <Legend colorScale={colorScale} />
       <div className='viz'>
-        <ParentSize>
-          {({ width, height }) => (
-            <ScatterPlot
-              data={data}
-              width={width}
-              height={height}
-              x={x}
-              y={y}
-              size={size}
-              getColor={getColor}
-              colorScale={colorScale}
-            />
-          )}
-        </ParentSize>
+        <ResponsiveScatter
+          data={data}
+          x={x}
+          y={y}
+          size={size}
+          getColor={getColor}
+          colorScale={colorScale}
+        />
       </div>
     </div>
   )
