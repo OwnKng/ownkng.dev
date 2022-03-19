@@ -1,46 +1,51 @@
-import * as THREE from "three"
 import { useMemo, useRef } from "react"
+import * as THREE from "three"
+import { vertex } from "../../../threejs/shaders/vertex"
+import { fragment } from "../../../threejs/shaders/fragment"
 import { useFrame } from "@react-three/fiber"
-import { RawShaderMaterial } from "three"
-import { vertexShader } from "../../../threejs/imageShaders/vertex"
-import { fragmentShader } from "../../../threejs/imageShaders/fragment"
-import { fragmentSquares } from "../../../threejs/imageShaders/sqaures/fragment"
-import { vertexSquares } from "../../../threejs/imageShaders/sqaures/vertex"
-import { stripesFragment } from "../../../threejs/imageShaders/stripes/fragment"
-import { stripesVertex } from "../../../threejs/imageShaders/stripes/vertex"
+import { ShaderMaterial } from "three"
+import useScrollPosition from "../../../hooks/useScrollPosition"
 
-const shaders = [
-  { fragmentShader: fragmentShader, vertexShader: vertexShader },
-  { fragmentShader: fragmentSquares, vertexShader: vertexSquares },
-  { fragmentShader: stripesFragment, vertexShader: stripesVertex },
-]
+const Material = ({ texture, nrows, ncols }: any) => {
+  const ref = useRef<ShaderMaterial>(null!)
 
-const Material = ({ texture }: any) => {
-  const { image } = texture
-
-  const ref = useRef<RawShaderMaterial>(null!)
-
-  const shader = shaders[Math.floor(Math.random() * 3)]
+  const { scrollPos, height } = useScrollPosition()
 
   const uniforms = useMemo(
     () => ({
-      uTime: { value: 0.0 },
       uTexture: { value: texture },
-      uTextureSize: { value: new THREE.Vector2(image.width, image.height) },
+      uTextureSize: {
+        value: new THREE.Vector2(
+          texture.image.width / ncols,
+          texture.image.height / nrows
+        ),
+      },
+      uTime: { value: 0.0 },
+      uNumberColumns: { value: ncols },
+      uNumberRows: { value: nrows },
+      uScroll: { value: 0 },
     }),
-    [texture, image]
+    [texture]
   )
 
   useFrame(({ clock }) => {
-    ref.current.uniforms.uTime.value = clock.getElapsedTime()
+    const elapsedTime = clock.getElapsedTime()
+    ref.current.uniforms.uTime.value = elapsedTime
+
+    ref.current.uniforms.uScroll.value = Math.min(
+      scrollPos / (height * 0.25),
+      1.0
+    )
   })
 
   return (
-    <rawShaderMaterial
+    <shaderMaterial
       ref={ref}
       uniforms={uniforms}
-      {...shader}
+      vertexShader={vertex}
+      fragmentShader={fragment}
       transparent={true}
+      depthWrite={false}
     />
   )
 }

@@ -1,14 +1,21 @@
-//@ts-nocheck
-import { useMemo } from "react"
-import Material from "./Material"
 import { useTexture } from "@react-three/drei"
+import { useMemo, useRef } from "react"
+import Material from "./Material"
+import * as THREE from "three"
+import { InstancedMesh } from "three"
 
 const CanvasImage = () => {
-  const texture = useTexture("headshot.png")
-  const { width, height } = texture.image
+  const ref = useRef<InstancedMesh>(null!)
+  const texture = useTexture("spritemap.png")
+
+  let { width, height } = texture.image
+  const nrows = 2
+  const ncols = 4
+
+  width /= ncols
+  height /= nrows
 
   const numPoints = width * height
-  const threshold = 50
 
   //_ vertices and index for the square shape
   const vertices = useMemo(
@@ -19,51 +26,44 @@ const CanvasImage = () => {
     []
   )
 
+  const uvs = useMemo(
+    () => new Float32Array([0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0]),
+    []
+  )
+
   const index = useMemo(() => new Uint16Array([0, 2, 1, 2, 3, 1]), [])
 
-  const { originalColors, numVisible } = useMemo(() => {
-    let numVisible = 0
-    const canvas = document.createElement("canvas")
-    const ctx = canvas.getContext("2d")
-
-    canvas.width = width
-    canvas.height = height
-
-    ctx.scale(1, -1)
-    ctx.drawImage(texture.image, 0, 0, width, height * -1)
-
-    const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height)
-    const originalColors = Float32Array.from(data)
+  //_ positions, indexes and UV coords for each pixel / shape
+  const { offsets, indices, colors } = useMemo(() => {
+    const offsets = new Float32Array(numPoints * 3)
+    const indices = new Uint16Array(numPoints)
+    const colors = new Float32Array(numPoints * 3)
 
     for (let i = 0; i < numPoints; i++) {
-      if (originalColors[i * 4 + 0] >= threshold) numVisible++
+      offsets[i * 3 + 0] = i % width
+      offsets[i * 3 + 1] = Math.floor(i / width)
+      offsets[i * 3 + 2] = 0
+      indices[i] = i
+
+      const { r, g, b } = new THREE.Color(
+        ["#5ADBFF", "#006DAA", "#F15152", "#ffffff"][
+          Math.floor(Math.random() * 4)
+        ]
+      )
+
+      colors[i * 3 + 0] = r
+      colors[i * 3 + 1] = g
+      colors[i * 3 + 2] = b
     }
 
-    return { originalColors, numVisible }
-  }, [numPoints, texture, width, height])
-
-  //_ positions, indexes and UV coords for each pixel / shape
-  const { offsets, indices } = useMemo(() => {
-    const offsets = new Float32Array(numVisible * 3)
-    const indices = new Uint16Array(numVisible)
-
-    for (let i = 0, j = 0; i < numPoints; i++) {
-      if (originalColors[i * 4 + 0] >= threshold) {
-        offsets[j * 3 + 0] = i % width
-        offsets[j * 3 + 1] = Math.floor(i / width)
-        offsets[j * 3 + 2] = 0
-        indices[j] = i
-        j++
-      }
-    }
-
-    return { offsets, indices }
-  }, [numVisible, numPoints, width, originalColors])
+    return { offsets, indices, colors }
+  }, [numPoints, width])
 
   return (
     <instancedMesh
+      ref={ref}
       position={[-width / 2, -width / 2, 0]}
-      args={[null, null, numVisible]}
+      args={[undefined, undefined, numPoints]}
     >
       <bufferGeometry>
         <bufferAttribute
@@ -76,6 +76,7 @@ const CanvasImage = () => {
           count={index.length}
           itemSize={1}
         />
+        <bufferAttribute attachObject={["attributes", "uv"]} args={[uvs, 2]} />
         <instancedBufferAttribute
           attachObject={["attributes", "offset"]}
           args={[offsets, 3]}
@@ -84,8 +85,12 @@ const CanvasImage = () => {
           attachObject={["attributes", "pindex"]}
           args={[indices, 1]}
         />
+        <instancedBufferAttribute
+          attachObject={["attributes", "pixelColor"]}
+          args={[colors, 3]}
+        />
       </bufferGeometry>
-      <Material texture={texture} />
+      <Material texture={texture} nrows={nrows} ncols={ncols} />
     </instancedMesh>
   )
 }

@@ -119,9 +119,9 @@ const Stack = ({
           tickStroke='#a7a9be'
           stroke='#a7a9be'
           tickLabelProps={(value) => ({
-            textAnchor: width > 400 ? "middle" : "start",
+            textAnchor: parentWidth > 400 ? "middle" : "start",
             transform:
-              width > 400
+              parentWidth > 400
                 ? ""
                 : `rotate(90 ${xScale(value) + bandwidth / 2}, 15)`,
           })}
