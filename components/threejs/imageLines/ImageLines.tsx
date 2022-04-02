@@ -2,7 +2,7 @@ import Settings from "./Settings"
 import { Suspense, useState } from "react"
 import styled from "styled-components"
 import { Canvas } from "@react-three/fiber"
-import Sketch from "./Sketch"
+import Lines from "./Lines"
 
 function Box() {
   return (
@@ -26,7 +26,7 @@ const ImageLines = ({ className }: { className: string }) => {
     <div className={className}>
       <Canvas>
         <Suspense fallback={<Box />}>
-          <Sketch {...state} />
+          <Lines {...state} />
         </Suspense>
       </Canvas>
       <Settings

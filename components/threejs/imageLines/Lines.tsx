@@ -16,7 +16,7 @@ const CurlMaterial = shaderMaterial(
 
 extend({ CurlMaterial })
 
-const Sketch: any = ({
+const Lines = ({
   numberLines,
   baseColor,
   colorRange,
@@ -156,4 +156,4 @@ const Tube = ({ vertices, baseColor, colorRange }: any) => {
   )
 }
 
-export default Sketch
+export default Lines
