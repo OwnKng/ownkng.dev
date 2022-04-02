@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { ParentSize } from "@visx/responsive"
+import { withParentSize } from "@visx/responsive"
 import { Axis } from "@visx/axis"
 import { demographics } from "../data/demographics"
 import { format, group } from "d3"
@@ -13,18 +13,18 @@ import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend"
 
 const Stack = ({
   data,
-  width,
-  height,
+  parentHeight,
+  parentWidth,
   x,
   y,
   color,
   colorScale,
   margin = { top: 20, bottom: 60, left: 40, right: 20 },
 }) => {
-  if (width < 100) return null
+  if (parentWidth < 100) return null
 
-  const innerWidth = width - margin.left - margin.right
-  const innerHeight = height - margin.top - margin.bottom
+  const innerWidth = parentWidth - margin.left - margin.right
+  const innerHeight = parentHeight - margin.top - margin.bottom
 
   // Scales
   const xScale = scaleBand({
@@ -84,7 +84,7 @@ const Stack = ({
 
   return (
     <div>
-      <svg width={width} height={height}>
+      <svg width={parentWidth} height={parentHeight}>
         <rect
           x={margin.left}
           y={margin.top}
@@ -119,9 +119,9 @@ const Stack = ({
           tickStroke='#a7a9be'
           stroke='#a7a9be'
           tickLabelProps={(value) => ({
-            textAnchor: width > 400 ? "middle" : "start",
+            textAnchor: parentWidth > 400 ? "middle" : "start",
             transform:
-              width > 400
+              parentWidth > 400
                 ? ""
                 : `rotate(90 ${xScale(value) + bandwidth / 2}, 15)`,
           })}
@@ -209,6 +209,8 @@ const Legend = ({ colorScale }) => (
   </div>
 )
 
+const ResponsiveStack = withParentSize(Stack)
+
 const StackWrapper = ({ className }) => {
   const x = (d) => d["cut"]
   const y = (d) => d["n"]
@@ -224,19 +226,13 @@ const StackWrapper = ({ className }) => {
       <span>Each rectangle represents a country</span>
       <Legend colorScale={colorScale} />
       <div className='viz'>
-        <ParentSize>
-          {({ width, height }) => (
-            <Stack
-              width={width}
-              height={height}
-              data={demographics}
-              x={x}
-              y={y}
-              color={color}
-              colorScale={colorScale}
-            />
-          )}
-        </ParentSize>
+        <ResponsiveStack
+          data={demographics}
+          x={x}
+          y={y}
+          color={color}
+          colorScale={colorScale}
+        />
       </div>
     </div>
   )

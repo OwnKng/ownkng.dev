@@ -4,8 +4,8 @@ import CanvasImage from "./CanvasImage"
 
 const Scene = () => (
   <Canvas
-    camera={{ position: [-20, 40, 280] }}
-    onCreated={({ camera }) => camera.lookAt(0, 40, 0)}
+    camera={{ position: [0, 15, 120] }}
+    onCreated={({ camera }) => camera.lookAt(0, 15, 0)}
   >
     <Suspense fallback={null}>
       <CanvasImage />

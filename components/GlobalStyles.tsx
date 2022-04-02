@@ -14,6 +14,8 @@ ${normalize()}
   --colors-headline: ${({ theme }) => theme.colors.headline};
   --colors-background: ${({ theme }) => theme.colors.background};
   --colors-button: ${({ theme }) => theme.colors.button};
+  --colors-outline: ${({ theme }) => theme.colors.outline};
+  --colors-foreground: ${({ theme }) => theme.colors.foreground};
 }
 
 html {

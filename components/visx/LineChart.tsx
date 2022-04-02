@@ -52,12 +52,13 @@ const Line = ({
     (event) => {
       const { x } = localPoint(event) || { x: 0 }
       let x0 = xScale.invert(x)
+
       x0 = Math.round(x0)
       if (x0 > max(data, xAccessor)) x0 = max(data, xAccessor)
       if (x0 < min(data, xAccessor)) x0 = min(data, xAccessor)
 
-      let d = data.filter((row) => row.year === x0)
-      let yMax = max(d, yAccessor)
+      const d = data.filter((row) => row.year === x0)
+      const yMax = max(d, yAccessor)
 
       showTooltip({
         tooltipData: d,

@@ -16,10 +16,6 @@ const withTM = require("next-transpile-modules")([
 ])
 
 config = {
-  experimental: {
-    // ssr and displayName are configured by default
-    styledComponents: true,
-  },
   typescript: {
     ignoreBuildErrors: true,
   },
