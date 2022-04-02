@@ -1,0 +1,17 @@
+import ImageLines from "../../../components/threejs/imageLines/ImageLines"
+import BlogPost from "../../../components/BlogPost"
+
+export const meta = {
+  url: "/thoughts/webgl-line",
+  title: "Article Title!",
+  description: "How to group countries using R and tidymodels",
+  date: "Apr 02 2022",
+  img: "/worldBank.png",
+  tags: ["Featured", "Web Dev"],
+}
+
+export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>
+
+<ImageLines />
+
+Hello world!
