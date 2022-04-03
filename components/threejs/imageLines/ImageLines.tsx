@@ -3,12 +3,13 @@ import { Suspense, useState } from "react"
 import styled from "styled-components"
 import { Canvas } from "@react-three/fiber"
 import Lines from "./Lines"
+import { elevation } from "../../styled/utilities"
 
 function Box() {
   return (
     <mesh>
       <boxBufferGeometry attach='geometry' args={[1, 1, 1]} />
-      <meshStandardMaterial attach='material' transparent opacity={0.5} />
+      <meshBasicMaterial color='teal' />
     </mesh>
   )
 }
@@ -24,7 +25,7 @@ const ImageLines = ({ className }: { className: string }) => {
 
   return (
     <div className={className}>
-      <Canvas>
+      <Canvas camera={{ position: [0, 0, 0] }}>
         <Suspense fallback={<Box />}>
           <Lines {...state} />
         </Suspense>
@@ -40,9 +41,14 @@ const ImageLines = ({ className }: { className: string }) => {
 export default styled(ImageLines)`
   display: grid;
   grid-template-areas: "canvas settings";
-  grid-template-columns: 2fr 1fr;
-  width: 100%;
+  grid-template-columns: 3fr 1fr;
+  left: calc(-50vw + 50%);
+  position: relative;
+  width: 100vw;
   height: 100%;
+  min-height: 80vh;
+  background: #0b1e31;
+  ${elevation[1]};
 
   canvas {
     grid-area: canvas;

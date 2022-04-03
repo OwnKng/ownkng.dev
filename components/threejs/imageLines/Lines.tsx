@@ -25,16 +25,14 @@ const Lines = ({
 }: any) => {
   const ref = useRef()
 
-  const texture = useTexture("hands.png")
+  const texture = useTexture("/hands.png")
 
   const { width, height } = texture.image
   const numberOfPoints = width * height
 
-  const threshold = 80
-
   //* eliminate dark areas of image
-  const [originalColors] = useMemo(() => {
-    let numVisible = 0
+  const positions = useMemo(() => {
+    const threshold = 80
 
     const canvas = document.createElement("canvas")
     const ctx = canvas.getContext("2d")
@@ -48,15 +46,6 @@ const Lines = ({
     const { data } = ctx.getImageData(0, 0, canvas.width, canvas.height)
     const originalColors = Float32Array.from(data)
 
-    for (let i = 0; i < numberOfPoints; i++) {
-      if (originalColors[i * 4 + 0] >= threshold) numVisible++
-    }
-
-    return [originalColors, numVisible]
-  }, [width, height, texture.image, numberOfPoints])
-
-  //* eliminate dark areas of image
-  const [positions] = useMemo(() => {
     const positions = []
 
     for (let i = 0; i < numberOfPoints; i++) {
@@ -71,9 +60,10 @@ const Lines = ({
       }
     }
 
-    return [positions]
-  }, [width, originalColors, numberOfPoints])
+    return positions
+  }, [width, height, texture.image, numberOfPoints])
 
+  //* sample the positions and draw the lines
   const lines = useMemo(() => {
     const lines = []
 
@@ -112,11 +102,11 @@ const Lines = ({
   })
 
   return (
-    <group ref={ref} scale={[0.06, 0.06, 0.06]} position={[-9, -6, -2]}>
+    <group ref={ref} scale={[0.062, 0.062, 0.062]} position={[-8, -6, -2]}>
       {lines
         .filter((d) => d.length > 3)
         .map((d, i) => (
-          <Tube
+          <Line
             vertices={d}
             baseColor={baseColor}
             colorRange={colorRange}
@@ -127,7 +117,7 @@ const Lines = ({
   )
 }
 
-const Tube = ({ vertices, baseColor, colorRange }: any) => {
+const Line = ({ vertices, baseColor, colorRange }: any) => {
   const ref = useRef(0)
 
   const curve = useMemo(() => new THREE.CatmullRomCurve3(vertices), [vertices])
