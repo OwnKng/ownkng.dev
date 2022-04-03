@@ -20,93 +20,103 @@ const Settings: React.FC<settingsType> = ({
   colorRange,
   updateProperty,
 }) => (
-  <form className={className}>
+  <div className={className}>
     <h2>Controls</h2>
-    <div>
-      <p>Number of lines</p>
-      <ButtonGroup
-        labels={["low", "med", "high"]}
-        selected='med'
-        onClick={(f: string) =>
-          createThreshold([
-            () => updateProperty({ numberLines: 300 }),
-            () => updateProperty({ numberLines: 200 }),
-            () => updateProperty({ numberLines: 100 }),
-          ])(f)
-        }
-      />
-    </div>
-    <div>
-      <p>Max number of vertices</p>
-      <ButtonGroup
-        labels={["low", "med", "high"]}
-        selected='med'
-        onClick={(f: string) =>
-          createThreshold([
-            () => updateProperty({ sampleSize: 4000 }),
-            () => updateProperty({ sampleSize: 2500 }),
-            () => updateProperty({ sampleSize: 1000 }),
-          ])(f)
-        }
-      />
-    </div>
-    <div>
-      <p>Max sampling distance</p>
-      <ButtonGroup
-        labels={["low", "med", "high"]}
-        selected='med'
-        onClick={(f: string) =>
-          createThreshold([
-            () => updateProperty({ maxDistance: 10 }),
-            () => updateProperty({ maxDistance: 8 }),
-            () => updateProperty({ maxDistance: 4 }),
-          ])(f)
-        }
-      />
-    </div>
-    <div>
-      <label htmlFor='baseColor'>Base color hue</label>
-      <input
-        id='baseColor'
-        className='slider'
-        type='range'
-        min={0.0}
-        max={1.0}
-        step={0.1}
-        name='baseColor'
-        value={baseColor}
-        onChange={(input) =>
-          updateProperty({ [input.target.name]: input.target.value })
-        }
-      />
-      <span>{baseColor}</span>
-    </div>
-    <div>
-      <label htmlFor='colorRange'>Color range</label>
-      <input
-        className='slider'
-        type='range'
-        min={0.0}
-        max={1.0}
-        step={0.1}
-        name='colorRange'
-        value={colorRange}
-        onChange={(input) =>
-          updateProperty({ [input.target.name]: input.target.value })
-        }
-      />
-      <span>{colorRange}</span>
-    </div>
-  </form>
+    <form>
+      <div>
+        <p>Number of lines</p>
+        <ButtonGroup
+          labels={["low", "med", "high"]}
+          selected='med'
+          onClick={(f: string) =>
+            createThreshold([
+              () => updateProperty({ numberLines: 300 }),
+              () => updateProperty({ numberLines: 200 }),
+              () => updateProperty({ numberLines: 100 }),
+            ])(f)
+          }
+        />
+      </div>
+      <div>
+        <p>Max number of vertices</p>
+        <ButtonGroup
+          labels={["low", "med", "high"]}
+          selected='med'
+          onClick={(f: string) =>
+            createThreshold([
+              () => updateProperty({ sampleSize: 4000 }),
+              () => updateProperty({ sampleSize: 2500 }),
+              () => updateProperty({ sampleSize: 1000 }),
+            ])(f)
+          }
+        />
+      </div>
+      <div>
+        <p>Max sampling distance</p>
+        <ButtonGroup
+          labels={["low", "med", "high"]}
+          selected='med'
+          onClick={(f: string) =>
+            createThreshold([
+              () => updateProperty({ maxDistance: 10 }),
+              () => updateProperty({ maxDistance: 8 }),
+              () => updateProperty({ maxDistance: 4 }),
+            ])(f)
+          }
+        />
+      </div>
+      <div>
+        <label htmlFor='baseColor'>Base color hue</label>
+        <input
+          id='baseColor'
+          className='slider'
+          type='range'
+          min={0.0}
+          max={1.0}
+          step={0.1}
+          name='baseColor'
+          value={baseColor}
+          onChange={(input) =>
+            updateProperty({ [input.target.name]: input.target.value })
+          }
+        />
+        <span>{baseColor}</span>
+      </div>
+      <div>
+        <label htmlFor='colorRange'>Color range</label>
+        <input
+          className='slider'
+          type='range'
+          min={0.0}
+          max={1.0}
+          step={0.1}
+          name='colorRange'
+          value={colorRange}
+          onChange={(input) =>
+            updateProperty({ [input.target.name]: input.target.value })
+          }
+        />
+        <span>{colorRange}</span>
+      </div>
+    </form>
+  </div>
 )
 
 export default styled(Settings)`
   grid-area: settings;
   color: var(--colors-headline);
 
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 20px;
+  }
+
+  h2 {
+    margin: 0px !important;
+  }
 
   p {
     color: var(--colors-headline);
@@ -135,5 +145,15 @@ export default styled(Settings)`
     border-radius: 10px;
     background: var(--colors-button);
     cursor: pointer;
+  }
+
+  @media only screen and (max-width: 600px) {
+    form {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      font-size: 1rem;
+    }
   }
 `

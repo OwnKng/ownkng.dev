@@ -57,4 +57,12 @@ export default styled(ImageLines)`
   .settings {
     grid-area: settings;
   }
+
+  @media only screen and (max-width: 600px) {
+    grid-template-areas:
+      "settings"
+      "canvas";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
 `
