@@ -74,4 +74,11 @@ small, .text_small {font-size: 0.8rem;}
         font-size: 80%;
     }
   }
+
+  ol {
+    li {
+      padding-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+  }
 `
