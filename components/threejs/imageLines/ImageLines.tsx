@@ -45,8 +45,7 @@ export default styled(ImageLines)`
   left: calc(-50vw + 50%);
   position: relative;
   width: 100vw;
-  height: 100%;
-  min-height: 80vh;
+  height: 90vh;
   background: #0b1e31;
   ${elevation[1]};
 
@@ -63,6 +62,6 @@ export default styled(ImageLines)`
       "settings"
       "canvas";
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 2fr;
   }
 `

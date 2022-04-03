@@ -105,12 +105,14 @@ const Settings: React.FC<settingsType> = ({
 export default styled(Settings)`
   grid-area: settings;
   color: var(--colors-headline);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     gap: 20px;
   }
 
@@ -148,12 +150,16 @@ export default styled(Settings)`
   }
 
   @media only screen and (max-width: 600px) {
+    display: block;
+    padding: 0 10px;
+
     form {
       flex-direction: row;
       flex-wrap: wrap;
-      justify-content: center;
       align-items: flex-start;
+      justify-content: space-between;
       font-size: 1rem;
+      gap: 5px;
     }
   }
 `
