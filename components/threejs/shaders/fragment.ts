@@ -30,8 +30,8 @@ export const fragment = `
         float PI = 3.142; 
         float angle = atan(vTexture.x - 0.5, vTexture.y) / (PI * 2.0) + 0.5;
 
-        float baseColor = 0.4 * step(angle, vScroll);
-        vec3 color = hsl2rgb(0.6 + baseColor, 1.0, 0.2 + vStrength * 0.8); 
+        float baseColor = 0.05 * step(angle, vScroll);
+        vec3 color = hsl2rgb(0.55 + baseColor, 1.0, 0.2 + vStrength * 0.8); 
 
         gl_FragColor = vec4(color, alpha); 
     }

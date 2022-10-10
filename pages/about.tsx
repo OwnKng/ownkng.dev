@@ -84,10 +84,10 @@ export default styled(About)/*css*/ `
     }
 
     svg {
-      fill: ${({ theme }) => theme.colors.stroke};
+      fill: ${({ theme }) => theme.colors.paragraph};
 
       a:visited {
-        color: ${({ theme }) => theme.colors.stroke};
+        color: ${({ theme }) => theme.colors.paragraph};
       }
     }
   }
